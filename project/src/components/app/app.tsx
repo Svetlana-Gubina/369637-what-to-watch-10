@@ -1,9 +1,10 @@
 /* eslint-disable quotes */
 import React from "react";
 import WelcomeScreen from "../WelcomeScreen/WelcomeScreen";
+import type { Props } from "./app.types";
 
-function App(): JSX.Element {
-  return <WelcomeScreen />;
+function App({ films }: Props): JSX.Element {
+  return <WelcomeScreen films={films} />;
 }
 
 export default App;
