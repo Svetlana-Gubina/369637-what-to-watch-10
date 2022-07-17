@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Props } from './Player.types';
+import type { Props } from './player.types';
 
 function Player({ iconHref, state }: Props): JSX.Element {
   return (

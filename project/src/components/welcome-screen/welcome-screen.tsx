@@ -1,7 +1,7 @@
 import React from 'react';
-import SmallFilmCard from '../SmallFilmCard/SmallFilmCard';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+import SmallFilmCard from '../small-film-card/small-film-card';
+import Header from '../header/header';
+import Footer from '../footer/footer';
 import type { Props } from '../app/app.types';
 
 function WelcomeScreen({ films }: Props): JSX.Element {

@@ -1,11 +1,14 @@
-import React from 'react';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
-import SmallFilmCard from '../SmallFilmCard/SmallFilmCard';
-import type { Props } from './FilmCardFull.types';
-import { LIMIT } from './FilmCardFull.constants';
+import React, { useState } from 'react';
+import { Link, NavLink, Outlet } from 'react-router-dom';
+import Header from '../header/header';
+import Footer from '../footer/footer';
+import SmallFilmCard from '../small-film-card/small-film-card';
+import type { Props } from './main-layout.types';
+import { LIMIT, NAV_LIST } from './main-layout.constants';
 
-function FilmCardFull({ films }: Props): JSX.Element {
+function MainLayout({ films }: Props): JSX.Element {
+  const [activeNavItem, setActiveNavItem] = useState(0);
+
   return (
     <>
       <section className='film-card film-card--full'>
@@ -45,9 +48,9 @@ function FilmCardFull({ films }: Props): JSX.Element {
                   <span>My list</span>
                   <span className='film-card__count'>9</span>
                 </button>
-                <a href='add-review.html' className='btn film-card__button'>
+                <Link to='/' className='btn film-card__button'>
                   Add review
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -63,59 +66,29 @@ function FilmCardFull({ films }: Props): JSX.Element {
                 height={327}
               />
             </div>
+
             <div className='film-card__desc'>
               <nav className='film-nav film-card__nav'>
                 <ul className='film-nav__list'>
-                  <li className='film-nav__item film-nav__item--active'>
-                    <a href='#' className='film-nav__link'>
-                      Overview
-                    </a>
-                  </li>
-                  <li className='film-nav__item'>
-                    <a href='#' className='film-nav__link'>
-                      Details
-                    </a>
-                  </li>
-                  <li className='film-nav__item'>
-                    <a href='#' className='film-nav__link'>
-                      Reviews
-                    </a>
-                  </li>
+                  {NAV_LIST.map((navItem, i) => (
+                    <li
+                      key={navItem}
+                      onClick={() => setActiveNavItem(i)}
+                      className={`film-nav__item ${
+                        activeNavItem === i ? 'film-nav__item--active' : ''
+                      }`}
+                    >
+                      <NavLink
+                        to={`/films/:id/${navItem.toLocaleLowerCase()}`}
+                        className='film-nav__link'
+                      >
+                        {navItem}
+                      </NavLink>
+                    </li>
+                  ))}
                 </ul>
               </nav>
-
-              <div className='film-rating'>
-                <div className='film-rating__score'>8,9</div>
-                <p className='film-rating__meta'>
-                  <span className='film-rating__level'>Very good</span>
-                  <span className='film-rating__count'>240 ratings</span>
-                </p>
-              </div>
-              <div className='film-card__text'>
-                <p>
-                  In the 1930s, the Grand Budapest Hotel is a popular European
-                  ski resort, presided over by concierge Gustave H. (Ralph
-                  Fiennes). Zero, a junior lobby boy, becomes Gustave&apos;s
-                  friend and protege.
-                </p>
-                <p>
-                  Gustave prides himself on providing first-class service to the
-                  hotel&apos;s guests, including satisfying the sexual needs of
-                  the many elderly women who stay there. When one of
-                  Gustave&apos;s lovers dies mysteriously, Gustave finds himself
-                  the recipient of a priceless painting and the chief suspect in
-                  her murder.
-                </p>
-                <p className='film-card__director'>
-                  <strong>Director: Wes Anderson</strong>
-                </p>
-                <p className='film-card__starring'>
-                  <strong>
-                    Starring: Bill Murray, Edward Norton, Jude Law, Willem Dafoe
-                    and other
-                  </strong>
-                </p>
-              </div>
+              <Outlet />
             </div>
           </div>
         </div>
@@ -136,4 +109,4 @@ function FilmCardFull({ films }: Props): JSX.Element {
   );
 }
 
-export default FilmCardFull;
+export default MainLayout;
