@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Props } from './SmallFilmCard.types';
+import type { Props } from './small-film-card.types';
 
 function SmallFilmCard({ imgSrc, name, link }: Props): JSX.Element {
   return (
