@@ -1,3 +1,3 @@
 import type { FilmItemType } from '../app/app.types';
 
-export type Props = Omit<FilmItemType, 'id'>;
+export type Props = FilmItemType;

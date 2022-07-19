@@ -1,4 +1,6 @@
 import React from 'react';
+// import type { FilmItemType } from '../app/app.types';
+// import { useOutletContext } from 'react-router-dom';
 
 function Reviews(): JSX.Element {
   return (

@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import SmallFilmCard from '../small-film-card/small-film-card';
 import Header from '../header/header';
 import Footer from '../footer/footer';
+import { GENRES } from './welcome-screen.constants';
 import type { Props } from '../app/app.types';
 
 function WelcomeScreen({ films }: Props): JSX.Element {
+  const [activeGenre, setActiveGenre] = useState(0);
+
   return (
     <>
       <section className='film-card'>
@@ -61,60 +65,23 @@ function WelcomeScreen({ films }: Props): JSX.Element {
         <section className='catalog'>
           <h2 className='catalog__title visually-hidden'>Catalog</h2>
           <ul className='catalog__genres-list'>
-            <li className='catalog__genres-item catalog__genres-item--active'>
-              <a href='#' className='catalog__genres-link'>
-                All genres
-              </a>
-            </li>
-            <li className='catalog__genres-item'>
-              <a href='#' className='catalog__genres-link'>
-                Comedies
-              </a>
-            </li>
-            <li className='catalog__genres-item'>
-              <a href='#' className='catalog__genres-link'>
-                Crime
-              </a>
-            </li>
-            <li className='catalog__genres-item'>
-              <a href='#' className='catalog__genres-link'>
-                Documentary
-              </a>
-            </li>
-            <li className='catalog__genres-item'>
-              <a href='#' className='catalog__genres-link'>
-                Dramas
-              </a>
-            </li>
-            <li className='catalog__genres-item'>
-              <a href='#' className='catalog__genres-link'>
-                Horror
-              </a>
-            </li>
-            <li className='catalog__genres-item'>
-              <a href='#' className='catalog__genres-link'>
-                Kids &amp; Family
-              </a>
-            </li>
-            <li className='catalog__genres-item'>
-              <a href='#' className='catalog__genres-link'>
-                Romance
-              </a>
-            </li>
-            <li className='catalog__genres-item'>
-              <a href='#' className='catalog__genres-link'>
-                Sci-Fi
-              </a>
-            </li>
-            <li className='catalog__genres-item'>
-              <a href='#' className='catalog__genres-link'>
-                Thrillers
-              </a>
-            </li>
+            {GENRES.map((genre, i) => (
+              <li
+                key={genre}
+                onClick={() => setActiveGenre(i)}
+                className={`catalog__genres-item ${
+                  activeGenre === i ? 'catalog__genres-item--active' : ''
+                }`}
+              >
+                <Link to='/' className='catalog__genres-link'>
+                  {genre}
+                </Link>
+              </li>
+            ))}
           </ul>
           <div className='catalog__films-list'>
-            {films.map(({ id, imgSrc, name, link }) => (
-              <SmallFilmCard key={id} imgSrc={imgSrc} name={name} link={link} />
+            {films.map(({ id, imgSrc, name }) => (
+              <SmallFilmCard key={id} id={id} imgSrc={imgSrc} name={name} />
             ))}
           </div>
           <div className='catalog__more'>

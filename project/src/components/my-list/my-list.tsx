@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Logo from '../logo/logo';
 import Footer from '../footer/footer';
 import SmallFilmCard from '../small-film-card/small-film-card';
@@ -25,15 +26,17 @@ function MyList({ films }: Props): JSX.Element {
             </div>
           </li>
           <li className='user-block__item'>
-            <a className='user-block__link'>Sign out</a>
+            <Link to='/' className='user-block__link'>
+              Sign out
+            </Link>
           </li>
         </ul>
       </header>
       <section className='catalog'>
         <h2 className='catalog__title visually-hidden'>Catalog</h2>
         <div className='catalog__films-list'>
-          {films.slice(MY_LIST_COUNT).map(({ id, imgSrc, name, link }) => (
-            <SmallFilmCard key={id} imgSrc={imgSrc} name={name} link={link} />
+          {films.slice(MY_LIST_COUNT).map(({ id, imgSrc, name }) => (
+            <SmallFilmCard key={id} id={id} imgSrc={imgSrc} name={name} />
           ))}
         </div>
       </section>

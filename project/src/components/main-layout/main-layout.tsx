@@ -1,32 +1,47 @@
-import React, { useState } from 'react';
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, Navigate, NavLink, Outlet, useParams } from 'react-router-dom';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import SmallFilmCard from '../small-film-card/small-film-card';
+import { AppRoute } from '../../project.constants';
 import type { Props } from './main-layout.types';
-import { LIMIT, NAV_LIST } from './main-layout.constants';
+import { shuffleFilms } from '../../project.utils';
+import { getSimilarFilms } from './main-layout.utils';
+import { NAV_LIST } from './main-layout.constants';
 
 function MainLayout({ films }: Props): JSX.Element {
+  const params = useParams();
+  const searchId = params.id;
+  const currentFilm = films.find((film) => film.id.toString() === searchId);
   const [activeNavItem, setActiveNavItem] = useState(0);
+  const [filmsLikeThis, setFilmsLikeThis] = useState(
+    getSimilarFilms(films, currentFilm)
+  );
+
+  useEffect(() => {
+    const moreLikeThis = shuffleFilms(getSimilarFilms(films, currentFilm));
+    setFilmsLikeThis(moreLikeThis);
+  }, [currentFilm, films]);
+
+  if (!currentFilm) {
+    return <Navigate to={AppRoute.PageNotFound} />;
+  }
 
   return (
     <>
       <section className='film-card film-card--full'>
         <div className='film-card__hero'>
           <div className='film-card__bg'>
-            <img
-              src='img/bg-the-grand-budapest-hotel.jpg'
-              alt='The Grand Budapest Hotel'
-            />
+            <img src={currentFilm?.imgSrc} alt={currentFilm?.name} />
           </div>
           <h1 className='visually-hidden'>WTW</h1>
           <Header />
           <div className='film-card__wrap'>
             <div className='film-card__desc'>
-              <h2 className='film-card__title'>The Grand Budapest Hotel</h2>
+              <h2 className='film-card__title'>{currentFilm?.name}</h2>
               <p className='film-card__meta'>
-                <span className='film-card__genre'>Drama</span>
-                <span className='film-card__year'>2014</span>
+                <span className='film-card__genre'>{currentFilm?.genre}</span>
+                <span className='film-card__year'>{currentFilm?.year}</span>
               </p>
               <div className='film-card__buttons'>
                 <button
@@ -48,7 +63,10 @@ function MainLayout({ films }: Props): JSX.Element {
                   <span>My list</span>
                   <span className='film-card__count'>9</span>
                 </button>
-                <Link to='/' className='btn film-card__button'>
+                <Link
+                  to={`/films/${currentFilm?.id}/review`}
+                  className='btn film-card__button'
+                >
                   Add review
                 </Link>
               </div>
@@ -60,8 +78,8 @@ function MainLayout({ films }: Props): JSX.Element {
           <div className='film-card__info'>
             <div className='film-card__poster film-card__poster--big'>
               <img
-                src='img/the-grand-budapest-hotel-poster.jpg'
-                alt='The Grand Budapest Hotel poster'
+                src={currentFilm?.imgSrc}
+                alt={currentFilm?.name}
                 width={218}
                 height={327}
               />
@@ -79,7 +97,9 @@ function MainLayout({ films }: Props): JSX.Element {
                       }`}
                     >
                       <NavLink
-                        to={`/films/:id/${navItem.toLocaleLowerCase()}`}
+                        to={`/films/${
+                          currentFilm?.id
+                        }/${navItem.toLocaleLowerCase()}`}
                         className='film-nav__link'
                       >
                         {navItem}
@@ -88,7 +108,7 @@ function MainLayout({ films }: Props): JSX.Element {
                   ))}
                 </ul>
               </nav>
-              <Outlet />
+              <Outlet context={currentFilm} />
             </div>
           </div>
         </div>
@@ -98,8 +118,8 @@ function MainLayout({ films }: Props): JSX.Element {
         <section className='catalog catalog--like-this'>
           <h2 className='catalog__title'>More like this</h2>
           <div className='catalog__films-list'>
-            {films.slice(0, LIMIT).map(({ id, imgSrc, name, link }) => (
-              <SmallFilmCard key={id} imgSrc={imgSrc} name={name} link={link} />
+            {filmsLikeThis.map(({ id, imgSrc, name }) => (
+              <SmallFilmCard key={id} id={id} imgSrc={imgSrc} name={name} />
             ))}
           </div>
         </section>

@@ -2,7 +2,12 @@ export type FilmItemType = {
   id: number;
   imgSrc: string;
   name: string;
-  link: string;
+  genre?: string;
+  year?: string;
+  description?: string;
+  director?: string;
+  cast?: string;
+  runtime?: string;
 };
 
 export type Props = {
