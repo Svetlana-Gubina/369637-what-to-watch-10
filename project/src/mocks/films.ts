@@ -1,3 +1,5 @@
+import { getReviews } from './reviews';
+
 export const FILMS = [
   {
     id: 1,
@@ -10,6 +12,7 @@ export const FILMS = [
     director: 'John Doe',
     cast: 'John Doe, Hot Blondie, Jane Doe, Hussain Mahoney,Ibrar Daly,Veronika Weir,Molly Munro',
     runtime: '1h 39m',
+    reviews: getReviews(),
   },
   {
     id: 2,
@@ -22,6 +25,7 @@ export const FILMS = [
     director: 'John Doe',
     cast: 'Brooks brothers, Jane Doe, Matthew Friedman, Jameel Ratliff, Amanah Mcneill, Siya Oneal',
     runtime: '2h 12m',
+    reviews: getReviews(),
   },
   {
     id: 3,
@@ -34,6 +38,7 @@ export const FILMS = [
       'Vestibulum imperdiet faucibus faucibus. Pellentesque sodales lobortis tellus, non porttitor erat posuere eget. Quisque cursus tristique lectus, nec pellentesque purus ultrices quis. Duis facilisis leo augue, eu tincidunt enim cursus tincidunt. Cras ac porttitor erat. Vestibulum orci metus, tincidunt eget aliquet id, condimentum viverra lorem. Etiam vestibulum mollis mauris, nec molestie lorem accumsan ut. Vivamus vestibulum ligula et ullamcorper venenatis.',
     cast: 'John Doe, Jane Doe, Omer Mcknight, Ronny Rivers',
     runtime: '1h 50m',
+    reviews: getReviews(),
   },
   {
     id: 4,
@@ -46,6 +51,7 @@ export const FILMS = [
       'Nunc justo mi, sollicitudin vitae accumsan eget, fringilla non urna. Nunc ut vehicula ex. Fusce et tristique nunc, vel mattis mauris. Vestibulum euismod orci mauris, ac congue quam vestibulum vitae. Aenean porttitor varius turpis, laoreet fermentum est vehicula venenatis. Praesent vitae pellentesque dui. Curabitur eu molestie velit, nec pulvinar ante. Morbi eget ornare ex. Aliquam id congue nulla. Aenean facilisis pharetra scelerisque.',
     cast: 'John Doe, Jane Doe, Nada Blevins, Hetty Corona, Yasmeen Aldred, Abdulahi Meyers',
     runtime: '1h 50m',
+    reviews: getReviews(),
   },
   {
     id: 5,
@@ -58,6 +64,7 @@ export const FILMS = [
       'Nulla at augue sed libero pellentesque auctor. Curabitur rhoncus euismod ipsum nec eleifend. Cras nec volutpat ante, nec eleifend purus. Quisque id laoreet felis. Nulla facilisi. Cras eu augue accumsan elit gravida vehicula. Nam accumsan magna sed lectus faucibus faucibus. Cras vel arcu at nunc vestibulum posuere. Donec nec aliquet ipsum. Nulla maximus enim eros, sed suscipit lectus lobortis eu. Vivamus vitae purus viverra, tempus sem at, feugiat risus.',
     cast: 'John Doe, Brooks brothers, Jane Doe, Nabila French, Greg Donovan, Nile Mcintosh, Lubna Higgins',
     runtime: '2h 12m',
+    reviews: getReviews(),
   },
   {
     id: 6,
@@ -70,6 +77,7 @@ export const FILMS = [
       'Vestibulum imperdiet faucibus faucibus. Pellentesque sodales lobortis tellus, non porttitor erat posuere eget. Quisque cursus tristique lectus, nec pellentesque purus ultrices quis. Duis facilisis leo augue, eu tincidunt enim cursus tincidunt. Cras ac porttitor erat. Vestibulum orci metus, tincidunt eget aliquet id, condimentum viverra lorem. Etiam vestibulum mollis mauris, nec molestie lorem accumsan ut. Vivamus vestibulum ligula et ullamcorper venenatis.',
     cast: 'John Doe, Hot Blondie, Jane Doe, Hussain Mahoney,Ibrar Daly,Veronika Weir,Molly Munro',
     runtime: '1h 50m',
+    reviews: getReviews(),
   },
   {
     id: 7,
@@ -82,6 +90,7 @@ export const FILMS = [
       'Nunc justo mi, sollicitudin vitae accumsan eget, fringilla non urna. Nunc ut vehicula ex. Fusce et tristique nunc, vel mattis mauris. Vestibulum euismod orci mauris, ac congue quam vestibulum vitae. Aenean porttitor varius turpis, laoreet fermentum est vehicula venenatis. Praesent vitae pellentesque dui. Curabitur eu molestie velit, nec pulvinar ante. Morbi eget ornare ex. Aliquam id congue nulla. Aenean facilisis pharetra scelerisque.',
     cast: 'John Doe, Brooks brothers, Jane Doe, Nabila French, Greg Donovan, Nile Mcintosh, Lubna Higgins',
     runtime: '2h 12m',
+    reviews: getReviews(),
   },
   {
     id: 8,
@@ -94,6 +103,7 @@ export const FILMS = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas id metus quis magna lacinia maximus et ac magna. Aenean lacus lacus, mollis quis congue ut, pharetra in metus. Donec diam sapien, lacinia eu eleifend eget, aliquet id justo. Ut volutpat imperdiet quam, id rhoncus risus feugiat vel. Duis malesuada eros erat, commodo facilisis metus posuere at. In imperdiet sapien nec venenatis volutpat. Duis ac felis in dolor malesuada ultricies.',
     cast: 'John Doe, Hot Blondie, Jane Doe, Hussain Mahoney,Ibrar Daly,Veronika Weir,Molly Munro',
     runtime: '1h 50m',
+    reviews: getReviews(),
   },
   {
     id: 9,
@@ -106,6 +116,7 @@ export const FILMS = [
       'Nunc justo mi, sollicitudin vitae accumsan eget, fringilla non urna. Nunc ut vehicula ex. Fusce et tristique nunc, vel mattis mauris. Vestibulum euismod orci mauris, ac congue quam vestibulum vitae. Aenean porttitor varius turpis, laoreet fermentum est vehicula venenatis. Praesent vitae pellentesque dui. Curabitur eu molestie velit, nec pulvinar ante. Morbi eget ornare ex. Aliquam id congue nulla. Aenean facilisis pharetra scelerisque.',
     cast: 'John Doe, Brooks brothers, Jane Doe, Nabila French, Greg Donovan, Nile Mcintosh, Lubna Higgins',
     runtime: '2h 12m',
+    reviews: getReviews(),
   },
   {
     id: 10,
@@ -118,6 +129,7 @@ export const FILMS = [
       'Vestibulum imperdiet faucibus faucibus. Pellentesque sodales lobortis tellus, non porttitor erat posuere eget. Quisque cursus tristique lectus, nec pellentesque purus ultrices quis. Duis facilisis leo augue, eu tincidunt enim cursus tincidunt. Cras ac porttitor erat. Vestibulum orci metus, tincidunt eget aliquet id, condimentum viverra lorem. Etiam vestibulum mollis mauris, nec molestie lorem accumsan ut. Vivamus vestibulum ligula et ullamcorper venenatis.',
     cast: 'John Doe, Hot Blondie, Jane Doe, Hussain Mahoney,Ibrar Daly,Veronika Weir,Molly Munro',
     runtime: '1h 50m',
+    reviews: getReviews(),
   },
   {
     id: 11,
@@ -130,6 +142,7 @@ export const FILMS = [
       'Nunc justo mi, sollicitudin vitae accumsan eget, fringilla non urna. Nunc ut vehicula ex. Fusce et tristique nunc, vel mattis mauris. Vestibulum euismod orci mauris, ac congue quam vestibulum vitae. Aenean porttitor varius turpis, laoreet fermentum est vehicula venenatis. Praesent vitae pellentesque dui. Curabitur eu molestie velit, nec pulvinar ante. Morbi eget ornare ex. Aliquam id congue nulla. Aenean facilisis pharetra scelerisque.',
     cast: 'John Doe, Brooks brothers, Jane Doe, Nabila French, Greg Donovan, Nile Mcintosh, Lubna Higgins',
     runtime: '1h 39m',
+    reviews: getReviews(),
   },
   {
     id: 12,
@@ -142,6 +155,7 @@ export const FILMS = [
       'Nulla at augue sed libero pellentesque auctor. Curabitur rhoncus euismod ipsum nec eleifend. Cras nec volutpat ante, nec eleifend purus. Quisque id laoreet felis. Nulla facilisi. Cras eu augue accumsan elit gravida vehicula. Nam accumsan magna sed lectus faucibus faucibus. Cras vel arcu at nunc vestibulum posuere. Donec nec aliquet ipsum. Nulla maximus enim eros, sed suscipit lectus lobortis eu. Vivamus vitae purus viverra, tempus sem at, feugiat risus.',
     cast: 'John Doe, Hot Blondie, Jane Doe, Hussain Mahoney,Ibrar Daly,Veronika Weir,Molly Munro',
     runtime: '1h 50m',
+    reviews: getReviews(),
   },
   {
     id: 13,
@@ -154,6 +168,7 @@ export const FILMS = [
       'Nunc justo mi, sollicitudin vitae accumsan eget, fringilla non urna. Nunc ut vehicula ex. Fusce et tristique nunc, vel mattis mauris. Vestibulum euismod orci mauris, ac congue quam vestibulum vitae. Aenean porttitor varius turpis, laoreet fermentum est vehicula venenatis. Praesent vitae pellentesque dui. Curabitur eu molestie velit, nec pulvinar ante. Morbi eget ornare ex. Aliquam id congue nulla. Aenean facilisis pharetra scelerisque.',
     cast: 'John Doe, Brooks brothers, Jane Doe, Nabila French, Greg Donovan, Nile Mcintosh, Lubna Higgins',
     runtime: '1h 39m',
+    reviews: getReviews(),
   },
   {
     id: 14,
@@ -166,6 +181,7 @@ export const FILMS = [
       'Nulla at augue sed libero pellentesque auctor. Curabitur rhoncus euismod ipsum nec eleifend. Cras nec volutpat ante, nec eleifend purus. Quisque id laoreet felis. Nulla facilisi. Cras eu augue accumsan elit gravida vehicula. Nam accumsan magna sed lectus faucibus faucibus. Cras vel arcu at nunc vestibulum posuere. Donec nec aliquet ipsum. Nulla maximus enim eros, sed suscipit lectus lobortis eu. Vivamus vitae purus viverra, tempus sem at, feugiat risus.',
     cast: 'John Doe, Jane Doe, Nada Blevins, Hetty Corona, Yasmeen Aldred, Abdulahi Meyers',
     runtime: '2h 12m',
+    reviews: getReviews(),
   },
   {
     id: 15,
@@ -178,6 +194,7 @@ export const FILMS = [
       'Cras rhoncus efficitur odio, vel blandit augue blandit id. Integer dapibus nisi at quam porta convallis. Sed vel lacus eu velit ullamcorper dignissim sed imperdiet metus. Donec aliquet fermentum mauris, ut tristique eros bibendum sagittis. Donec vitae dignissim est, at euismod enim. Proin ut scelerisque nunc. Ut mollis felis non leo aliquet, et lobortis elit pulvinar. Cras tempor lobortis egestas. Integer vitae malesuada nibh, nec fermentum velit.',
     cast: 'John Doe, Hot Blondie, Jane Doe, Hussain Mahoney,Ibrar Daly,Veronika Weir,Molly Munro',
     runtime: '1h 39m',
+    reviews: getReviews(),
   },
   {
     id: 16,
@@ -190,6 +207,7 @@ export const FILMS = [
       'Cras rhoncus efficitur odio, vel blandit augue blandit id. Integer dapibus nisi at quam porta convallis. Sed vel lacus eu velit ullamcorper dignissim sed imperdiet metus. Donec aliquet fermentum mauris, ut tristique eros bibendum sagittis. Donec vitae dignissim est, at euismod enim. Proin ut scelerisque nunc. Ut mollis felis non leo aliquet, et lobortis elit pulvinar. Cras tempor lobortis egestas. Integer vitae malesuada nibh, nec fermentum velit.',
     cast: 'John Doe, Jane Doe, Nada Blevins, Hetty Corona, Yasmeen Aldred, Abdulahi Meyers',
     runtime: '2h 12m',
+    reviews: getReviews(),
   },
   {
     id: 17,
@@ -202,6 +220,7 @@ export const FILMS = [
       'Cras rhoncus efficitur odio, vel blandit augue blandit id. Integer dapibus nisi at quam porta convallis. Sed vel lacus eu velit ullamcorper dignissim sed imperdiet metus. Donec aliquet fermentum mauris, ut tristique eros bibendum sagittis. Donec vitae dignissim est, at euismod enim. Proin ut scelerisque nunc. Ut mollis felis non leo aliquet, et lobortis elit pulvinar. Cras tempor lobortis egestas. Integer vitae malesuada nibh, nec fermentum velit.',
     cast: 'John Doe, Hot Blondie, Jane Doe, Hussain Mahoney,Ibrar Daly,Veronika Weir,Molly Munro',
     runtime: '2h 12m',
+    reviews: getReviews(),
   },
   {
     id: 18,
@@ -214,6 +233,7 @@ export const FILMS = [
       'Cras rhoncus efficitur odio, vel blandit augue blandit id. Integer dapibus nisi at quam porta convallis. Sed vel lacus eu velit ullamcorper dignissim sed imperdiet metus. Donec aliquet fermentum mauris, ut tristique eros bibendum sagittis. Donec vitae dignissim est, at euismod enim. Proin ut scelerisque nunc. Ut mollis felis non leo aliquet, et lobortis elit pulvinar. Cras tempor lobortis egestas. Integer vitae malesuada nibh, nec fermentum velit.',
     cast: 'John Doe, Jane Doe, Nada Blevins, Hetty Corona, Yasmeen Aldred, Abdulahi Meyers',
     runtime: '1h 39m',
+    reviews: getReviews(),
   },
   {
     id: 19,
@@ -226,6 +246,7 @@ export const FILMS = [
       'Cras rhoncus efficitur odio, vel blandit augue blandit id. Integer dapibus nisi at quam porta convallis. Sed vel lacus eu velit ullamcorper dignissim sed imperdiet metus. Donec aliquet fermentum mauris, ut tristique eros bibendum sagittis. Donec vitae dignissim est, at euismod enim. Proin ut scelerisque nunc. Ut mollis felis non leo aliquet, et lobortis elit pulvinar. Cras tempor lobortis egestas. Integer vitae malesuada nibh, nec fermentum velit.',
     cast: 'John Doe, Hot Blondie, Jane Doe, Hussain Mahoney,Ibrar Daly,Veronika Weir,Molly Munro',
     runtime: '1h 50m',
+    reviews: getReviews(),
   },
   {
     id: 20,
@@ -238,5 +259,6 @@ export const FILMS = [
       'Nunc justo mi, sollicitudin vitae accumsan eget, fringilla non urna. Nunc ut vehicula ex. Fusce et tristique nunc, vel mattis mauris. Vestibulum euismod orci mauris, ac congue quam vestibulum vitae. Aenean porttitor varius turpis, laoreet fermentum est vehicula venenatis. Praesent vitae pellentesque dui. Curabitur eu molestie velit, nec pulvinar ante. Morbi eget ornare ex. Aliquam id congue nulla. Aenean facilisis pharetra scelerisque.',
     cast: 'John Doe, Jane Doe, Nada Blevins, Hetty Corona, Yasmeen Aldred, Abdulahi Meyers',
     runtime: '1h 39m',
+    reviews: getReviews(),
   },
 ];

@@ -1,14 +1,36 @@
-import React from 'react';
-import { Link, useParams, Navigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
 import Logo from '../logo/logo';
 import { AppRoute } from '../../project.constants';
+import useUrlParam from '../../hooks/useUrlParam/useUrlParam';
 import { RATING_ITEMS } from './add-review.constants';
 import type { Props } from '../app/app.types';
 
 function AddReview({ films }: Props): JSX.Element {
-  const params = useParams();
-  const searchId = params.id;
-  const currentFilm = films.find((film) => film.id.toString() === searchId);
+  const currentFilm = useUrlParam(films);
+  const [review, setReview] = useState({
+    text: '',
+    rating: 0,
+  });
+
+  const handleTextChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = evt.target;
+    setReview({
+      ...review,
+      text: value,
+    });
+  };
+
+  const handleRateChange = (evt: React.FormEvent<HTMLInputElement>) => {
+    const { value } = evt.currentTarget;
+    // eslint-disable-next-line no-console
+    console.log(value);
+
+    setReview({
+      ...review,
+      rating: Number(value),
+    });
+  };
 
   if (!currentFilm) {
     return <Navigate to={AppRoute.PageNotFound} />;
@@ -81,8 +103,9 @@ function AddReview({ films }: Props): JSX.Element {
                     id={`star-${i}`}
                     type='radio'
                     name='rating'
-                    defaultValue={i}
+                    defaultValue={i + 1}
                     defaultChecked={false}
+                    onChange={(evt) => handleRateChange(evt)}
                   />
                   <label className='rating__label' htmlFor={`star-${i}`}>
                     {`Rating ${i}`}
@@ -98,6 +121,7 @@ function AddReview({ films }: Props): JSX.Element {
               id='review-text'
               placeholder='Review text'
               defaultValue={''}
+              onChange={(evt) => handleTextChange(evt)}
             />
             <div className='add-review__submit'>
               <button className='add-review__btn' type='submit'>

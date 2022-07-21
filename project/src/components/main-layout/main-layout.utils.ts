@@ -10,6 +10,6 @@ export const getSimilarFilms = (
     return shuffleFilms(films).slice(0, LIMIT);
   }
   return shuffleFilms(films)
-    .slice(0, LIMIT)
-    .filter(({ id }) => id !== currentFilm.id);
+    .filter(({ id }) => id !== currentFilm.id)
+    .slice(0, LIMIT);
 };

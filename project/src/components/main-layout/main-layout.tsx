@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Navigate, NavLink, Outlet, useParams } from 'react-router-dom';
+import { Link, Navigate, NavLink, Outlet, useLocation } from 'react-router-dom';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import SmallFilmCard from '../small-film-card/small-film-card';
 import { AppRoute } from '../../project.constants';
 import type { Props } from './main-layout.types';
-import { shuffleFilms } from '../../project.utils';
 import { getSimilarFilms } from './main-layout.utils';
 import { NAV_LIST } from './main-layout.constants';
+import useUrlParam from '../../hooks/useUrlParam/useUrlParam';
 
 function MainLayout({ films }: Props): JSX.Element {
-  const params = useParams();
-  const searchId = params.id;
-  const currentFilm = films.find((film) => film.id.toString() === searchId);
-  const [activeNavItem, setActiveNavItem] = useState(0);
+  const location = useLocation();
+  const currentNavItem = location.pathname.slice(
+    location.pathname.lastIndexOf('/') + 1
+  );
+  const reg = new RegExp(currentNavItem, 'i');
+  const currentFilm = useUrlParam(films);
+  const [activeNavItem, setActiveNavItem] = useState(
+    NAV_LIST.findIndex((n) => n.match(reg)) || 0
+  );
   const [filmsLikeThis, setFilmsLikeThis] = useState(
     getSimilarFilms(films, currentFilm)
   );
 
   useEffect(() => {
-    const moreLikeThis = shuffleFilms(getSimilarFilms(films, currentFilm));
-    setFilmsLikeThis(moreLikeThis);
+    setFilmsLikeThis(getSimilarFilms(films, currentFilm));
   }, [currentFilm, films]);
 
   if (!currentFilm) {

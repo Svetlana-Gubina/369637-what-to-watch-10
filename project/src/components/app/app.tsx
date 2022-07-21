@@ -22,10 +22,10 @@ function App({ films }: Props): JSX.Element {
       <Routes>
         <Route path={AppRoute.Main} element={<WelcomeScreen films={films} />} />
         <Route path={AppRoute.Film} element={<MainLayout films={films} />}>
+          <Route index element={<Overview />} />
           <Route path={AppRoute.Overview} element={<Overview />} />
           <Route path={AppRoute.Reviews} element={<Reviews />} />
           <Route path={AppRoute.Details} element={<Details />} />
-          <Route index element={<Overview />} />
           <Route path='*' element={<Overview />} />
         </Route>
         <Route

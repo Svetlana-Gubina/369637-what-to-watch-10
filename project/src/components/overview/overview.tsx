@@ -1,20 +1,34 @@
 import React from 'react';
 import type { FilmItemType } from '../app/app.types';
+import { RatingDecription } from '../reviews/reviews.constants';
 import { CAST_LIMIT } from './overview.constants';
 import { useOutletContext } from 'react-router-dom';
 
 function Overview(): JSX.Element {
-  const { description, director, cast } = useOutletContext() as FilmItemType;
+  const { description, director, cast, reviews } =
+    useOutletContext() as FilmItemType;
+  const ratingSum = reviews?.reduce(
+    (previousValue, currentValue) => previousValue + currentValue.rate,
+    0
+  );
 
   return (
     <>
-      <div className='film-rating'>
-        <div className='film-rating__score'>8,9</div>
-        <p className='film-rating__meta'>
-          <span className='film-rating__level'>Very good</span>
-          <span className='film-rating__count'>240 ratings</span>
-        </p>
-      </div>
+      {reviews && reviews.length && (
+        <div className='film-rating'>
+          <div className='film-rating__score'>
+            {ratingSum && Number((ratingSum / reviews.length).toFixed(1))}
+          </div>
+          <p className='film-rating__meta'>
+            <span className='film-rating__level'>
+              {ratingSum &&
+                RatingDecription[Math.floor(ratingSum / reviews.length)]}
+            </span>
+            <span className='film-rating__count'>{reviews.length} ratings</span>
+          </p>
+        </div>
+      )}
+
       <div className='film-card__text'>
         {description}
         <p className='film-card__director'>

@@ -5,7 +5,7 @@ export const GENRES = [
   'Documentary',
   'Dramas',
   'Horror',
-  'Kids &amp; Family',
+  'Kids and Family',
   'Romance',
   'Sci-Fi',
   'Thrillers',
