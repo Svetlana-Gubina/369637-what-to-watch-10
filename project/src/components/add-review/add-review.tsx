@@ -23,8 +23,6 @@ function AddReview({ films }: Props): JSX.Element {
 
   const handleRateChange = (evt: React.FormEvent<HTMLInputElement>) => {
     const { value } = evt.currentTarget;
-    // eslint-disable-next-line no-console
-    console.log(value);
 
     setReview({
       ...review,
