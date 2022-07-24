@@ -22,10 +22,10 @@ function App({ films }: Props): JSX.Element {
       <Routes>
         <Route path={AppRoute.Main} element={<WelcomeScreen films={films} />} />
         <Route path={AppRoute.Film} element={<MainLayout films={films} />}>
+          <Route index element={<Overview />} />
           <Route path={AppRoute.Overview} element={<Overview />} />
           <Route path={AppRoute.Reviews} element={<Reviews />} />
           <Route path={AppRoute.Details} element={<Details />} />
-          <Route index element={<Overview />} />
           <Route path='*' element={<Overview />} />
         </Route>
         <Route
@@ -41,7 +41,10 @@ function App({ films }: Props): JSX.Element {
           path={AppRoute.SignIn}
           element={<SignIn isSignInFailed={false} isError={false} />}
         />
-        <Route path={AppRoute.AddReview} element={<AddReview />} />
+        <Route
+          path={AppRoute.AddReview}
+          element={<AddReview films={films} />}
+        />
         <Route
           path={AppRoute.MyList}
           element={
@@ -50,6 +53,7 @@ function App({ films }: Props): JSX.Element {
             </PrivateRoot>
           }
         />
+        <Route path={AppRoute.PageNotFound} element={<PageNotFound />} />
         <Route path='*' element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>

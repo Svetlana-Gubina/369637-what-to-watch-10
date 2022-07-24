@@ -361,7 +361,7 @@ main {
   margin: 0 auto; }
 
 .add-review__text {
-  background: #E8C3C4;
+  background: #F5DEB3;
   border-radius: 8px; }
 
 .add-review__textarea {
@@ -640,7 +640,7 @@ main {
   z-index: 1;
   color: #EEE5B5;
   padding-bottom: 78px;
-  background: #E1B0B2; }
+  background: #FAF0E6; }
   .film-card--full {
     padding-bottom: 45px;
     min-height: 100vh; }
@@ -1136,7 +1136,7 @@ main {
     transition: color 0.2s; }
 
 .review {
-  border-bottom: 2px solid #E8C3C4;
+  border-bottom: 2px solid #F5DEB3;
   font-size: 17px;
   color: #252525;
   line-height: 24px;

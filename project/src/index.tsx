@@ -1,5 +1,5 @@
 import React from 'react';
-import { FILMS } from './project.constants';
+import { FILMS } from './mocks/films';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 
