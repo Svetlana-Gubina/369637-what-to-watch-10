@@ -6,7 +6,7 @@ import { useOutletContext } from 'react-router-dom';
 
 function Overview(): JSX.Element {
   const { description, director, cast, reviews } =
-    useOutletContext() as FilmItemType;
+    useOutletContext<FilmItemType>();
   const ratingSum = reviews?.reduce(
     (previousValue, currentValue) => previousValue + currentValue.rate,
     0

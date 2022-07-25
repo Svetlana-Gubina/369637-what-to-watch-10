@@ -948,13 +948,14 @@ main {
 
 .player {
   position: fixed;
-  z-index: 9999;
+  z-index: 100;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1;
-  /* &::after {
+  }
+
+  .player::after {
     content: '';
     position: absolute;
     z-index: 1;
@@ -963,7 +964,7 @@ main {
     left: 0;
     right: 0;
     background: rgba(0,0,0,0.40);
-  } */ }
+  }
 
 .player__video {
   width: 100%;
@@ -1102,6 +1103,8 @@ main {
   .player__full-screen:hover {
     -webkit-transform: scale(1.1);
             transform: scale(1.1); }
+
+
 
 .rating__stars {
   display: -webkit-box;

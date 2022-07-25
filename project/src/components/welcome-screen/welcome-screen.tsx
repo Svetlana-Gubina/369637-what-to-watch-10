@@ -4,58 +4,61 @@ import SmallFilmCard from '../small-film-card/small-film-card';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import { GENRES } from './welcome-screen.constants';
+import { PROMO_ID } from '../../mocks/films';
+import { AuthorizationStatus } from '../private-route/private-route.constants';
 import type { Props } from '../app/app.types';
 
-function WelcomeScreen({ films }: Props): JSX.Element {
+function WelcomeScreen({ films, authorizationStatus }: Props): JSX.Element {
   const [activeGenre, setActiveGenre] = useState(0);
+  const promo = films.find((f) => f.id === PROMO_ID);
 
   return (
     <>
       <section className='film-card'>
         <div className='film-card__bg'>
-          <img
-            src='img/bg-the-grand-budapest-hotel.jpg'
-            alt='The Grand Budapest Hotel'
-          />
+          <img src={promo?.imgSrc} alt={promo?.name} />
         </div>
         <h1 className='visually-hidden'>WTW</h1>
-        <Header />
+        <Header authorizationStatus={authorizationStatus} />
         <div className='film-card__wrap'>
           <div className='film-card__info'>
             <div className='film-card__poster'>
               <img
-                src='img/the-grand-budapest-hotel-poster.jpg'
-                alt='The Grand Budapest Hotel poster'
+                src={promo?.posterSrc}
+                alt={`${promo?.name} poster`}
                 width={218}
                 height={327}
               />
             </div>
             <div className='film-card__desc'>
-              <h2 className='film-card__title'>The Grand Budapest Hotel</h2>
+              <h2 className='film-card__title'>{promo?.name}</h2>
               <p className='film-card__meta'>
-                <span className='film-card__genre'>Drama</span>
-                <span className='film-card__year'>2014</span>
+                <span className='film-card__genre'>{promo?.genre}</span>
+                <span className='film-card__year'>{promo?.year}</span>
               </p>
               <div className='film-card__buttons'>
-                <button
+                <Link
                   className='btn btn--play film-card__button'
-                  type='button'
+                  to={`/player/${promo?.id}`}
                 >
                   <svg viewBox='0 0 19 19' width={19} height={19}>
                     <use xlinkHref='#play-s' />
                   </svg>
                   <span>Play</span>
-                </button>
-                <button
-                  className='btn btn--list film-card__button'
-                  type='button'
-                >
-                  <svg viewBox='0 0 19 20' width={19} height={20}>
-                    <use xlinkHref='#add' />
-                  </svg>
-                  <span>My list</span>
-                  <span className='film-card__count'>9</span>
-                </button>
+                </Link>
+
+                {authorizationStatus === AuthorizationStatus.Auth && (
+                  <button
+                    className='btn btn--list film-card__button'
+                    type='button'
+                  >
+                    <svg viewBox='0 0 19 20' width={19} height={20}>
+                      <use xlinkHref='#add' />
+                    </svg>
+                    <span>My list</span>
+                    <span className='film-card__count'>9</span>
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -80,9 +83,17 @@ function WelcomeScreen({ films }: Props): JSX.Element {
             ))}
           </ul>
           <div className='catalog__films-list'>
-            {films.map(({ id, imgSrc, name }) => (
-              <SmallFilmCard key={id} id={id} imgSrc={imgSrc} name={name} />
-            ))}
+            {films
+              .filter(({ id }) => id !== PROMO_ID)
+              .map(({ id, imgSrc, name }) => (
+                <SmallFilmCard
+                  key={id}
+                  id={id}
+                  imgSrc={imgSrc}
+                  name={name}
+                  films={films}
+                />
+              ))}
           </div>
           <div className='catalog__more'>
             <button className='catalog__button' type='button'>

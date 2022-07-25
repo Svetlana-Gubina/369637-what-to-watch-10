@@ -1,5 +1,7 @@
 import { getReviews } from './reviews';
 
+export const PROMO_ID = 111;
+
 export const FILMS = [
   {
     id: 1,
@@ -260,5 +262,18 @@ export const FILMS = [
     cast: 'John Doe, Jane Doe, Nada Blevins, Hetty Corona, Yasmeen Aldred, Abdulahi Meyers',
     runtime: '1h 39m',
     reviews: getReviews(),
+  },
+  {
+    id: 111,
+    imgSrc: 'img/bg-the-grand-budapest-hotel.jpg',
+    posterSrc: 'img/the-grand-budapest-hotel-poster.jpg',
+    name: 'The Grand Budapest Hotel',
+    genre: 'Drama',
+    year: '2014',
+    description:
+      'Vestibulum imperdiet faucibus faucibus. Pellentesque sodales lobortis tellus, non porttitor erat posuere eget. Quisque cursus tristique lectus, nec pellentesque purus ultrices quis. Duis facilisis leo augue, eu tincidunt enim cursus tincidunt. Cras ac porttitor erat. Vestibulum orci metus, tincidunt eget aliquet id, condimentum viverra lorem. Etiam vestibulum mollis mauris, nec molestie lorem accumsan ut. Vivamus vestibulum ligula et ullamcorper venenatis.',
+    director: 'John Doe',
+    cast: 'John Doe, Hot Blondie, Jane Doe, Hussain Mahoney,Ibrar Daly,Veronika Weir,Molly Munro',
+    runtime: '1h 39m',
   },
 ];

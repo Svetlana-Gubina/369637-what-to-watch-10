@@ -1,4 +1,5 @@
+import type { FilmItemType } from '../app/app.types';
+
 export type Props = {
-  iconHref: string;
-  state: string;
+  films: FilmItemType[];
 };

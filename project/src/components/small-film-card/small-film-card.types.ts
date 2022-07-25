@@ -1,3 +1,3 @@
-import type { FilmItemType } from '../app/app.types';
+import type { FilmItemType, Props as AppProps } from '../app/app.types';
 
-export type Props = FilmItemType;
+export type Props = FilmItemType & Pick<AppProps, 'films'>;
