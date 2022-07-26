@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import SmallFilmCard from '../small-film-card/small-film-card';
-import Header from '../header/header';
-import Footer from '../footer/footer';
-import { GENRES } from './welcome-screen.constants';
+import SmallFilmCard from '../../components/small-film-card/small-film-card';
+import Header from '../../components/header/header';
+import Footer from '../../components/footer/footer';
+import {
+  GENRES,
+  FILMS_TO_SHOW,
+  INITIAL_COUNT,
+} from './welcome-screen.constants';
 import { PROMO_ID } from '../../mocks/films';
-import { AuthorizationStatus } from '../private-route/private-route.constants';
-import type { Props } from '../app/app.types';
+import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
+import type { Props } from '../../components/app/app.types';
 
 function WelcomeScreen({ films, authorizationStatus }: Props): JSX.Element {
   const [activeGenre, setActiveGenre] = useState(0);
+  const [count, setCount] = useState(INITIAL_COUNT);
   const promo = films.find((f) => f.id === PROMO_ID);
 
   return (
@@ -85,6 +90,7 @@ function WelcomeScreen({ films, authorizationStatus }: Props): JSX.Element {
           <div className='catalog__films-list'>
             {films
               .filter(({ id }) => id !== PROMO_ID)
+              .slice(0, FILMS_TO_SHOW * count)
               .map(({ id, imgSrc, name }) => (
                 <SmallFilmCard
                   key={id}
@@ -96,7 +102,15 @@ function WelcomeScreen({ films, authorizationStatus }: Props): JSX.Element {
               ))}
           </div>
           <div className='catalog__more'>
-            <button className='catalog__button' type='button'>
+            <button
+              onClick={() => setCount((prevState) => (prevState += 1))}
+              className='catalog__button'
+              type='button'
+              disabled={
+                FILMS_TO_SHOW * count >=
+                films.filter(({ id }) => id !== PROMO_ID).length
+              }
+            >
               Show more
             </button>
           </div>

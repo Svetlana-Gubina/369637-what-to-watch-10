@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Logo from '../logo/logo';
-import Footer from '../footer/footer';
-import SmallFilmCard from '../small-film-card/small-film-card';
-import type { Props } from '../app/app.types';
+import Logo from '../../components/logo/logo';
+import Footer from '../../components/footer/footer';
+import SmallFilmCard from '../../components/small-film-card/small-film-card';
+import type { Props } from '../../components/app/app.types';
 import { PROMO_ID } from '../../mocks/films';
 import { MY_LIST_COUNT } from './my-list.constants';
 

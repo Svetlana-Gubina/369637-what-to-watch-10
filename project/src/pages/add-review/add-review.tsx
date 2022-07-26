@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import Logo from '../logo/logo';
+import Logo from '../../components/logo/logo';
 import { AppRoute } from '../../project.constants';
 import useUrlParam from '../../hooks/useUrlParam/useUrlParam';
 import { RATING_ITEMS } from './add-review.constants';
-import type { Props } from '../app/app.types';
+import type { Props } from '../../components/app/app.types';
 
 function AddReview({ films }: Props): JSX.Element {
   const currentFilm = useUrlParam(films);

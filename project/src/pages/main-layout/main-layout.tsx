@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Navigate, NavLink, Outlet, useLocation } from 'react-router-dom';
-import Header from '../header/header';
-import Footer from '../footer/footer';
-import SmallFilmCard from '../small-film-card/small-film-card';
+import Header from '../../components/header/header';
+import Footer from '../../components/footer/footer';
+import SmallFilmCard from '../../components/small-film-card/small-film-card';
 import { AppRoute } from '../../project.constants';
 import type { Props } from './main-layout.types';
 import { getSimilarFilms } from './main-layout.utils';
 import { NAV_LIST } from './main-layout.constants';
-import { AuthorizationStatus } from '../private-route/private-route.constants';
+import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 import useUrlParam from '../../hooks/useUrlParam/useUrlParam';
 
 function MainLayout({ films, authorizationStatus }: Props): JSX.Element {

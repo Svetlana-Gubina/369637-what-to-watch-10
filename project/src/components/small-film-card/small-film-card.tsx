@@ -2,7 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import PlayerComponent from '../player/player-component/player-component';
+import PlayerComponent from '../player-component/player-component';
 import type { Props } from './small-film-card.types';
 
 function SmallFilmCard({ id, imgSrc, name, films }: Props): JSX.Element {

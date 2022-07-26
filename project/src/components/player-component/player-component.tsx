@@ -1,12 +1,14 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useVideoPlayer from '../../../hooks/useVideoPlayer/useVideoPlayer';
-import { PlayerState } from '../player-constants';
-import { MockTrailerSource } from '../player-constants';
+import LoadingOverlay from '../loading-overlay/loading-overlay';
+import useVideoPlayer from '../../hooks/useVideoPlayer/useVideoPlayer';
+import { PlayerState } from '../../pages/player/player-constants';
+import { MockTrailerSource } from '../../pages/player/player-constants';
 import { Props } from './player-component.types';
 
 function PlayerComponent({ id, imgSrc, name, isFullPage }: Props): JSX.Element {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const {
     isPlaying,
@@ -23,8 +25,18 @@ function PlayerComponent({ id, imgSrc, name, isFullPage }: Props): JSX.Element {
   };
 
   return (
-    <>
+    <div
+      style={{
+        position: 'relative',
+        margin: '0',
+        padding: '0',
+        width: '100%',
+        height: '100%',
+      }}
+    >
+      {isLoading && <LoadingOverlay />}
       <video
+        onLoadedData={() => setIsLoading(false)}
         onCanPlay={togglePlay}
         id='video-preview'
         className='player__video'
@@ -134,7 +146,7 @@ function PlayerComponent({ id, imgSrc, name, isFullPage }: Props): JSX.Element {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

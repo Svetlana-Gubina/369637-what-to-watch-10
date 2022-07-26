@@ -1,8 +1,5 @@
-/* eslint-disable indent */
-/* eslint-disable no-console */
-/* eslint-disable prefer-template */
 import React from 'react';
-import PlayerComponent from './player-component/player-component';
+import PlayerComponent from '../../components/player-component/player-component';
 import useUrlParam from '../../hooks/useUrlParam/useUrlParam';
 import type { Props } from './player.types';
 
