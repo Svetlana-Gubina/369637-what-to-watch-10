@@ -1103,6 +1103,8 @@ main {
     -webkit-transform: scale(1.1);
             transform: scale(1.1); }
 
+         
+
 .rating__stars {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1110,7 +1112,7 @@ main {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  flex-direction: row-reverse;
+  flex-direction: row;
   margin-bottom: 15px; }
 
 .rating__input {

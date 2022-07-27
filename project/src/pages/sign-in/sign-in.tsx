@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Props } from './sign-in.types';
-import Logo from '../logo/logo';
-import Footer from '../footer/footer';
+import Logo from '../../components/logo/logo';
+import Footer from '../../components/footer/footer';
 
 function SignIn({ isSignInFailed, isError }: Props): JSX.Element {
   return (

@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Logo from '../logo/logo';
-import Footer from '../footer/footer';
-import SmallFilmCard from '../small-film-card/small-film-card';
-import type { Props } from '../app/app.types';
+import Logo from '../../components/logo/logo';
+import Footer from '../../components/footer/footer';
+import SmallFilmCard from '../../components/small-film-card/small-film-card';
+import type { Props } from '../../components/app/app.types';
+import { PROMO_ID } from '../../mocks/films';
 import { MY_LIST_COUNT } from './my-list.constants';
 
 function MyList({ films }: Props): JSX.Element {
@@ -35,9 +36,18 @@ function MyList({ films }: Props): JSX.Element {
       <section className='catalog'>
         <h2 className='catalog__title visually-hidden'>Catalog</h2>
         <div className='catalog__films-list'>
-          {films.slice(MY_LIST_COUNT).map(({ id, imgSrc, name }) => (
-            <SmallFilmCard key={id} id={id} imgSrc={imgSrc} name={name} />
-          ))}
+          {films
+            .filter(({ id }) => id !== PROMO_ID)
+            .slice(MY_LIST_COUNT)
+            .map(({ id, imgSrc, name }) => (
+              <SmallFilmCard
+                key={id}
+                id={id}
+                imgSrc={imgSrc}
+                name={name}
+                films={films}
+              />
+            ))}
         </div>
       </section>
       <Footer />

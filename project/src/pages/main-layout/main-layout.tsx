@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Navigate, NavLink, Outlet, useLocation } from 'react-router-dom';
-import Header from '../header/header';
-import Footer from '../footer/footer';
-import SmallFilmCard from '../small-film-card/small-film-card';
+import Header from '../../components/header/header';
+import Footer from '../../components/footer/footer';
+import SmallFilmCard from '../../components/small-film-card/small-film-card';
 import { AppRoute } from '../../project.constants';
 import type { Props } from './main-layout.types';
 import { getSimilarFilms } from './main-layout.utils';
 import { NAV_LIST } from './main-layout.constants';
+import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 import useUrlParam from '../../hooks/useUrlParam/useUrlParam';
 
-function MainLayout({ films }: Props): JSX.Element {
+function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
   const location = useLocation();
   const currentNavItem = location.pathname.slice(
     location.pathname.lastIndexOf('/') + 1
@@ -39,7 +40,7 @@ function MainLayout({ films }: Props): JSX.Element {
             <img src={currentFilm?.imgSrc} alt={currentFilm?.name} />
           </div>
           <h1 className='visually-hidden'>WTW</h1>
-          <Header />
+          <Header authorizationStatus={authorizationStatus} />
           <div className='film-card__wrap'>
             <div className='film-card__desc'>
               <h2 className='film-card__title'>{currentFilm?.name}</h2>
@@ -48,31 +49,36 @@ function MainLayout({ films }: Props): JSX.Element {
                 <span className='film-card__year'>{currentFilm?.year}</span>
               </p>
               <div className='film-card__buttons'>
-                <button
+                <Link
                   className='btn btn--play film-card__button'
-                  type='button'
+                  to={`/player/${currentFilm.id}`}
                 >
                   <svg viewBox='0 0 19 19' width={19} height={19}>
                     <use xlinkHref='#play-s' />
                   </svg>
                   <span>Play</span>
-                </button>
-                <button
-                  className='btn btn--list film-card__button'
-                  type='button'
-                >
-                  <svg viewBox='0 0 19 20' width={19} height={20}>
-                    <use xlinkHref='#add' />
-                  </svg>
-                  <span>My list</span>
-                  <span className='film-card__count'>9</span>
-                </button>
-                <Link
-                  to={`/films/${currentFilm?.id}/review`}
-                  className='btn film-card__button'
-                >
-                  Add review
                 </Link>
+
+                {authorizationStatus === AuthorizationStatus.Auth && (
+                  <>
+                    <Link
+                      className='btn btn--list film-card__button'
+                      to={AppRoute.MyList}
+                    >
+                      <svg viewBox='0 0 19 20' width={19} height={20}>
+                        <use xlinkHref='#add' />
+                      </svg>
+                      <span>My list</span>
+                      <span className='film-card__count'>9</span>
+                    </Link>
+                    <Link
+                      to={`/films/${currentFilm?.id}/review`}
+                      className='btn film-card__button'
+                    >
+                      Add review
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -123,7 +129,13 @@ function MainLayout({ films }: Props): JSX.Element {
           <h2 className='catalog__title'>More like this</h2>
           <div className='catalog__films-list'>
             {filmsLikeThis.map(({ id, imgSrc, name }) => (
-              <SmallFilmCard key={id} id={id} imgSrc={imgSrc} name={name} />
+              <SmallFilmCard
+                key={id}
+                id={id}
+                imgSrc={imgSrc}
+                name={name}
+                films={films}
+              />
             ))}
           </div>
         </section>

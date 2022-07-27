@@ -4,7 +4,7 @@ import { useOutletContext } from 'react-router-dom';
 
 function Details(): JSX.Element {
   const { year, genre, director, cast, runtime } =
-    useOutletContext() as FilmItemType;
+    useOutletContext<FilmItemType>();
 
   return (
     <div className='film-card__text film-card__row'>

@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import type { Review } from '../components/app/app.types';
-import { MAX_RATING } from '../components/add-review/add-review.constants';
+import { MAX_RATING } from '../pages/add-review/add-review.constants';
 
 const randomNames = [
   'Joseph Thomas',

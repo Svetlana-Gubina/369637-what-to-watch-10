@@ -1,5 +1,6 @@
 import React from 'react';
 import SmallFilmCard from '../small-film-card/small-film-card';
+import { PROMO_ID } from '../../mocks/films';
 import type { Props } from './catalog.types';
 
 function Catalog({ films }: Props): JSX.Element {
@@ -7,9 +8,17 @@ function Catalog({ films }: Props): JSX.Element {
     <section className='catalog'>
       <h2 className='catalog__title visually-hidden'>Catalog</h2>
       <div className='catalog__films-list'>
-        {films.map(({ id, imgSrc, name }) => (
-          <SmallFilmCard key={id} id={id} imgSrc={imgSrc} name={name} />
-        ))}
+        {films
+          .filter(({ id }) => id !== PROMO_ID)
+          .map(({ id, imgSrc, name }) => (
+            <SmallFilmCard
+              key={id}
+              id={id}
+              imgSrc={imgSrc}
+              name={name}
+              films={films}
+            />
+          ))}
       </div>
     </section>
   );

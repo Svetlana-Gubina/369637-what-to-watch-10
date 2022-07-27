@@ -1,3 +1,5 @@
+import { AuthorizationStatus } from '../private-route/private-route.constants';
+
 export type Review = {
   id: number;
   author: string;
@@ -9,6 +11,7 @@ export type Review = {
 export type FilmItemType = {
   id: number;
   imgSrc: string;
+  posterSrc?: string;
   name: string;
   genre?: string;
   year?: string;
@@ -21,4 +24,5 @@ export type FilmItemType = {
 
 export type Props = {
   films: FilmItemType[];
+  authorizationStatus?: AuthorizationStatus;
 };

@@ -5,7 +5,7 @@ import type { FilmItemType } from '../app/app.types';
 import { useOutletContext } from 'react-router-dom';
 
 function Reviews(): JSX.Element {
-  const { reviews } = useOutletContext() as FilmItemType;
+  const { reviews } = useOutletContext<FilmItemType>();
 
   return (
     <div className='film-card__reviews film-card__row'>
