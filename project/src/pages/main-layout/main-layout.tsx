@@ -129,13 +129,7 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
           <h2 className='catalog__title'>More like this</h2>
           <div className='catalog__films-list'>
             {filmsLikeThis.map(({ id, imgSrc, name }) => (
-              <SmallFilmCard
-                key={id}
-                id={id}
-                imgSrc={imgSrc}
-                name={name}
-                films={films}
-              />
+              <SmallFilmCard key={id} id={id} imgSrc={imgSrc} name={name} />
             ))}
           </div>
         </section>

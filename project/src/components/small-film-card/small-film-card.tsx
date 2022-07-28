@@ -1,12 +1,10 @@
-/* eslint-disable no-console */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import PlayerComponent from '../player-component/player-component';
+import PlayerComponent from '../../components/player-component/player-component';
+import { TIMEOUT } from './small-film-card.constants';
 import type { Props } from './small-film-card.types';
 
-function SmallFilmCard({ id, imgSrc, name, films }: Props): JSX.Element {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+function SmallFilmCard({ id, imgSrc, name }: Props): JSX.Element {
   const [isVideoActive, setIsVideoActive] = useState(false);
   const [isCursonOnCard, setIsCursonOnCard] = useState(false);
 
@@ -17,7 +15,7 @@ function SmallFilmCard({ id, imgSrc, name, films }: Props): JSX.Element {
       } else {
         setIsVideoActive(false);
       }
-    }, 1000);
+    }, TIMEOUT);
 
     return () => clearTimeout(timer);
   }, [isCursonOnCard]);

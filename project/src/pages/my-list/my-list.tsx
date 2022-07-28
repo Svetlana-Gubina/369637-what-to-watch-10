@@ -40,13 +40,7 @@ function MyList({ films }: Props): JSX.Element {
             .filter(({ id }) => id !== PROMO_ID)
             .slice(MY_LIST_COUNT)
             .map(({ id, imgSrc, name }) => (
-              <SmallFilmCard
-                key={id}
-                id={id}
-                imgSrc={imgSrc}
-                name={name}
-                films={films}
-              />
+              <SmallFilmCard key={id} id={id} imgSrc={imgSrc} name={name} />
             ))}
         </div>
       </section>

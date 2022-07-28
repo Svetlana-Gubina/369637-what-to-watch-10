@@ -11,13 +11,7 @@ function Catalog({ films }: Props): JSX.Element {
         {films
           .filter(({ id }) => id !== PROMO_ID)
           .map(({ id, imgSrc, name }) => (
-            <SmallFilmCard
-              key={id}
-              id={id}
-              imgSrc={imgSrc}
-              name={name}
-              films={films}
-            />
+            <SmallFilmCard key={id} id={id} imgSrc={imgSrc} name={name} />
           ))}
       </div>
     </section>

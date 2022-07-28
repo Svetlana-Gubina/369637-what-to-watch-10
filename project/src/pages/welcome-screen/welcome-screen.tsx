@@ -92,13 +92,7 @@ function WelcomeScreen({ films, authorizationStatus }: Props): JSX.Element {
               .filter(({ id }) => id !== PROMO_ID)
               .slice(0, FILMS_TO_SHOW * count)
               .map(({ id, imgSrc, name }) => (
-                <SmallFilmCard
-                  key={id}
-                  id={id}
-                  imgSrc={imgSrc}
-                  name={name}
-                  films={films}
-                />
+                <SmallFilmCard key={id} id={id} imgSrc={imgSrc} name={name} />
               ))}
           </div>
           <div className='catalog__more'>

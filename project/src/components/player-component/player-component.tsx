@@ -121,15 +121,9 @@ function PlayerComponent({ id, imgSrc, name, isFullPage }: Props): JSX.Element {
               alignItems: 'center',
             }}
           >
-            {isVideoMuted ? (
-              <svg viewBox='3 3 27 27' width={27} height={27}>
-                <use xlinkHref='#audio-off' />
-              </svg>
-            ) : (
-              <svg viewBox='0 3 27 27' width={27} height={27}>
-                <use xlinkHref='#audio-on' />
-              </svg>
-            )}
+            <svg viewBox='3 3 27 27' width={27} height={27}>
+              <use xlinkHref={`#audio-${isVideoMuted ? 'off' : 'on'}`} />
+            </svg>
           </button>
 
           {!isFullPage && (
