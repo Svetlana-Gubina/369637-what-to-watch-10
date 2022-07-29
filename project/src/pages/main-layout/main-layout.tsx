@@ -16,10 +16,12 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
     location.pathname.lastIndexOf('/') + 1
   );
   const reg = new RegExp(currentNavItem, 'i');
+  const subPageCurrentIndex = NAV_LIST.findIndex((n) => n.match(reg));
   const currentFilm = useUrlParam(films);
   const [activeNavItem, setActiveNavItem] = useState(
-    NAV_LIST.findIndex((n) => n.match(reg)) || 0
+    subPageCurrentIndex > 0 ? subPageCurrentIndex : 0
   );
+
   const [filmsLikeThis, setFilmsLikeThis] = useState(
     getSimilarFilms(films, currentFilm)
   );

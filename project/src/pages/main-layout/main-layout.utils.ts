@@ -12,5 +12,6 @@ export const getSimilarFilms = (
   }
   return shuffleFilms(films)
     .filter(({ id }) => id !== currentFilm.id && id !== PROMO_ID)
+    .filter(({ genre }) => genre === currentFilm.genre)
     .slice(0, LIMIT);
 };
