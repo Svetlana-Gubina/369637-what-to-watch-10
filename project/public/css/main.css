@@ -584,6 +584,8 @@ main {
   cursor: pointer; }
   .catalog__button:hover {
     border-color: rgba(217, 202, 116, 0.5); }
+  .catalog__button:disabled {
+      display: none; }
 
 .copyright {
   text-align: center;
@@ -592,6 +594,13 @@ main {
   color: #54503E; }
   .copyright p {
     margin: 0; }
+
+.page-footer .logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
 
 .logo__link {
   border: 1px solid rgba(223, 207, 119, 0.36);

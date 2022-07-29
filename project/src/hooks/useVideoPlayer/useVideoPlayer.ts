@@ -48,11 +48,7 @@ function useVideoPlayer(videoElement: React.RefObject<HTMLVideoElement>) {
 
   useEffect(() => {
     if (videoElement.current) {
-      if (isVideoMuted) {
-        videoElement.current.muted = true;
-      } else {
-        videoElement.current.muted = false;
-      }
+      videoElement.current.muted = isVideoMuted;
     }
   }, [isVideoMuted, videoElement]);
 
