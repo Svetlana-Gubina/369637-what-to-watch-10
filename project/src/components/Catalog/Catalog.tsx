@@ -4,11 +4,10 @@ import { PROMO_ID } from '../../mocks/films';
 import { GENRES, FILMS_TO_SHOW, INITIAL_COUNT } from './catalog.constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { chooseGenreAction } from '../../store/action';
-import type { Props } from './catalog.types';
 
-function Catalog({ films }: Props): JSX.Element {
+function Catalog(): JSX.Element {
   const [activeGenre, setActiveGenre] = useState(0);
-  const [count, setCount] = useState(INITIAL_COUNT);
+  const [count, setCount] = useState<number>(INITIAL_COUNT);
   const filmsByGenre = useAppSelector((state) => state.filmsByGenre);
   const dispatch = useAppDispatch();
 

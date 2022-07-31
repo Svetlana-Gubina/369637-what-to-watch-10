@@ -63,7 +63,7 @@ function WelcomeScreen({ films, authorizationStatus }: Props): JSX.Element {
         </div>
       </section>
       <div className='page-content'>
-        <Catalog films={films} />
+        <Catalog />
         <Footer />
       </div>
     </>
