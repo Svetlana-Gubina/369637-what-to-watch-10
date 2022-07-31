@@ -7,7 +7,7 @@ export const FILMS = [
     id: 1,
     imgSrc: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
     name: 'Fantastic Beasts: The Crimes of Grindelwald',
-    genre: 'Drama',
+    genre: 'Dramas',
     year: '2014',
     description:
       'Vestibulum imperdiet faucibus faucibus. Pellentesque sodales lobortis tellus, non porttitor erat posuere eget. Quisque cursus tristique lectus, nec pellentesque purus ultrices quis. Duis facilisis leo augue, eu tincidunt enim cursus tincidunt. Cras ac porttitor erat. Vestibulum orci metus, tincidunt eget aliquet id, condimentum viverra lorem. Etiam vestibulum mollis mauris, nec molestie lorem accumsan ut. Vivamus vestibulum ligula et ullamcorper venenatis.',
@@ -20,7 +20,7 @@ export const FILMS = [
     id: 2,
     imgSrc: 'img/bohemian-rhapsody.jpg',
     name: 'Bohemian Rhapsody',
-    genre: 'Drama',
+    genre: 'Dramas',
     year: '2014',
     description:
       'Nulla at augue sed libero pellentesque auctor. Curabitur rhoncus euismod ipsum nec eleifend. Cras nec volutpat ante, nec eleifend purus. Quisque id laoreet felis. Nulla facilisi. Cras eu augue accumsan elit gravida vehicula. Nam accumsan magna sed lectus faucibus faucibus. Cras vel arcu at nunc vestibulum posuere. Donec nec aliquet ipsum. Nulla maximus enim eros, sed suscipit lectus lobortis eu. Vivamus vitae purus viverra, tempus sem at, feugiat risus.',
@@ -33,7 +33,7 @@ export const FILMS = [
     id: 3,
     imgSrc: 'img/macbeth.jpg',
     name: 'Macbeth',
-    genre: 'Drama',
+    genre: 'Dramas',
     year: '2014',
     director: 'Jane Doe',
     description:
@@ -46,7 +46,7 @@ export const FILMS = [
     id: 4,
     imgSrc: 'img/aviator.jpg',
     name: 'Aviator',
-    genre: 'Drama',
+    genre: 'Dramas',
     year: '2014',
     director: 'John Doe',
     description:
@@ -59,7 +59,7 @@ export const FILMS = [
     id: 5,
     imgSrc: 'img/we-need-to-talk-about-kevin.jpg',
     name: 'We need to talk about Kevin',
-    genre: 'Drama',
+    genre: 'Comedies',
     year: '2014',
     director: 'Jane Doe',
     description:
@@ -72,7 +72,7 @@ export const FILMS = [
     id: 6,
     imgSrc: 'img/what-we-do-in-the-shadows.jpg',
     name: 'What We Do in the Shadows',
-    genre: 'Drama',
+    genre: 'Comedies',
     year: '2014',
     director: 'The Big Bob',
     description:
@@ -85,7 +85,7 @@ export const FILMS = [
     id: 7,
     imgSrc: 'img/revenant.jpg',
     name: 'Revenant',
-    genre: 'Drama',
+    genre: 'Thrillers',
     year: '2014',
     director: 'Jane Doe',
     description:
@@ -98,7 +98,7 @@ export const FILMS = [
     id: 8,
     imgSrc: 'img/johnny-english.jpg',
     name: 'Johnny English',
-    genre: 'Drama',
+    genre: 'Dramas',
     year: '2014',
     director: 'John Doe',
     description:
@@ -111,7 +111,7 @@ export const FILMS = [
     id: 9,
     imgSrc: 'img/shutter-island.jpg',
     name: 'Shutter Island',
-    genre: 'Drama',
+    genre: 'Thrillers',
     year: '2014',
     director: 'The Big Bob',
     description:
@@ -124,7 +124,7 @@ export const FILMS = [
     id: 10,
     imgSrc: 'img/pulp-fiction.jpg',
     name: 'Pulp Fiction',
-    genre: 'Drama',
+    genre: 'Crime',
     year: '2014',
     director: 'John Doe',
     description:
@@ -137,7 +137,7 @@ export const FILMS = [
     id: 11,
     imgSrc: 'img/no-country-for-old-men.jpg',
     name: 'No Country for Old Men',
-    genre: 'Drama',
+    genre: 'Crime',
     year: '2014',
     director: 'The Big Bob',
     description:
@@ -150,7 +150,7 @@ export const FILMS = [
     id: 12,
     imgSrc: 'img/snatch.jpg',
     name: 'Snatch',
-    genre: 'Drama',
+    genre: 'Crime',
     year: '2014',
     director: 'The Big Bob',
     description:
@@ -163,7 +163,7 @@ export const FILMS = [
     id: 13,
     imgSrc: 'img/moonrise-kingdom.jpg',
     name: 'Moonrise Kingdom',
-    genre: 'Drama',
+    genre: 'Kids and Family',
     year: '2014',
     director: 'Jane Doe',
     description:
@@ -176,7 +176,7 @@ export const FILMS = [
     id: 14,
     imgSrc: 'img/seven-years-in-tibet.jpg',
     name: 'Seven Years in Tibet',
-    genre: 'Drama',
+    genre: 'Dramas',
     year: '2014',
     director: 'John Doe',
     description:
@@ -189,7 +189,7 @@ export const FILMS = [
     id: 15,
     imgSrc: 'img/midnight-special.jpg',
     name: 'Midnight Special',
-    genre: 'Drama',
+    genre: 'Romance',
     year: '2014',
     director: 'The Big Bob',
     description:
@@ -202,7 +202,7 @@ export const FILMS = [
     id: 16,
     imgSrc: 'img/war-of-the-worlds.jpg',
     name: 'War of the Worlds',
-    genre: 'Drama',
+    genre: 'Sci-Fi',
     year: '2014',
     director: 'John Doe',
     description:
@@ -215,7 +215,7 @@ export const FILMS = [
     id: 17,
     imgSrc: 'img/dardjeeling-limited.jpg',
     name: 'Dardjeeling Limited',
-    genre: 'Drama',
+    genre: 'Comedies',
     year: '2014',
     director: 'Jane Doe',
     description:
@@ -228,7 +228,7 @@ export const FILMS = [
     id: 18,
     imgSrc: 'img/orlando.jpg',
     name: 'Orlando',
-    genre: 'Drama',
+    genre: 'Romance',
     year: '2014',
     director: 'The Big Bob',
     description:
@@ -241,7 +241,7 @@ export const FILMS = [
     id: 19,
     imgSrc: 'img/mindhunter.jpg',
     name: 'Mindhunter',
-    genre: 'Drama',
+    genre: 'Dramas',
     year: '2014',
     director: 'The Big Bob',
     description:
@@ -254,7 +254,7 @@ export const FILMS = [
     id: 20,
     imgSrc: 'img/midnight-special.jpg',
     name: 'Midnight Special',
-    genre: 'Drama',
+    genre: 'Romance',
     year: '2014',
     director: 'Jane Doe',
     description:
@@ -268,7 +268,7 @@ export const FILMS = [
     imgSrc: 'img/bg-the-grand-budapest-hotel.jpg',
     posterSrc: 'img/the-grand-budapest-hotel-poster.jpg',
     name: 'The Grand Budapest Hotel',
-    genre: 'Drama',
+    genre: 'Dramas',
     year: '2014',
     description:
       'Vestibulum imperdiet faucibus faucibus. Pellentesque sodales lobortis tellus, non porttitor erat posuere eget. Quisque cursus tristique lectus, nec pellentesque purus ultrices quis. Duis facilisis leo augue, eu tincidunt enim cursus tincidunt. Cras ac porttitor erat. Vestibulum orci metus, tincidunt eget aliquet id, condimentum viverra lorem. Etiam vestibulum mollis mauris, nec molestie lorem accumsan ut. Vivamus vestibulum ligula et ullamcorper venenatis.',
