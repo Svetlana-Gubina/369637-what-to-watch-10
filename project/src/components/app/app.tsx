@@ -22,7 +22,7 @@ function App({ films }: Props): JSX.Element | null {
 
   useEffect(() => {
     dispatch(setAllFimlsAction(films));
-  });
+  }, [films, dispatch]);
 
   const filmData = useAppSelector((state) => state.films);
 
