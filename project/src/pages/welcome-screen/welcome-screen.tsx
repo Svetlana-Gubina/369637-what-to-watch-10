@@ -1,20 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import SmallFilmCard from '../../components/small-film-card/small-film-card';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
-import {
-  GENRES,
-  FILMS_TO_SHOW,
-  INITIAL_COUNT,
-} from './welcome-screen.constants';
 import { PROMO_ID } from '../../mocks/films';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
+import Catalog from '../../components/catalog/catalog';
 import type { Props } from '../../components/app/app.types';
 
 function WelcomeScreen({ films, authorizationStatus }: Props): JSX.Element {
-  const [activeGenre, setActiveGenre] = useState(0);
-  const [count, setCount] = useState(INITIAL_COUNT);
   const promo = films.find((f) => f.id === PROMO_ID);
 
   return (
@@ -70,45 +63,7 @@ function WelcomeScreen({ films, authorizationStatus }: Props): JSX.Element {
         </div>
       </section>
       <div className='page-content'>
-        <section className='catalog'>
-          <h2 className='catalog__title visually-hidden'>Catalog</h2>
-          <ul className='catalog__genres-list'>
-            {GENRES.map((genre, i) => (
-              <li
-                key={genre}
-                onClick={() => setActiveGenre(i)}
-                className={`catalog__genres-item ${
-                  activeGenre === i ? 'catalog__genres-item--active' : ''
-                }`}
-              >
-                <Link to='/' className='catalog__genres-link'>
-                  {genre}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <div className='catalog__films-list'>
-            {films
-              .filter(({ id }) => id !== PROMO_ID)
-              .slice(0, FILMS_TO_SHOW * count)
-              .map(({ id, imgSrc, name }) => (
-                <SmallFilmCard key={id} id={id} imgSrc={imgSrc} name={name} />
-              ))}
-          </div>
-          <div className='catalog__more'>
-            <button
-              onClick={() => setCount((prevState) => (prevState += 1))}
-              className='catalog__button'
-              type='button'
-              disabled={
-                FILMS_TO_SHOW * count >=
-                films.filter(({ id }) => id !== PROMO_ID).length
-              }
-            >
-              Show more
-            </button>
-          </div>
-        </section>
+        <Catalog />
         <Footer />
       </div>
     </>
