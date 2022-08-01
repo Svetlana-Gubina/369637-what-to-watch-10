@@ -118,6 +118,9 @@ function AddReview({ films }: Props): JSX.Element {
               name='review-text'
               id='review-text'
               placeholder='Review text'
+              maxLength={50}
+              minLength={400}
+              required
               defaultValue={''}
               onChange={(evt) => handleTextChange(evt)}
             />
