@@ -1,12 +1,12 @@
 import React from 'react';
-import type { FilmItemType } from '../app/app.types';
+import type { FilmItemType, Review } from '../app/app.types';
 import { RatingDecription } from '../reviews/reviews.constants';
 import { CAST_LIMIT } from './overview.constants';
 import { useOutletContext } from 'react-router-dom';
 
 function Overview(): JSX.Element {
-  const { description, director, cast, reviews } =
-    useOutletContext<FilmItemType>();
+  const reviews: Review[] = [];
+  const { description, director, starring } = useOutletContext<FilmItemType>();
   const ratingSum = reviews?.reduce(
     (previousValue, currentValue) => previousValue + currentValue.rate,
     0
@@ -36,7 +36,7 @@ function Overview(): JSX.Element {
         </p>
         <p className='film-card__starring'>
           <strong>
-            {`Starring: ${cast?.split(',').slice(0, CAST_LIMIT)} and
+            {`Starring: ${starring.slice(0, CAST_LIMIT)} and
             other`}
           </strong>
         </p>

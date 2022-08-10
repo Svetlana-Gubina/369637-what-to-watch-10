@@ -39,7 +39,7 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
       <section className='film-card film-card--full'>
         <div className='film-card__hero'>
           <div className='film-card__bg'>
-            <img src={currentFilm?.imgSrc} alt={currentFilm?.name} />
+            <img src={currentFilm?.backgroundImage} alt={currentFilm?.name} />
           </div>
           <h1 className='visually-hidden'>WTW</h1>
           <Header authorizationStatus={authorizationStatus} />
@@ -48,7 +48,7 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
               <h2 className='film-card__title'>{currentFilm?.name}</h2>
               <p className='film-card__meta'>
                 <span className='film-card__genre'>{currentFilm?.genre}</span>
-                <span className='film-card__year'>{currentFilm?.year}</span>
+                <span className='film-card__year'>{currentFilm?.released}</span>
               </p>
               <div className='film-card__buttons'>
                 <Link
@@ -90,7 +90,7 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
           <div className='film-card__info'>
             <div className='film-card__poster film-card__poster--big'>
               <img
-                src={currentFilm?.imgSrc}
+                src={currentFilm?.posterImage}
                 alt={currentFilm?.name}
                 width={218}
                 height={327}
@@ -130,8 +130,13 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
         <section className='catalog catalog--like-this'>
           <h2 className='catalog__title'>More like this</h2>
           <div className='catalog__films-list'>
-            {filmsLikeThis.map(({ id, imgSrc, name }) => (
-              <SmallFilmCard key={id} id={id} imgSrc={imgSrc} name={name} />
+            {filmsLikeThis.map(({ id, posterImage, name }) => (
+              <SmallFilmCard
+                key={id}
+                id={id}
+                imgSrc={posterImage}
+                name={name}
+              />
             ))}
           </div>
         </section>

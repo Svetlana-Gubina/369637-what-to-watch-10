@@ -1,11 +1,12 @@
 import React from 'react';
 import ReviewItem from '../review/review';
 import { MAX_REVIEWS_TO_SHOW } from './reviews.constants';
-import type { FilmItemType } from '../app/app.types';
-import { useOutletContext } from 'react-router-dom';
+import type { Review } from '../app/app.types';
+// import { useOutletContext } from 'react-router-dom';
 
 function Reviews(): JSX.Element {
-  const { reviews } = useOutletContext<FilmItemType>();
+  // const { reviews } = useOutletContext<FilmItemType>();
+  const reviews: Review[] = [];
 
   return (
     <div className='film-card__reviews film-card__row'>

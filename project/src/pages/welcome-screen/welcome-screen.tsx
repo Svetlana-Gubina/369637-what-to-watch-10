@@ -2,19 +2,18 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
-import { PROMO_ID } from '../../mocks/films';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 import Catalog from '../../components/catalog/catalog';
 import type { Props } from '../../components/app/app.types';
 
 function WelcomeScreen({ films, authorizationStatus }: Props): JSX.Element {
-  const promo = films.find((f) => f.id === PROMO_ID);
+  const promo = films[0];
 
   return (
     <>
       <section className='film-card'>
         <div className='film-card__bg'>
-          <img src={promo?.imgSrc} alt={promo?.name} />
+          <img src={promo?.backgroundImage} alt={promo?.name} />
         </div>
         <h1 className='visually-hidden'>WTW</h1>
         <Header authorizationStatus={authorizationStatus} />
@@ -22,7 +21,7 @@ function WelcomeScreen({ films, authorizationStatus }: Props): JSX.Element {
           <div className='film-card__info'>
             <div className='film-card__poster'>
               <img
-                src={promo?.posterSrc}
+                src={promo?.posterImage}
                 alt={`${promo?.name} poster`}
                 width={218}
                 height={327}
@@ -32,7 +31,7 @@ function WelcomeScreen({ films, authorizationStatus }: Props): JSX.Element {
               <h2 className='film-card__title'>{promo?.name}</h2>
               <p className='film-card__meta'>
                 <span className='film-card__genre'>{promo?.genre}</span>
-                <span className='film-card__year'>{promo?.year}</span>
+                <span className='film-card__year'>{promo?.released}</span>
               </p>
               <div className='film-card__buttons'>
                 <Link

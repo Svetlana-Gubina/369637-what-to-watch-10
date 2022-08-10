@@ -1,0 +1,177 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { ApiRoute } from '../api/constants';
+import type { AppDispatch, RootState } from './store.types';
+import type {
+  FilmItemType,
+  CommentType,
+  UserDataType,
+} from '../components/app/app.types';
+import { saveToken, dropToken } from '../services/token';
+import { AxiosInstance } from 'axios';
+
+// Films
+export const fetchAllFilms = createAsyncThunk<
+  FilmItemType[],
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+    extra: AxiosInstance;
+  }
+>('films/fetchAllFilms', async (_arg, { dispatch, extra: api }) => {
+  const { data } = await api.get<FilmItemType[]>(ApiRoute.Films);
+  return data;
+});
+
+export const fetchFilmDataById = createAsyncThunk<
+  FilmItemType,
+  number,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+    extra: AxiosInstance;
+  }
+>('films/fetchFilmDataById', async (filmId, { dispatch, extra: api }) => {
+  const { data } = await api.get<FilmItemType>(`${ApiRoute.Films}/${filmId}`);
+  return data;
+});
+
+export const fetchSimilarFilms = createAsyncThunk<
+  FilmItemType[],
+  number,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+    extra: AxiosInstance;
+  }
+>('films/fetchSimilarFilms', async (filmId, { dispatch, extra: api }) => {
+  const { data } = await api.get<FilmItemType[]>(
+    `${ApiRoute.Films}/${filmId}/similar`
+  );
+  return data;
+});
+
+export const fetchPromo = createAsyncThunk<
+  FilmItemType,
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+    extra: AxiosInstance;
+  }
+>('films/fetchPromo', async (_arg, { dispatch, extra: api }) => {
+  const { data } = await api.get<FilmItemType>(ApiRoute.Promo);
+  return data;
+});
+
+// Comments
+export const fetchCommentsByFilmId = createAsyncThunk<
+  CommentType[],
+  number,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+    extra: AxiosInstance;
+  }
+>('films/fetchCommentsByFilmId', async (filmId, { dispatch, extra: api }) => {
+  const { data } = await api.get<CommentType[]>(
+    `${ApiRoute.Comments}/${filmId}`
+  );
+  return data;
+});
+
+type AddCommentAttributes = {
+  filmId: number;
+  data: { comment: string; rating: number };
+};
+
+export const AddComment = createAsyncThunk<
+  void,
+  AddCommentAttributes,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+    extra: AxiosInstance;
+  }
+>('films/AddComment', async (attr, { dispatch, extra: api }) => {
+  await api.post(`${ApiRoute.Comments}/${attr.filmId}`, {
+    body: JSON.stringify(attr.data),
+  });
+});
+
+// Favorite
+export const fetchFavoriteFilms = createAsyncThunk<
+  FilmItemType[],
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+    extra: AxiosInstance;
+  }
+>('films/fetchFavoriteFilms', async (_arg, { dispatch, extra: api }) => {
+  const { data } = await api.get<FilmItemType[]>(ApiRoute.Favorite);
+  return data;
+});
+
+type UpdateStatusAttributes = {
+  filmId: number;
+  status: boolean;
+};
+
+export const updateFilmIsFavoriteState = createAsyncThunk<
+  void,
+  UpdateStatusAttributes,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+    extra: AxiosInstance;
+  }
+>('films/updateFilmIsFavoriteState', async (attr, { dispatch, extra: api }) => {
+  await api.post(`${ApiRoute.Favorite}/${attr.filmId}/${attr.status}`);
+});
+
+// User
+export const checkAuthAction = createAsyncThunk<
+  void,
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+    extra: AxiosInstance;
+  }
+>('user/checkAuth', async (_arg, { dispatch, extra: api }) => {
+  await api.get(ApiRoute.Login);
+});
+
+type LoginAttributes = {
+  email: string;
+  password: string;
+};
+
+export const loginAction = createAsyncThunk<
+  void,
+  LoginAttributes,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+    extra: AxiosInstance;
+  }
+>('user/login', async ({ email, password }, { dispatch, extra: api }) => {
+  const {
+    data: { token },
+  } = await api.post<UserDataType>(ApiRoute.Login, { email, password });
+  saveToken(token);
+});
+
+export const logoutAction = createAsyncThunk<
+  void,
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+    extra: AxiosInstance;
+  }
+>('user/logout', async (_arg, { dispatch, extra: api }) => {
+  await api.delete(ApiRoute.Logout);
+  dropToken();
+});

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import WelcomeScreen from '../../pages/welcome-screen/welcome-screen';
 import MainLayout from '../../pages/main-layout/main-layout';
@@ -13,18 +13,11 @@ import AddReview from '../../pages/add-review/add-review';
 import PageNotFound from '../../pages/page-not-found/page-not-found';
 import { AuthorizationStatus } from '../private-route/private-route.constants';
 import { AppRoute } from '../../project.constants';
-import { setAllFimlsAction } from '../../store/action';
-import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
-import type { Props } from './app.types';
+import { useAppSelector } from '../../hooks/storeHooks';
+// import type { Props } from './app.types';
 
-function App({ films }: Props): JSX.Element | null {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(setAllFimlsAction(films));
-  }, [films, dispatch]);
-
-  const filmData = useAppSelector((state) => state.films);
+function App(): JSX.Element | null {
+  const filmData = useAppSelector((state) => state.dataLoaded);
 
   if (!filmData) {
     return null;
