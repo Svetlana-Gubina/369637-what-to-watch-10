@@ -2,6 +2,7 @@ import React from 'react';
 import type { FilmItemType, Review } from '../app/app.types';
 import { RatingDecription } from '../reviews/reviews.constants';
 import { CAST_LIMIT } from './overview.constants';
+import { getRatingDescription } from './overview.utils';
 import { useOutletContext } from 'react-router-dom';
 
 function Overview(): JSX.Element {
@@ -21,8 +22,7 @@ function Overview(): JSX.Element {
           </div>
           <p className='film-rating__meta'>
             <span className='film-rating__level'>
-              {ratingSum &&
-                RatingDecription[Math.floor(ratingSum / reviews.length)]}
+              {ratingSum && getRatingDescription(ratingSum, reviews.length)}
             </span>
             <span className='film-rating__count'>{reviews.length} ratings</span>
           </p>
