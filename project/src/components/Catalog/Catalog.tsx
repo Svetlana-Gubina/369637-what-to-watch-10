@@ -6,9 +6,12 @@ import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { chooseGenreAction } from '../../store/action';
 
 function Catalog(): JSX.Element {
+  const filmData = useAppSelector((state) => state.films.films);
   const [activeGenre, setActiveGenre] = useState(0);
   const [count, setCount] = useState<number>(INITIAL_COUNT);
-  const filmsByGenre = useAppSelector((state) => state.filmsByGenre);
+
+  // todo: reselect
+  const filmsByGenre = filmData;
   const dispatch = useAppDispatch();
 
   const handleChooseGenre = (

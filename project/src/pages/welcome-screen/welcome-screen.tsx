@@ -4,10 +4,13 @@ import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 import Catalog from '../../components/catalog/catalog';
+import { useAppSelector } from '../../hooks/storeHooks';
 import type { Props } from '../../components/app/app.types';
 
-function WelcomeScreen({ films, authorizationStatus }: Props): JSX.Element {
-  const promo = films[0];
+function WelcomeScreen({
+  authorizationStatus,
+}: Omit<Props, 'films'>): JSX.Element {
+  const promo = useAppSelector((state) => state.films.promo);
 
   return (
     <>

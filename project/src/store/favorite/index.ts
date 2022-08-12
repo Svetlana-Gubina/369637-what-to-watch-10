@@ -1,14 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import type { PayloadAction } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { FilmItemType } from '../../components/app/app.types';
+import { fetchFavoriteFilms } from '../async-action';
 // import type { RootState } from '../store.types';
 
-// Define a type for the slice state
+// a type for the slice state
 type FavoriteState = {
   favorites: FilmItemType[];
 };
 
-// Define the initial state using that type
+// the initial state using that type
 const initialState: FavoriteState = {
   favorites: [],
 };
@@ -18,8 +19,14 @@ export const favoriteSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {},
+  extraReducers(builder) {
+    builder.addCase(
+      fetchFavoriteFilms.fulfilled,
+      (state, action: PayloadAction<FilmItemType[]>) => {
+        state.favorites = action.payload;
+      }
+    );
+  },
 });
-
-// export const { } = favoriteSlice.actions;
 
 export default favoriteSlice.reducer;

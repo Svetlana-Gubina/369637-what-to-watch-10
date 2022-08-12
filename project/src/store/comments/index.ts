@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import type { PayloadAction } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { fetchCommentsByFilmId } from '../async-action';
 import type { CommentType } from '../../components/app/app.types';
 // import type { RootState } from '../store.types';
 
@@ -18,6 +19,14 @@ export const commentsSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {},
+  extraReducers(builder) {
+    builder.addCase(
+      fetchCommentsByFilmId.fulfilled,
+      (state, action: PayloadAction<CommentType[]>) => {
+        state.comments = action.payload;
+      }
+    );
+  },
 });
 
 // export const { } = commentsSlice.actions;

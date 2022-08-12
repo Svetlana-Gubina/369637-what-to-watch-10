@@ -3,9 +3,15 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { fetchAllFilms } from './store/async-action';
+import {
+  fetchAllFilms,
+  checkAuthAction,
+  fetchPromo,
+} from './store/async-action';
 
 store.dispatch(fetchAllFilms());
+store.dispatch(checkAuthAction());
+store.dispatch(fetchPromo());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
