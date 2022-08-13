@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import type { FilmItemType } from '../app/app.types';
 import { RatingDecription } from '../reviews/reviews.constants';
 import { CAST_LIMIT } from './overview.constants';
+import { getRatingDescription } from './overview.utils';
 import { useOutletContext } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import type { CommentType } from '../app/app.types';
@@ -45,7 +46,8 @@ function Overview(): JSX.Element {
                 RatingDecription[Math.floor(ratingSum / comments.length)]}
             </span>
             <span className='film-rating__count'>
-              {comments.length} ratings
+              {comments.length} ratings{' '}
+              {ratingSum && getRatingDescription(ratingSum, comments.length)}
             </span>
           </p>
         </div>
