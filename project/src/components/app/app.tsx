@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import WelcomeScreen from '../../pages/welcome-screen/welcome-screen';
 import MainLayout from '../../pages/main-layout/main-layout';
@@ -12,8 +12,9 @@ import MyList from '../../pages/my-list/my-list';
 import AddReview from '../../pages/add-review/add-review';
 import PageNotFound from '../../pages/page-not-found/page-not-found';
 import { AppRoute } from '../../project.constants';
-import { useAppSelector } from '../../hooks/storeHooks';
 import LoadingOverlay from '../loading-overlay/loading-overlay';
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
+import { fetchAllFilms, fetchPromo } from '../../store/async-action';
 
 function App(): JSX.Element | null {
   const filmData = useAppSelector((state) => state.films.films);
@@ -22,6 +23,14 @@ function App(): JSX.Element | null {
   const authorizationStatus = useAppSelector(
     (state) => state.user.authorizationStatus
   );
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (!isDataLoaded) {
+      dispatch(fetchAllFilms());
+      dispatch(fetchPromo());
+    }
+  }, [isDataLoaded, dispatch]);
 
   if (!isDataLoaded && !isFetchError) {
     return <LoadingOverlay />;
