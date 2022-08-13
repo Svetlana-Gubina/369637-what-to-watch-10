@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import SmallFilmCard from '../small-film-card/small-film-card';
-import { PROMO_ID } from '../../mocks/films';
 import { GENRES, FILMS_TO_SHOW, INITIAL_COUNT } from './catalog.constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { chooseGenreAction } from '../../store/action';
 
 function Catalog(): JSX.Element {
+  const filmData = useAppSelector((state) => state.films.films);
   const [activeGenre, setActiveGenre] = useState(0);
   const [count, setCount] = useState<number>(INITIAL_COUNT);
-  const filmsByGenre = useAppSelector((state) => state.filmsByGenre);
+
+  // todo: reselect
+  const filmsByGenre = filmData;
   const dispatch = useAppDispatch();
 
   const handleChooseGenre = (
@@ -47,10 +49,9 @@ function Catalog(): JSX.Element {
       </ul>
       <div className='catalog__films-list'>
         {filmsByGenre
-          .filter(({ id }) => id !== PROMO_ID)
           .slice(0, FILMS_TO_SHOW * count)
-          .map(({ id, imgSrc, name }) => (
-            <SmallFilmCard key={id} id={id} imgSrc={imgSrc} name={name} />
+          .map(({ id, posterImage, name }) => (
+            <SmallFilmCard key={id} id={id} imgSrc={posterImage} name={name} />
           ))}
       </div>
       <div className='catalog__more'>
@@ -58,10 +59,7 @@ function Catalog(): JSX.Element {
           onClick={() => setCount((prevState) => (prevState += 1))}
           className='catalog__button'
           type='button'
-          disabled={
-            FILMS_TO_SHOW * count >=
-            filmsByGenre.filter(({ id }) => id !== PROMO_ID).length
-          }
+          disabled={FILMS_TO_SHOW * count >= filmsByGenre.length}
         >
           Show more
         </button>

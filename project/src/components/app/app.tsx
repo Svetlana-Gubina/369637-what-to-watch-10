@@ -11,23 +11,33 @@ import PrivateRoot from '../private-route/private-route';
 import MyList from '../../pages/my-list/my-list';
 import AddReview from '../../pages/add-review/add-review';
 import PageNotFound from '../../pages/page-not-found/page-not-found';
-import { AuthorizationStatus } from '../private-route/private-route.constants';
 import { AppRoute } from '../../project.constants';
-import { setAllFimlsAction } from '../../store/action';
+import LoadingOverlay from '../loading-overlay/loading-overlay';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
-import type { Props } from './app.types';
+import { fetchAllFilms, fetchPromo } from '../../store/async-action';
 
-function App({ films }: Props): JSX.Element | null {
+function App(): JSX.Element | null {
+  const filmData = useAppSelector((state) => state.films.films);
+  const isDataLoaded = useAppSelector((state) => state.films.isFilmDataLoaded);
+  const isFetchError = useAppSelector((state) => state.films.filmDataError);
+  const authorizationStatus = useAppSelector(
+    (state) => state.user.authorizationStatus
+  );
+
   const dispatch = useAppDispatch();
-
   useEffect(() => {
-    dispatch(setAllFimlsAction(films));
-  }, [films, dispatch]);
+    if (!isDataLoaded) {
+      dispatch(fetchAllFilms());
+      dispatch(fetchPromo());
+    }
+  }, [isDataLoaded, dispatch]);
 
-  const filmData = useAppSelector((state) => state.films);
+  if (!isDataLoaded && !isFetchError) {
+    return <LoadingOverlay />;
+  }
 
-  if (!filmData) {
-    return null;
+  if (isFetchError) {
+    <div>Sorry, server is not responding, please try again later.</div>;
   }
 
   return (
@@ -35,18 +45,13 @@ function App({ films }: Props): JSX.Element | null {
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={
-            <WelcomeScreen
-              authorizationStatus={AuthorizationStatus.NoAuth}
-              films={filmData}
-            />
-          }
+          element={<WelcomeScreen authorizationStatus={authorizationStatus} />}
         />
         <Route
           path={AppRoute.Film}
           element={
             <MainLayout
-              authorizationStatus={AuthorizationStatus.NoAuth}
+              authorizationStatus={authorizationStatus}
               films={filmData}
             />
           }
@@ -65,7 +70,7 @@ function App({ films }: Props): JSX.Element | null {
         <Route
           path={AppRoute.AddReview}
           element={
-            <PrivateRoot authorizationStatus={AuthorizationStatus.NoAuth}>
+            <PrivateRoot authorizationStatus={authorizationStatus}>
               <AddReview films={filmData} />
             </PrivateRoot>
           }
@@ -73,7 +78,7 @@ function App({ films }: Props): JSX.Element | null {
         <Route
           path={AppRoute.MyList}
           element={
-            <PrivateRoot authorizationStatus={AuthorizationStatus.NoAuth}>
+            <PrivateRoot authorizationStatus={authorizationStatus}>
               <MyList films={filmData} />
             </PrivateRoot>
           }

@@ -5,30 +5,49 @@ import Footer from '../../components/footer/footer';
 import SmallFilmCard from '../../components/small-film-card/small-film-card';
 import { AppRoute } from '../../project.constants';
 import type { Props } from './main-layout.types';
-import { getSimilarFilms } from './main-layout.utils';
 import { NAV_LIST } from './main-layout.constants';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
-import useUrlParam from '../../hooks/useUrlParam/useUrlParam';
+import { useParams } from 'react-router-dom';
+import type { FilmItemType } from '../../components/app/app.types';
+import { api } from '../../store';
+import { ApiRoute } from '../../api/constants';
 
 function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
+  const { id: searchId } = useParams();
+  const [similarFilms, setSimilarFilms] = useState<FilmItemType[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    api
+      .get(`${ApiRoute.Films}/${searchId}/similar`)
+      .then((res) => {
+        setSimilarFilms(res.data);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setIsLoading(false);
+      });
+  }, [searchId]);
+
   const location = useLocation();
   const currentNavItem = location.pathname.slice(
     location.pathname.lastIndexOf('/') + 1
   );
   const reg = new RegExp(currentNavItem, 'i');
   const subPageCurrentIndex = NAV_LIST.findIndex((n) => n.match(reg));
-  const currentFilm = useUrlParam(films);
   const [activeNavItem, setActiveNavItem] = useState(
     subPageCurrentIndex > 0 ? subPageCurrentIndex : 0
   );
 
-  const [filmsLikeThis, setFilmsLikeThis] = useState(
-    getSimilarFilms(films, currentFilm)
-  );
-
   useEffect(() => {
-    setFilmsLikeThis(getSimilarFilms(films, currentFilm));
-  }, [currentFilm, films]);
+    if (subPageCurrentIndex > 0) {
+      setActiveNavItem(subPageCurrentIndex);
+    } else {
+      setActiveNavItem(0);
+    }
+  }, [currentNavItem, subPageCurrentIndex]);
+
+  const currentFilm = films.find((film) => film.id.toString() === searchId);
 
   if (!currentFilm) {
     return <Navigate to={AppRoute.PageNotFound} />;
@@ -39,7 +58,7 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
       <section className='film-card film-card--full'>
         <div className='film-card__hero'>
           <div className='film-card__bg'>
-            <img src={currentFilm?.imgSrc} alt={currentFilm?.name} />
+            <img src={currentFilm?.backgroundImage} alt={currentFilm?.name} />
           </div>
           <h1 className='visually-hidden'>WTW</h1>
           <Header authorizationStatus={authorizationStatus} />
@@ -48,7 +67,7 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
               <h2 className='film-card__title'>{currentFilm?.name}</h2>
               <p className='film-card__meta'>
                 <span className='film-card__genre'>{currentFilm?.genre}</span>
-                <span className='film-card__year'>{currentFilm?.year}</span>
+                <span className='film-card__year'>{currentFilm?.released}</span>
               </p>
               <div className='film-card__buttons'>
                 <Link
@@ -90,7 +109,7 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
           <div className='film-card__info'>
             <div className='film-card__poster film-card__poster--big'>
               <img
-                src={currentFilm?.imgSrc}
+                src={currentFilm?.posterImage}
                 alt={currentFilm?.name}
                 width={218}
                 height={327}
@@ -129,11 +148,18 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
       <div className='page-content'>
         <section className='catalog catalog--like-this'>
           <h2 className='catalog__title'>More like this</h2>
-          <div className='catalog__films-list'>
-            {filmsLikeThis.map(({ id, imgSrc, name }) => (
-              <SmallFilmCard key={id} id={id} imgSrc={imgSrc} name={name} />
-            ))}
-          </div>
+          {!isLoading && (
+            <div className='catalog__films-list'>
+              {similarFilms.map(({ id, posterImage, name }) => (
+                <SmallFilmCard
+                  key={id}
+                  id={id}
+                  imgSrc={posterImage}
+                  name={name}
+                />
+              ))}
+            </div>
+          )}
         </section>
         <Footer />
       </div>

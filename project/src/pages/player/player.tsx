@@ -14,7 +14,7 @@ function Player({ films }: Props): JSX.Element | null {
     <div className='player'>
       <PlayerComponent
         id={currentFilm.id}
-        imgSrc={currentFilm.imgSrc}
+        imgSrc={currentFilm.previewImage}
         name={currentFilm.name}
         isFullPage
       />

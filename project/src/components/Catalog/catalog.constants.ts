@@ -2,7 +2,7 @@ import type { FilmItemType } from '../app/app.types';
 
 export const GENRES = [
   'All genres',
-  'Comedies',
+  'Comedy',
   'Crime',
   'Documentary',
   'Dramas',
@@ -11,6 +11,7 @@ export const GENRES = [
   'Romance',
   'Sci-Fi',
   'Thrillers',
+  // ['Comedy', 'Crime', 'Adventure', 'Comedy', 'Adventure', 'Comedy', 'Adventure', 'Drama', 'Drama', 'Adventure', 'Thriller', 'Action', 'Adventure', 'Crime', 'Drama', 'Crime', 'Action', 'Drama', 'Drama', 'Action', 'Action', 'Fantasy', 'Crime', 'Drama', 'Crime']
 ];
 
 export const FILMS_TO_SHOW = 8;

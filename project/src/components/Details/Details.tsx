@@ -3,7 +3,7 @@ import type { FilmItemType } from '../app/app.types';
 import { useOutletContext } from 'react-router-dom';
 
 function Details(): JSX.Element {
-  const { year, genre, director, cast, runtime } =
+  const { released, genre, director, starring, runTime } =
     useOutletContext<FilmItemType>();
 
   return (
@@ -16,10 +16,10 @@ function Details(): JSX.Element {
         <p className='film-card__details-item'>
           <strong className='film-card__details-name'>Starring</strong>
           <span className='film-card__details-value'>
-            {cast?.split(',').map((val) => (
-              <>
+            {starring.map((val) => (
+              <span key={val}>
                 {val},<br />
-              </>
+              </span>
             ))}
           </span>
         </p>
@@ -27,7 +27,7 @@ function Details(): JSX.Element {
       <div className='film-card__text-col'>
         <p className='film-card__details-item'>
           <strong className='film-card__details-name'>Run Time</strong>
-          <span className='film-card__details-value'>{runtime}</span>
+          <span className='film-card__details-value'>{runTime}</span>
         </p>
         <p className='film-card__details-item'>
           <strong className='film-card__details-name'>Genre</strong>
@@ -35,7 +35,7 @@ function Details(): JSX.Element {
         </p>
         <p className='film-card__details-item'>
           <strong className='film-card__details-name'>Released</strong>
-          <span className='film-card__details-value'>{year}</span>
+          <span className='film-card__details-value'>{released}</span>
         </p>
       </div>
     </div>
