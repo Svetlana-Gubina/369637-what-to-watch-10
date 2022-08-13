@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 import type { UserDataType } from '../../components/app/app.types';
 import { checkAuthAction, loginAction, logoutAction } from '../async-action';
-// import type { PayloadAction } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 // import type { RootState } from '../store.types';
 
 // Define a type for the slice state
@@ -30,13 +30,17 @@ export const userSlice = createSlice({
       .addCase(checkAuthAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
       })
-      .addCase(loginAction.fulfilled, (state) => {
-        state.authorizationStatus = AuthorizationStatus.Auth;
-      })
+      .addCase(
+        loginAction.fulfilled,
+        (state, action: PayloadAction<UserDataType>) => {
+          state.authorizationStatus = AuthorizationStatus.Auth;
+          state.userData = action.payload;
+        }
+      )
       .addCase(loginAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
       })
-      .addCase(logoutAction.fulfilled, (state, action) => {
+      .addCase(logoutAction.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
         state.userData = null;
       });

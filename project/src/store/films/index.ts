@@ -1,13 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { FilmItemType } from '../../components/app/app.types';
-import {
-  fetchAllFilms,
-  fetchPromo,
-  fetchSimilarFilms,
-  fetchFilmDataById,
-} from '../async-action';
-// import type { RootState } from '../store.types';
+import { fetchAllFilms, fetchPromo, fetchFilmDataById } from '../async-action';
 
 // a type for the slice state
 type FillmsState = {
@@ -18,7 +12,6 @@ type FillmsState = {
   films: FilmItemType[];
   promo: FilmItemType | null;
   activeFilmData: FilmItemType | null;
-  similarFilms: FilmItemType[];
 };
 
 // the initial state using that type
@@ -30,7 +23,6 @@ const initialState: FillmsState = {
   films: [],
   promo: null,
   activeFilmData: null,
-  similarFilms: [],
 };
 
 export const filmsSlice = createSlice({
@@ -58,12 +50,6 @@ export const filmsSlice = createSlice({
         (state, action: PayloadAction<FilmItemType>) => {
           state.promo = action.payload;
           state.isPromoDataLoaded = true;
-        }
-      )
-      .addCase(
-        fetchSimilarFilms.fulfilled,
-        (state, action: PayloadAction<FilmItemType[]>) => {
-          state.similarFilms = action.payload;
         }
       )
       .addCase(

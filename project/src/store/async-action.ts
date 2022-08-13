@@ -1,11 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ApiRoute } from '../api/constants';
 import type { AppDispatch, RootState } from './store.types';
-import type {
-  FilmItemType,
-  CommentType,
-  UserDataType,
-} from '../components/app/app.types';
+import type { FilmItemType, UserDataType } from '../components/app/app.types';
 import { saveToken, dropToken } from '../services/token';
 import { AxiosInstance } from 'axios';
 
@@ -36,21 +32,6 @@ export const fetchFilmDataById = createAsyncThunk<
   return data;
 });
 
-export const fetchSimilarFilms = createAsyncThunk<
-  FilmItemType[],
-  number,
-  {
-    dispatch: AppDispatch;
-    state: RootState;
-    extra: AxiosInstance;
-  }
->('films/fetchSimilarFilms', async (filmId, { dispatch, extra: api }) => {
-  const { data } = await api.get<FilmItemType[]>(
-    `${ApiRoute.Films}/${filmId}/similar`
-  );
-  return data;
-});
-
 export const fetchPromo = createAsyncThunk<
   FilmItemType,
   undefined,
@@ -65,21 +46,6 @@ export const fetchPromo = createAsyncThunk<
 });
 
 // Comments
-export const fetchCommentsByFilmId = createAsyncThunk<
-  CommentType[],
-  number,
-  {
-    dispatch: AppDispatch;
-    state: RootState;
-    extra: AxiosInstance;
-  }
->('films/fetchCommentsByFilmId', async (filmId, { dispatch, extra: api }) => {
-  const { data } = await api.get<CommentType[]>(
-    `${ApiRoute.Comments}/${filmId}`
-  );
-  return data;
-});
-
 type AddCommentAttributes = {
   filmId: number;
   data: { comment: string; rating: number };
@@ -149,7 +115,7 @@ type LoginAttributes = {
 };
 
 export const loginAction = createAsyncThunk<
-  void,
+  UserDataType,
   LoginAttributes,
   {
     dispatch: AppDispatch;
@@ -157,10 +123,12 @@ export const loginAction = createAsyncThunk<
     extra: AxiosInstance;
   }
 >('user/login', async ({ email, password }, { dispatch, extra: api }) => {
-  const {
-    data: { token },
-  } = await api.post<UserDataType>(ApiRoute.Login, { email, password });
-  saveToken(token);
+  const { data } = await api.post<UserDataType>(ApiRoute.Login, {
+    email,
+    password,
+  });
+  saveToken(data.token);
+  return data;
 });
 
 export const logoutAction = createAsyncThunk<
