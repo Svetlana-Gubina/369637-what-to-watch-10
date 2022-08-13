@@ -16,11 +16,7 @@ function Details(): JSX.Element {
         <p className='film-card__details-item'>
           <strong className='film-card__details-name'>Starring</strong>
           <span className='film-card__details-value'>
-            {starring.map((val) => (
-              <span key={val}>
-                {val},<br />
-              </span>
-            ))}
+            {`${starring.map((s) => `${s}`)}`}
           </span>
         </p>
       </div>

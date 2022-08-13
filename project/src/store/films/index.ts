@@ -4,7 +4,7 @@ import { FilmItemType } from '../../components/app/app.types';
 import { fetchAllFilms, fetchPromo, fetchFilmDataById } from '../async-action';
 
 // a type for the slice state
-type FillmsState = {
+type FilmsState = {
   isFilmDataLoaded: boolean;
   isPromoDataLoaded: boolean;
   filmDataError: boolean;
@@ -15,7 +15,7 @@ type FillmsState = {
 };
 
 // the initial state using that type
-const initialState: FillmsState = {
+const initialState: FilmsState = {
   filmDataError: false,
   promoDataError: false,
   isFilmDataLoaded: false,
