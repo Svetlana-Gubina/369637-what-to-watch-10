@@ -63,10 +63,7 @@ function App(): JSX.Element | null {
           <Route path='*' element={<Overview />} />
         </Route>
         <Route path={AppRoute.Player} element={<Player films={filmData} />} />
-        <Route
-          path={AppRoute.SignIn}
-          element={<SignIn isSignInFailed={false} isError={false} />}
-        />
+        <Route path={AppRoute.SignIn} element={<SignIn />} />
         <Route
           path={AppRoute.AddReview}
           element={
