@@ -1125,14 +1125,16 @@ cursor: pointer; }
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  flex-direction: row-reverse;
+  flex-direction: row;
   margin-bottom: 15px; }
 
 .rating__input {
   display: none; }
   .rating__input:checked ~ .rating__label::after {
     color: rgba(56, 44, 42, 0.7); }
-
+    .rating__input.active ~ .rating__label::after  {
+  color: rgba(56, 44, 42, 0.7);
+}
 .rating__label {
   font-size: 0;
   line-height: 0;
