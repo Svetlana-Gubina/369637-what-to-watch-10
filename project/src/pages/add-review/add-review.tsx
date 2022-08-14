@@ -3,6 +3,7 @@ import { Link, Navigate } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import { AppRoute } from '../../project.constants';
 import useUrlParam from '../../hooks/useUrlParam/useUrlParam';
+import UserBlock from '../../components/user-block/user-block';
 import { RATING_ITEMS } from './add-review.constants';
 import type { Props } from '../../components/app/app.types';
 
@@ -62,23 +63,7 @@ function AddReview({ films }: Props): JSX.Element {
             </ul>
           </nav>
 
-          <ul className='user-block'>
-            <li className='user-block__item'>
-              <div className='user-block__avatar'>
-                <img
-                  src='img/avatar.jpg'
-                  alt='User avatar'
-                  width={63}
-                  height={63}
-                />
-              </div>
-            </li>
-            <li className='user-block__item'>
-              <Link to='/' className='user-block__link'>
-                Sign out
-              </Link>
-            </li>
-          </ul>
+          <UserBlock />
         </header>
         <div className='film-card__poster film-card__poster--small'>
           <img
@@ -94,9 +79,8 @@ function AddReview({ films }: Props): JSX.Element {
           <div className='rating'>
             <div className='rating__stars'>
               {RATING_ITEMS.map((item, i) => (
-                <>
+                <div key={item}>
                   <input
-                    key={item}
                     className='rating__input'
                     id={`star-${i}`}
                     type='radio'
@@ -108,7 +92,7 @@ function AddReview({ films }: Props): JSX.Element {
                   <label className='rating__label' htmlFor={`star-${i}`}>
                     {`Rating ${i}`}
                   </label>
-                </>
+                </div>
               ))}
             </div>
           </div>

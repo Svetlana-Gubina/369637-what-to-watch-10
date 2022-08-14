@@ -1,29 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ReviewItem from '../review/review';
 import { MAX_REVIEWS_TO_SHOW } from './reviews.constants';
 import { useParams } from 'react-router-dom';
 import type { CommentType } from '../app/app.types';
 import LoadingOverlay from '../loading-overlay/loading-overlay';
-import { api } from '../../store';
 import { ApiRoute } from '../../api/constants';
-// import { useOutletContext } from 'react-router-dom';
+import useApiService from '../../hooks/apiHooks/useApiService';
 
 function Reviews(): JSX.Element {
   const { id: searchId } = useParams();
-  const [comments, setComments] = useState<CommentType[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    api
-      .get(`${ApiRoute.Comments}/${searchId}`)
-      .then((res) => {
-        setComments(res.data);
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setIsLoading(false);
-      });
-  }, [searchId]);
+  const { data: comments, isLoading } = useApiService<CommentType[]>(
+    `${ApiRoute.Comments}/${searchId}`
+  );
 
   if (isLoading) {
     return <LoadingOverlay />;

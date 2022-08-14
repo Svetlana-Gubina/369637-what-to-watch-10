@@ -9,12 +9,14 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 type UserState = {
   authorizationStatus: AuthorizationStatus;
   userData: UserDataType | null;
+  isLoginError: boolean;
 };
 
 // Define the initial state using that type
 const initialState: UserState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   userData: null,
+  isLoginError: false,
 };
 
 export const userSlice = createSlice({
@@ -35,10 +37,12 @@ export const userSlice = createSlice({
         (state, action: PayloadAction<UserDataType>) => {
           state.authorizationStatus = AuthorizationStatus.Auth;
           state.userData = action.payload;
+          state.isLoginError = false;
         }
       )
       .addCase(loginAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
+        state.isLoginError = true;
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;

@@ -1,9 +1,46 @@
-import React from 'react';
-import type { Props } from './sign-in.types';
+import React, { useEffect, useState, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
+import { loginAction } from '../../store/async-action';
+import { AppRoute } from '../../project.constants';
+import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 
-function SignIn({ isSignInFailed, isError }: Props): JSX.Element {
+function SignIn(): JSX.Element {
+  // todo: add validation
+  const isError = false;
+  const authorizationStatus = useAppSelector(
+    (state) => state.user.authorizationStatus
+  );
+  const isLoginError = useAppSelector((state) => state.user.isLoginError);
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      navigate(AppRoute.Main);
+    }
+  }, [authorizationStatus, navigate]);
+
+  const handleEmailChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    setUserEmail(evt.target.value);
+  };
+
+  const handlePasswordChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    setUserPassword(evt.target.value);
+  };
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (userEmail && userPassword) {
+      dispatch(loginAction({ email: userEmail, password: userPassword }));
+    }
+  };
+
   return (
     <div className='user-page'>
       <header className='page-header user-page__head'>
@@ -11,13 +48,17 @@ function SignIn({ isSignInFailed, isError }: Props): JSX.Element {
         <h1 className='page-title user-page__title'>Sign in</h1>
       </header>
       <div className='sign-in user-page__content'>
-        <form action='#' className='sign-in__form'>
+        <form
+          action='#'
+          className='sign-in__form'
+          onSubmit={(evt) => handleSubmit(evt)}
+        >
           {isError && (
             <div className='sign-in__message'>
               <p>Please enter a valid email address</p>
             </div>
           )}
-          {isSignInFailed && (
+          {isLoginError && (
             <div className='sign-in__message'>
               <p>
                 We can’t recognize this email <br /> and password combination.
@@ -33,6 +74,7 @@ function SignIn({ isSignInFailed, isError }: Props): JSX.Element {
                 placeholder='Email address'
                 name='user-email'
                 id='user-email'
+                onChange={(evt) => handleEmailChange(evt)}
               />
               <label
                 className='sign-in__label visually-hidden'
@@ -48,6 +90,7 @@ function SignIn({ isSignInFailed, isError }: Props): JSX.Element {
                 placeholder='Password'
                 name='user-password'
                 id='user-password'
+                onChange={(evt) => handlePasswordChange(evt)}
               />
               <label
                 className='sign-in__label visually-hidden'

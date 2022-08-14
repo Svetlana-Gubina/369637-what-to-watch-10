@@ -8,26 +8,16 @@ import type { Props } from './main-layout.types';
 import { NAV_LIST } from './main-layout.constants';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 import { useParams } from 'react-router-dom';
+import useUrlParam from '../../hooks/useUrlParam/useUrlParam';
 import type { FilmItemType } from '../../components/app/app.types';
-import { api } from '../../store';
+import useApiService from '../../hooks/apiHooks/useApiService';
 import { ApiRoute } from '../../api/constants';
 
 function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
   const { id: searchId } = useParams();
-  const [similarFilms, setSimilarFilms] = useState<FilmItemType[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    api
-      .get(`${ApiRoute.Films}/${searchId}/similar`)
-      .then((res) => {
-        setSimilarFilms(res.data);
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setIsLoading(false);
-      });
-  }, [searchId]);
+  const { data: similarFilms, isLoading } = useApiService<FilmItemType[]>(
+    `${ApiRoute.Films}/${searchId}/similar`
+  );
 
   const location = useLocation();
   const currentNavItem = location.pathname.slice(
@@ -47,7 +37,7 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
     }
   }, [currentNavItem, subPageCurrentIndex]);
 
-  const currentFilm = films.find((film) => film.id.toString() === searchId);
+  const currentFilm = useUrlParam(films);
 
   if (!currentFilm) {
     return <Navigate to={AppRoute.PageNotFound} />;
@@ -150,14 +140,16 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
           <h2 className='catalog__title'>More like this</h2>
           {!isLoading && (
             <div className='catalog__films-list'>
-              {similarFilms.map(({ id, posterImage, name }) => (
-                <SmallFilmCard
-                  key={id}
-                  id={id}
-                  imgSrc={posterImage}
-                  name={name}
-                />
-              ))}
+              {similarFilms
+                ?.filter(({ id }) => id !== currentFilm.id)
+                .map(({ id, posterImage, name }) => (
+                  <SmallFilmCard
+                    key={id}
+                    id={id}
+                    imgSrc={posterImage}
+                    name={name}
+                  />
+                ))}
             </div>
           )}
         </section>

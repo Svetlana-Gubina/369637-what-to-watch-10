@@ -9,3 +9,8 @@ export const shuffleFilms = (arr: FilmItemType[]) => {
   }
   return inner;
 };
+
+export const getCurrentFilm = (
+  films: FilmItemType[],
+  searchId: string | undefined
+) => films.find((film) => film.id.toString() === searchId);
