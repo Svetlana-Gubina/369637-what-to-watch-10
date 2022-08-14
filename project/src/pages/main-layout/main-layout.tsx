@@ -142,12 +142,13 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
             <div className='catalog__films-list'>
               {similarFilms
                 ?.filter(({ id }) => id !== currentFilm.id)
-                .map(({ id, posterImage, name }) => (
+                .map(({ id, posterImage, name, previewVideoLink }) => (
                   <SmallFilmCard
                     key={id}
                     id={id}
                     imgSrc={posterImage}
                     name={name}
+                    previewVideoLink={previewVideoLink}
                   />
                 ))}
             </div>

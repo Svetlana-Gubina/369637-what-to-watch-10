@@ -3,10 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import LoadingOverlay from '../loading-overlay/loading-overlay';
 import useVideoPlayer from '../../hooks/useVideoPlayer/useVideoPlayer';
 import { PlayerState } from '../../pages/player/player-constants';
-import { MockTrailerSource } from '../../pages/player/player-constants';
 import { Props } from './player-component.types';
 
-function PlayerComponent({ id, imgSrc, name, isFullPage }: Props): JSX.Element {
+function PlayerComponent({
+  id,
+  imgSrc,
+  name,
+  previewVideoLink,
+  isFullPage,
+}: Props): JSX.Element {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -43,11 +48,11 @@ function PlayerComponent({ id, imgSrc, name, isFullPage }: Props): JSX.Element {
         poster={imgSrc || 'img/player-poster.jpg'}
         ref={videoRef}
       >
-        <source src={MockTrailerSource[0]} type='video/mp4' />
-        <source src={MockTrailerSource[1]} type='video/webm' />
+        <source src={previewVideoLink} type='video/mp4' />
+        <source src={previewVideoLink} type='video/webm' />
         <p>
           Your browser doesn&rsquo;t support HTML5 video. Here is a{' '}
-          <a href={MockTrailerSource[0]}>link to the video</a> instead.
+          <a href={previewVideoLink}>link to the video</a> instead.
         </p>
       </video>
 

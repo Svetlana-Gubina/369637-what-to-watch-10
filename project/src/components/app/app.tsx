@@ -76,7 +76,7 @@ function App(): JSX.Element | null {
           path={AppRoute.MyList}
           element={
             <PrivateRoot authorizationStatus={authorizationStatus}>
-              <MyList films={filmData} />
+              <MyList />
             </PrivateRoot>
           }
         />

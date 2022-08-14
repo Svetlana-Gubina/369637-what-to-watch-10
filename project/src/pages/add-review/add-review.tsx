@@ -1,38 +1,91 @@
-import React, { useState } from 'react';
+import React, { useState, FormEvent, useRef } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import { AppRoute } from '../../project.constants';
 import useUrlParam from '../../hooks/useUrlParam/useUrlParam';
 import UserBlock from '../../components/user-block/user-block';
 import { RATING_ITEMS } from './add-review.constants';
+import { addComment } from '../../store/async-action';
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
+import { clearCommentState } from '../../store/action';
 import type { Props } from '../../components/app/app.types';
 
 function AddReview({ films }: Props): JSX.Element {
   const currentFilm = useUrlParam(films);
-  const [review, setReview] = useState({
-    text: '',
-    rating: 0,
-  });
+  const isSuccess = useAppSelector((state) => state.comment.isCommentSuccess);
+  const isError = useAppSelector((state) => state.comment.isCommentError);
+  const [text, setText] = useState('');
+  const [rating, setRating] = useState(0);
+
+  const inputRefs = useRef<HTMLInputElement[]>([]);
+  const textRef = useRef<HTMLTextAreaElement | null>(null);
+  const dispatch = useAppDispatch();
+
+  const validate = (): boolean => {
+    if (!rating) {
+      // todo: show error
+      // console.log('Please check some stars');
+      return false;
+    }
+
+    return true;
+  };
 
   const handleTextChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = evt.target;
-    setReview({
-      ...review,
-      text: value,
-    });
+
+    setText(value);
   };
 
   const handleRateChange = (evt: React.FormEvent<HTMLInputElement>) => {
     const { value } = evt.currentTarget;
 
-    setReview({
-      ...review,
-      rating: Number(value),
-    });
+    setRating(Number(value));
+  };
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (!validate()) {
+      return;
+    }
+
+    if (text && rating && currentFilm) {
+      dispatch(
+        addComment({
+          filmId: currentFilm.id,
+          data: { comment: text, rating: rating },
+        })
+      );
+    }
   };
 
   if (!currentFilm) {
     return <Navigate to={AppRoute.PageNotFound} />;
+  }
+
+  if (isSuccess) {
+    if (textRef.current && inputRefs.current) {
+      textRef.current.value = '';
+      inputRefs.current.map((el) => {
+        el.checked = false;
+        el.className = 'rating__input';
+        return el;
+      });
+    }
+
+    setText('');
+    setRating(0);
+    window.location.reload();
+    // todo: show error
+    // console.log('Your review successfully posted!');
+    dispatch(clearCommentState());
+  }
+
+  if (isError) {
+    // todo: show error
+    // console.log('Sorry, comment not posted, please try again.');
+    dispatch(clearCommentState());
   }
 
   return (
@@ -75,13 +128,20 @@ function AddReview({ films }: Props): JSX.Element {
         </div>
       </div>
       <div className='add-review'>
-        <form action='#' className='add-review__form'>
+        <form
+          action='#'
+          className='add-review__form'
+          onSubmit={(evt) => handleSubmit(evt)}
+        >
           <div className='rating'>
             <div className='rating__stars'>
               {RATING_ITEMS.map((item, i) => (
                 <div key={item}>
                   <input
-                    className='rating__input'
+                    ref={(el: HTMLInputElement) => (inputRefs.current[i] = el)}
+                    className={`rating__input ${
+                      i <= rating - 1 ? 'active' : ''
+                    }`}
                     id={`star-${i}`}
                     type='radio'
                     name='rating'
@@ -98,12 +158,13 @@ function AddReview({ films }: Props): JSX.Element {
           </div>
           <div className='add-review__text'>
             <textarea
+              ref={textRef}
               className='add-review__textarea'
               name='review-text'
               id='review-text'
               placeholder='Review text'
-              maxLength={50}
-              minLength={400}
+              maxLength={400}
+              minLength={50}
               required
               defaultValue={''}
               onChange={(evt) => handleTextChange(evt)}

@@ -51,7 +51,7 @@ type AddCommentAttributes = {
   data: { comment: string; rating: number };
 };
 
-export const AddComment = createAsyncThunk<
+export const addComment = createAsyncThunk<
   void,
   AddCommentAttributes,
   {
@@ -59,10 +59,8 @@ export const AddComment = createAsyncThunk<
     state: RootState;
     extra: AxiosInstance;
   }
->('films/AddComment', async (attr, { dispatch, extra: api }) => {
-  await api.post(`${ApiRoute.Comments}/${attr.filmId}`, {
-    body: JSON.stringify(attr.data),
-  });
+>('comment/addComment', async (attr, { dispatch, extra: api }) => {
+  await api.post(`${ApiRoute.Comments}/${attr.filmId}`, attr.data);
 });
 
 // Favorite
@@ -81,7 +79,7 @@ export const fetchFavoriteFilms = createAsyncThunk<
 
 type UpdateStatusAttributes = {
   filmId: number;
-  status: boolean;
+  status: number;
 };
 
 export const updateFilmIsFavoriteState = createAsyncThunk<

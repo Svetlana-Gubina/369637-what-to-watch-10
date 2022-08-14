@@ -4,13 +4,36 @@ import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 import Catalog from '../../components/catalog/catalog';
-import { useAppSelector } from '../../hooks/storeHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import type { Props } from '../../components/app/app.types';
+import useApiService from '../../hooks/apiHooks/useApiService';
+import type { FilmItemType } from '../../components/app/app.types';
+import { ApiRoute } from '../../api/constants';
+import { updateFilmIsFavoriteState } from '../../store/async-action';
 
 function WelcomeScreen({
   authorizationStatus,
 }: Omit<Props, 'films'>): JSX.Element {
   const promo = useAppSelector((state) => state.films.promo);
+  const { data: myFilms } = useApiService<FilmItemType[]>(ApiRoute.Favorite);
+
+  const dispatch = useAppDispatch();
+
+  const handleFilmStateUpdate = (
+    evt:
+      | React.KeyboardEvent<HTMLButtonElement>
+      | React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    if (promo) {
+      const { id, isFavorite: currentFilmState } = promo;
+      dispatch(
+        updateFilmIsFavoriteState({
+          filmId: id,
+          status: Number(!currentFilmState),
+        })
+      );
+    }
+  };
 
   return (
     <>
@@ -49,6 +72,7 @@ function WelcomeScreen({
 
                 {authorizationStatus === AuthorizationStatus.Auth && (
                   <button
+                    onClick={(evt) => handleFilmStateUpdate(evt)}
                     className='btn btn--list film-card__button'
                     type='button'
                   >
@@ -56,7 +80,7 @@ function WelcomeScreen({
                       <use xlinkHref='#add' />
                     </svg>
                     <span>My list</span>
-                    <span className='film-card__count'>9</span>
+                    <span className='film-card__count'>{myFilms?.length}</span>
                   </button>
                 )}
               </div>
