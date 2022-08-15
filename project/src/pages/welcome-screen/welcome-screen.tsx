@@ -1,39 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 import Catalog from '../../components/catalog/catalog';
-import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
+import { useAppSelector } from '../../hooks/storeHooks';
 import type { Props } from '../../components/app/app.types';
 import useApiService from '../../hooks/apiHooks/useApiService';
 import type { FilmItemType } from '../../components/app/app.types';
 import { ApiRoute } from '../../api/constants';
-import { updateFilmIsFavoriteState } from '../../store/async-action';
+import { handleFilmStateUpdate } from '../../project.utils';
 
 function WelcomeScreen({
   authorizationStatus,
 }: Omit<Props, 'films'>): JSX.Element {
   const promo = useAppSelector((state) => state.films.promo);
-  const { data: myFilms } = useApiService<FilmItemType[]>(ApiRoute.Favorite);
+  const [filmStatus, setFilmStatus] = useState(promo?.isFavorite || false);
+  const [isFilmStatusUpdateError, setIsFilmStatusUpdateError] = useState(false);
 
-  const dispatch = useAppDispatch();
+  const { data: myFilms } = useApiService<FilmItemType[]>(
+    ApiRoute.Favorite,
+    filmStatus
+  );
 
-  const handleFilmStateUpdate = (
-    evt:
-      | React.KeyboardEvent<HTMLButtonElement>
-      | React.MouseEvent<HTMLButtonElement>
-  ): void => {
-    if (promo) {
-      const { id, isFavorite: currentFilmState } = promo;
-      dispatch(
-        updateFilmIsFavoriteState({
-          filmId: id,
-          status: Number(!currentFilmState),
-        })
-      );
-    }
-  };
+  if (isFilmStatusUpdateError) {
+    //todo: log error
+    // eslint-disable-next-line no-console
+    console.log(isFilmStatusUpdateError);
+  }
 
   return (
     <>
@@ -72,12 +66,22 @@ function WelcomeScreen({
 
                 {authorizationStatus === AuthorizationStatus.Auth && (
                   <button
-                    onClick={(evt) => handleFilmStateUpdate(evt)}
+                    onClick={
+                      (evt) =>
+                        handleFilmStateUpdate(
+                          evt,
+                          promo?.id,
+                          filmStatus,
+                          setFilmStatus,
+                          setIsFilmStatusUpdateError
+                        )
+                      // eslint-disable-next-line react/jsx-curly-newline
+                    }
                     className='btn btn--list film-card__button'
                     type='button'
                   >
                     <svg viewBox='0 0 19 20' width={19} height={20}>
-                      <use xlinkHref='#add' />
+                      <use xlinkHref={filmStatus ? '#in-list' : '#add'} />
                     </svg>
                     <span>My list</span>
                     <span className='film-card__count'>{myFilms?.length}</span>

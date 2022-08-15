@@ -63,37 +63,6 @@ export const addComment = createAsyncThunk<
   await api.post(`${ApiRoute.Comments}/${attr.filmId}`, attr.data);
 });
 
-// Favorite
-export const fetchFavoriteFilms = createAsyncThunk<
-  FilmItemType[],
-  undefined,
-  {
-    dispatch: AppDispatch;
-    state: RootState;
-    extra: AxiosInstance;
-  }
->('films/fetchFavoriteFilms', async (_arg, { dispatch, extra: api }) => {
-  const { data } = await api.get<FilmItemType[]>(ApiRoute.Favorite);
-  return data;
-});
-
-type UpdateStatusAttributes = {
-  filmId: number;
-  status: number;
-};
-
-export const updateFilmIsFavoriteState = createAsyncThunk<
-  void,
-  UpdateStatusAttributes,
-  {
-    dispatch: AppDispatch;
-    state: RootState;
-    extra: AxiosInstance;
-  }
->('films/updateFilmIsFavoriteState', async (attr, { dispatch, extra: api }) => {
-  await api.post(`${ApiRoute.Favorite}/${attr.filmId}/${attr.status}`);
-});
-
 // User
 export const checkAuthAction = createAsyncThunk<
   void,

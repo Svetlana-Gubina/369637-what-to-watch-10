@@ -12,13 +12,13 @@ import useUrlParam from '../../hooks/useUrlParam/useUrlParam';
 import type { FilmItemType } from '../../components/app/app.types';
 import useApiService from '../../hooks/apiHooks/useApiService';
 import { ApiRoute } from '../../api/constants';
+import { handleFilmStateUpdate } from '../../project.utils';
 
 function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
   const { id: searchId } = useParams();
   const { data: similarFilms, isLoading } = useApiService<FilmItemType[]>(
     `${ApiRoute.Films}/${searchId}/similar`
   );
-
   const location = useLocation();
   const currentNavItem = location.pathname.slice(
     location.pathname.lastIndexOf('/') + 1
@@ -38,9 +38,23 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
   }, [currentNavItem, subPageCurrentIndex]);
 
   const currentFilm = useUrlParam(films);
+  const [filmStatus, setFilmStatus] = useState(
+    currentFilm?.isFavorite || false
+  );
+  const [isFilmStatusUpdateError, setIsFilmStatusUpdateError] = useState(false);
+  const { data: myFilms } = useApiService<FilmItemType[]>(
+    ApiRoute.Favorite,
+    filmStatus
+  );
 
   if (!currentFilm) {
     return <Navigate to={AppRoute.PageNotFound} />;
+  }
+
+  if (isFilmStatusUpdateError) {
+    //todo: log error
+    // eslint-disable-next-line no-console
+    console.log(isFilmStatusUpdateError);
   }
 
   return (
@@ -72,16 +86,28 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
 
                 {authorizationStatus === AuthorizationStatus.Auth && (
                   <>
-                    <Link
+                    <button
+                      onClick={
+                        (evt) =>
+                          handleFilmStateUpdate(
+                            evt,
+                            currentFilm?.id,
+                            filmStatus,
+                            setFilmStatus,
+                            setIsFilmStatusUpdateError
+                          )
+                        // eslint-disable-next-line react/jsx-curly-newline
+                      }
                       className='btn btn--list film-card__button'
-                      to={AppRoute.MyList}
                     >
                       <svg viewBox='0 0 19 20' width={19} height={20}>
-                        <use xlinkHref='#add' />
+                        <use xlinkHref={filmStatus ? '#in-list' : '#add'} />
                       </svg>
                       <span>My list</span>
-                      <span className='film-card__count'>9</span>
-                    </Link>
+                      <span className='film-card__count'>
+                        {myFilms?.length}
+                      </span>
+                    </button>
                     <Link
                       to={`/films/${currentFilm?.id}/review`}
                       className='btn film-card__button'
