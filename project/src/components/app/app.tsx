@@ -49,12 +49,7 @@ function App(): JSX.Element | null {
         />
         <Route
           path={AppRoute.Film}
-          element={
-            <MainLayout
-              authorizationStatus={authorizationStatus}
-              films={filmData}
-            />
-          }
+          element={<MainLayout authorizationStatus={authorizationStatus} />}
         >
           <Route index element={<Overview />} />
           <Route path={AppRoute.Overview} element={<Overview />} />

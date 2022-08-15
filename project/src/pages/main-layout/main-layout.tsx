@@ -8,14 +8,21 @@ import type { Props } from './main-layout.types';
 import { NAV_LIST } from './main-layout.constants';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 import { useParams } from 'react-router-dom';
-import useUrlParam from '../../hooks/useUrlParam/useUrlParam';
 import type { FilmItemType } from '../../components/app/app.types';
 import useApiService from '../../hooks/apiHooks/useApiService';
 import { ApiRoute } from '../../api/constants';
+import LoadingOverlay from '../../components/loading-overlay/loading-overlay';
 import { handleFilmStateUpdate } from '../../project.utils';
 
-function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
+function MainLayout({
+  authorizationStatus,
+}: Omit<Props, 'films'>): JSX.Element {
   const { id: searchId } = useParams();
+  const {
+    data: filmData,
+    isLoading: isFilmDataLoading,
+    isError: isFilmDataError,
+  } = useApiService<FilmItemType>(`${ApiRoute.Films}/${searchId}`);
   const { data: similarFilms, isLoading } = useApiService<FilmItemType[]>(
     `${ApiRoute.Films}/${searchId}/similar`
   );
@@ -37,7 +44,7 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
     }
   }, [currentNavItem, subPageCurrentIndex]);
 
-  const currentFilm = useUrlParam(films);
+  const currentFilm = filmData;
   const [filmStatus, setFilmStatus] = useState(
     currentFilm?.isFavorite || false
   );
@@ -47,8 +54,12 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
     filmStatus
   );
 
-  if (!currentFilm) {
+  if (isFilmDataError) {
     return <Navigate to={AppRoute.PageNotFound} />;
+  }
+
+  if (isFilmDataLoading) {
+    return <LoadingOverlay />;
   }
 
   if (isFilmStatusUpdateError) {
@@ -76,7 +87,7 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
               <div className='film-card__buttons'>
                 <Link
                   className='btn btn--play film-card__button'
-                  to={`/player/${currentFilm.id}`}
+                  to={`/player/${currentFilm?.id}`}
                 >
                   <svg viewBox='0 0 19 19' width={19} height={19}>
                     <use xlinkHref='#play-s' />
@@ -167,7 +178,7 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
           {!isLoading && (
             <div className='catalog__films-list'>
               {similarFilms
-                ?.filter(({ id }) => id !== currentFilm.id)
+                ?.filter(({ id }) => id !== currentFilm?.id)
                 .map(({ id, posterImage, name, previewVideoLink }) => (
                   <SmallFilmCard
                     key={id}

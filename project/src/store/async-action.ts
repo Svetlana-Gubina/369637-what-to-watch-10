@@ -19,19 +19,6 @@ export const fetchAllFilms = createAsyncThunk<
   return data;
 });
 
-export const fetchFilmDataById = createAsyncThunk<
-  FilmItemType,
-  number,
-  {
-    dispatch: AppDispatch;
-    state: RootState;
-    extra: AxiosInstance;
-  }
->('films/fetchFilmDataById', async (filmId, { dispatch, extra: api }) => {
-  const { data } = await api.get<FilmItemType>(`${ApiRoute.Films}/${filmId}`);
-  return data;
-});
-
 export const fetchPromo = createAsyncThunk<
   FilmItemType,
   undefined,
