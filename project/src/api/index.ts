@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { getItem, AUTH_TOKEN_KEY_NAME } from '../services/localStorageItem';
 
 const BASE_URL = 'https://10.react.pages.academy/wtw';
@@ -23,14 +22,6 @@ export const createApi = (): AxiosInstance => {
       return config;
     }
   );
-
-  // instance.interceptors.response.use(
-  // (response) => response,
-  // (error: AxiosError) => {
-  // eslint-disable-next-line no-console
-  // console.log(error);
-  // }
-  // );
 
   return instance;
 };

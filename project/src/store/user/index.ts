@@ -3,7 +3,6 @@ import { AuthorizationStatus } from '../../components/private-route/private-rout
 import type { UserDataType } from '../../types';
 import { checkAuthAction, loginAction, logoutAction } from '../async-action';
 import type { PayloadAction } from '@reduxjs/toolkit';
-// import type { RootState } from '../store.types';
 
 // Define a type for the slice state
 type UserState = {
@@ -27,13 +26,9 @@ export const userSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(checkAuthAction.fulfilled, (state) => {
-        // eslint-disable-next-line no-console
-        console.log('fulfilled');
         state.authorizationStatus = AuthorizationStatus.Auth;
       })
       .addCase(checkAuthAction.rejected, (state) => {
-        // eslint-disable-next-line no-console
-        console.log('rejected');
         state.authorizationStatus = AuthorizationStatus.NoAuth;
       })
       .addCase(

@@ -18,11 +18,12 @@ function MainLayout({
   authorizationStatus,
 }: Omit<Props, 'films'>): JSX.Element {
   const { id: searchId } = useParams();
+  const [filmStatus, setFilmStatus] = useState(false);
   const {
-    data: CurrentFilmData,
+    data: currentFilmData,
     isLoading: isFilmDataLoading,
     isError: isFilmDataError,
-  } = useApiService<FilmItemType>(`${ApiRoute.Films}/${searchId}`);
+  } = useApiService<FilmItemType>(`${ApiRoute.Films}/${searchId}`, filmStatus);
   const { data: similarFilms, isLoading } = useApiService<FilmItemType[]>(
     `${ApiRoute.Films}/${searchId}/similar`
   );
@@ -37,6 +38,12 @@ function MainLayout({
   );
 
   useEffect(() => {
+    if (currentFilmData) {
+      setFilmStatus(currentFilmData.isFavorite);
+    }
+  }, [currentFilmData]);
+
+  useEffect(() => {
     if (subPageCurrentIndex > 0) {
       setActiveNavItem(subPageCurrentIndex);
     } else {
@@ -44,10 +51,6 @@ function MainLayout({
     }
   }, [currentNavItem, subPageCurrentIndex]);
 
-  const currentFilm = CurrentFilmData;
-  const [filmStatus, setFilmStatus] = useState(
-    currentFilm?.isFavorite || false
-  );
   const [isFilmStatusUpdateError, setIsFilmStatusUpdateError] = useState(false);
   const { data: myFilms } = useApiService<FilmItemType[]>(
     ApiRoute.Favorite,
@@ -73,21 +76,28 @@ function MainLayout({
       <section className='film-card film-card--full'>
         <div className='film-card__hero'>
           <div className='film-card__bg'>
-            <img src={currentFilm?.backgroundImage} alt={currentFilm?.name} />
+            <img
+              src={currentFilmData?.backgroundImage}
+              alt={currentFilmData?.name}
+            />
           </div>
           <h1 className='visually-hidden'>WTW</h1>
           <Header authorizationStatus={authorizationStatus} />
           <div className='film-card__wrap'>
             <div className='film-card__desc'>
-              <h2 className='film-card__title'>{currentFilm?.name}</h2>
+              <h2 className='film-card__title'>{currentFilmData?.name}</h2>
               <p className='film-card__meta'>
-                <span className='film-card__genre'>{currentFilm?.genre}</span>
-                <span className='film-card__year'>{currentFilm?.released}</span>
+                <span className='film-card__genre'>
+                  {currentFilmData?.genre}
+                </span>
+                <span className='film-card__year'>
+                  {currentFilmData?.released}
+                </span>
               </p>
               <div className='film-card__buttons'>
                 <Link
                   className='btn btn--play film-card__button'
-                  to={`/player/${currentFilm?.id}`}
+                  to={`/player/${currentFilmData?.id}`}
                 >
                   <svg viewBox='0 0 19 19' width={19} height={19}>
                     <use xlinkHref='#play-s' />
@@ -102,7 +112,7 @@ function MainLayout({
                         (evt) =>
                           handleFilmStateUpdate(
                             evt,
-                            currentFilm?.id,
+                            currentFilmData?.id,
                             filmStatus,
                             setFilmStatus,
                             setIsFilmStatusUpdateError
@@ -120,7 +130,7 @@ function MainLayout({
                       </span>
                     </button>
                     <Link
-                      to={`/films/${currentFilm?.id}/review`}
+                      to={`/films/${currentFilmData?.id}/review`}
                       className='btn film-card__button'
                     >
                       Add review
@@ -136,8 +146,8 @@ function MainLayout({
           <div className='film-card__info'>
             <div className='film-card__poster film-card__poster--big'>
               <img
-                src={currentFilm?.posterImage}
-                alt={currentFilm?.name}
+                src={currentFilmData?.posterImage}
+                alt={currentFilmData?.name}
                 width={218}
                 height={327}
               />
@@ -156,7 +166,7 @@ function MainLayout({
                     >
                       <NavLink
                         to={`/films/${
-                          currentFilm?.id
+                          currentFilmData?.id
                         }/${navItem.toLocaleLowerCase()}`}
                         className='film-nav__link'
                       >
@@ -166,7 +176,7 @@ function MainLayout({
                   ))}
                 </ul>
               </nav>
-              <Outlet context={currentFilm} />
+              <Outlet context={currentFilmData} />
             </div>
           </div>
         </div>
@@ -178,7 +188,7 @@ function MainLayout({
           {!isLoading && (
             <div className='catalog__films-list'>
               {similarFilms
-                ?.filter(({ id }) => id !== currentFilm?.id)
+                ?.filter(({ id }) => id !== currentFilmData?.id)
                 .map(({ id, posterImage, name, previewVideoLink }) => (
                   <SmallFilmCard
                     key={id}

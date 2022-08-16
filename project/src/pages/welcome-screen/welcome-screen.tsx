@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 import Catalog from '../../components/catalog/catalog';
-import { useAppSelector } from '../../hooks/storeHooks';
+import { useAppSelector, useAppDispatch } from '../../hooks/storeHooks';
 import type { Props } from '../../types';
 import useApiService from '../../hooks/apiHooks/useApiService';
 import type { FilmItemType } from '../../types';
 import { ApiRoute } from '../../api/constants';
 import { handleFilmStateUpdate } from '../../project.utils';
+import { fetchPromo } from '../../store/async-action';
 
 function WelcomeScreen({
   authorizationStatus,
@@ -18,14 +19,16 @@ function WelcomeScreen({
   const [filmStatus, setFilmStatus] = useState(promo?.isFavorite || false);
   const [isFilmStatusUpdateError, setIsFilmStatusUpdateError] = useState(false);
 
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchPromo());
+  }, [filmStatus, dispatch]);
+
   const { data: myFilms } = useApiService<FilmItemType[]>(
     ApiRoute.Favorite,
     filmStatus,
     authorizationStatus
   );
-
-  // eslint-disable-next-line no-console
-  console.log(myFilms);
 
   if (isFilmStatusUpdateError) {
     //todo: log error
