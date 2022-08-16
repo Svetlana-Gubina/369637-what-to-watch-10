@@ -8,7 +8,7 @@ import { RATING_ITEMS } from './add-review.constants';
 import { addComment } from '../../store/async-action';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { clearCommentState } from '../../store/action';
-import type { Props } from '../../components/app/app.types';
+import type { Props } from '../../types';
 
 function AddReview({ films }: Props): JSX.Element {
   const currentFilm = useUrlParam(films);

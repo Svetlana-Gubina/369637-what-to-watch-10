@@ -1,4 +1,4 @@
-import type { FilmItemType } from './components/app/app.types';
+import type { FilmItemType } from './types';
 import { api } from './store';
 import { ApiRoute } from './api/constants';
 
@@ -33,7 +33,10 @@ export const handleFilmStateUpdate = (
   }
   api
     .post(`${ApiRoute.Favorite}/${filmId}/${Number(!filmStatus)}`)
-    .then((res) => setFilmStatus(res.data.isFavorite))
+    .then((res) => {
+      setFilmStatus(res.data.isFavorite);
+      setIsFilmStatusUpdateError(false);
+    })
     .catch((err) => {
       setIsFilmStatusUpdateError(true);
     });

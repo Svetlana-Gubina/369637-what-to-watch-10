@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { FilmItemType } from '../../components/app/app.types';
+import { FilmItemType } from '../../types';
 import { fetchAllFilms, fetchPromo } from '../async-action';
 
 // a type for the slice state

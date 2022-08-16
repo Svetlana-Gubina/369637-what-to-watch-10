@@ -1,4 +1,4 @@
-import type { FilmItemType } from '../../components/app/app.types';
+import type { FilmItemType } from '../../types';
 import { useParams } from 'react-router-dom';
 import { getCurrentFilm } from '../../project.utils';
 

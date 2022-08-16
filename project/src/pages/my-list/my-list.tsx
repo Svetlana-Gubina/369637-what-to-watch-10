@@ -5,7 +5,7 @@ import SmallFilmCard from '../../components/small-film-card/small-film-card';
 import UserBlock from '../../components/user-block/user-block';
 import useApiService from '../../hooks/apiHooks/useApiService';
 import { ApiRoute } from '../../api/constants';
-import type { FilmItemType } from '../../components/app/app.types';
+import type { FilmItemType } from '../../types';
 import LoadingOverlay from '../../components/loading-overlay/loading-overlay';
 
 function MyList(): JSX.Element {

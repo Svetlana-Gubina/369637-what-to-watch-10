@@ -5,9 +5,9 @@ import Footer from '../../components/footer/footer';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 import Catalog from '../../components/catalog/catalog';
 import { useAppSelector } from '../../hooks/storeHooks';
-import type { Props } from '../../components/app/app.types';
+import type { Props } from '../../types';
 import useApiService from '../../hooks/apiHooks/useApiService';
-import type { FilmItemType } from '../../components/app/app.types';
+import type { FilmItemType } from '../../types';
 import { ApiRoute } from '../../api/constants';
 import { handleFilmStateUpdate } from '../../project.utils';
 
@@ -20,8 +20,12 @@ function WelcomeScreen({
 
   const { data: myFilms } = useApiService<FilmItemType[]>(
     ApiRoute.Favorite,
-    filmStatus
+    filmStatus,
+    authorizationStatus
   );
+
+  // eslint-disable-next-line no-console
+  console.log(myFilms);
 
   if (isFilmStatusUpdateError) {
     //todo: log error
@@ -84,7 +88,9 @@ function WelcomeScreen({
                       <use xlinkHref={filmStatus ? '#in-list' : '#add'} />
                     </svg>
                     <span>My list</span>
-                    <span className='film-card__count'>{myFilms?.length}</span>
+                    <span className='film-card__count'>
+                      {myFilms?.length || 0}
+                    </span>
                   </button>
                 )}
               </div>

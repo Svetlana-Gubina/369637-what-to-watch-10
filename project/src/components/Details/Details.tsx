@@ -1,5 +1,5 @@
 import React from 'react';
-import type { FilmItemType } from '../app/app.types';
+import type { FilmItemType } from '../../types';
 import { useOutletContext } from 'react-router-dom';
 
 function Details(): JSX.Element {

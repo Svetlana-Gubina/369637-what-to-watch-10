@@ -1,5 +1,6 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { getToken } from '../services/token';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
+import { getItem, AUTH_TOKEN_KEY_NAME } from '../services/localStorageItem';
 
 const BASE_URL = 'https://10.react.pages.academy/wtw';
 const TIMEOUT = 5000;
@@ -15,13 +16,21 @@ export const createApi = (): AxiosInstance => {
     (
       config: AxiosRequestConfig
     ): AxiosRequestConfig | Promise<AxiosRequestConfig> => {
-      const token = getToken();
+      const token = getItem(AUTH_TOKEN_KEY_NAME);
       if (token) {
         config.headers['x-token'] = token;
       }
       return config;
     }
   );
+
+  // instance.interceptors.response.use(
+  // (response) => response,
+  // (error: AxiosError) => {
+  // eslint-disable-next-line no-console
+  // console.log(error);
+  // }
+  // );
 
   return instance;
 };

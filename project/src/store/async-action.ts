@@ -1,8 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ApiRoute } from '../api/constants';
 import type { AppDispatch, RootState } from './store.types';
-import type { FilmItemType, UserDataType } from '../components/app/app.types';
-import { saveToken, dropToken } from '../services/token';
+import type { FilmItemType, UserDataType } from '../types';
+import {
+  saveItem,
+  dropItem,
+  AUTH_TOKEN_KEY_NAME,
+  USER_AVATAR_KEY_NAME,
+} from '../services/localStorageItem';
 import { AxiosInstance } from 'axios';
 
 // Films
@@ -81,7 +86,8 @@ export const loginAction = createAsyncThunk<
     email,
     password,
   });
-  saveToken(data.token);
+  saveItem(AUTH_TOKEN_KEY_NAME, data.token);
+  saveItem(USER_AVATAR_KEY_NAME, data.avatarUrl);
   return data;
 });
 
@@ -95,5 +101,6 @@ export const logoutAction = createAsyncThunk<
   }
 >('user/logout', async (_arg, { dispatch, extra: api }) => {
   await api.delete(ApiRoute.Logout);
-  dropToken();
+  dropItem(AUTH_TOKEN_KEY_NAME);
+  dropItem(USER_AVATAR_KEY_NAME);
 });

@@ -15,14 +15,15 @@ import { AppRoute } from '../../project.constants';
 import LoadingOverlay from '../loading-overlay/loading-overlay';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { fetchAllFilms, fetchPromo } from '../../store/async-action';
+import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 
 function App(): JSX.Element | null {
   const filmData = useAppSelector((state) => state.films.films);
   const isDataLoaded = useAppSelector((state) => state.films.isFilmDataLoaded);
   const isFetchError = useAppSelector((state) => state.films.filmDataError);
-  const authorizationStatus = useAppSelector(
-    (state) => state.user.authorizationStatus
-  );
+  const authorizationStatus =
+    useAppSelector((state) => state.user.authorizationStatus) ||
+    AuthorizationStatus.Unknown;
 
   const dispatch = useAppDispatch();
   useEffect(() => {

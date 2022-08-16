@@ -1,4 +1,4 @@
-import { AuthorizationStatus } from '../private-route/private-route.constants';
+import { AuthorizationStatus } from '../components/private-route/private-route.constants';
 
 export type UserDataType = {
   avatarUrl: string;

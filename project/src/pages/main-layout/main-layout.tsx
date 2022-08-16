@@ -8,7 +8,7 @@ import type { Props } from './main-layout.types';
 import { NAV_LIST } from './main-layout.constants';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 import { useParams } from 'react-router-dom';
-import type { FilmItemType } from '../../components/app/app.types';
+import type { FilmItemType } from '../../types';
 import useApiService from '../../hooks/apiHooks/useApiService';
 import { ApiRoute } from '../../api/constants';
 import LoadingOverlay from '../../components/loading-overlay/loading-overlay';
@@ -19,7 +19,7 @@ function MainLayout({
 }: Omit<Props, 'films'>): JSX.Element {
   const { id: searchId } = useParams();
   const {
-    data: filmData,
+    data: CurrentFilmData,
     isLoading: isFilmDataLoading,
     isError: isFilmDataError,
   } = useApiService<FilmItemType>(`${ApiRoute.Films}/${searchId}`);
@@ -44,7 +44,7 @@ function MainLayout({
     }
   }, [currentNavItem, subPageCurrentIndex]);
 
-  const currentFilm = filmData;
+  const currentFilm = CurrentFilmData;
   const [filmStatus, setFilmStatus] = useState(
     currentFilm?.isFavorite || false
   );
@@ -116,7 +116,7 @@ function MainLayout({
                       </svg>
                       <span>My list</span>
                       <span className='film-card__count'>
-                        {myFilms?.length}
+                        {myFilms?.length || 0}
                       </span>
                     </button>
                     <Link
