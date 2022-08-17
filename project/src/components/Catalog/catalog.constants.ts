@@ -1,4 +1,4 @@
-import type { FilmItemType } from '../app/app.types';
+import type { FilmItemType } from '../../types';
 
 export const GENRES = [
   'All genres',

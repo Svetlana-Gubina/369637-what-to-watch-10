@@ -1,6 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import type { CommentType } from '../app/app.types';
+import type { CommentType } from '../../types';
 
 function ReviewItem({
   user,

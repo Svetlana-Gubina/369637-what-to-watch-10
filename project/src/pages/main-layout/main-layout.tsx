@@ -8,17 +8,25 @@ import type { Props } from './main-layout.types';
 import { NAV_LIST } from './main-layout.constants';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 import { useParams } from 'react-router-dom';
-import useUrlParam from '../../hooks/useUrlParam/useUrlParam';
-import type { FilmItemType } from '../../components/app/app.types';
+import type { FilmItemType } from '../../types';
 import useApiService from '../../hooks/apiHooks/useApiService';
 import { ApiRoute } from '../../api/constants';
+import LoadingOverlay from '../../components/loading-overlay/loading-overlay';
+import { handleFilmStateUpdate } from '../../project.utils';
 
-function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
+function MainLayout({
+  authorizationStatus,
+}: Omit<Props, 'films'>): JSX.Element {
   const { id: searchId } = useParams();
+  const [filmStatus, setFilmStatus] = useState(false);
+  const {
+    data: currentFilmData,
+    isLoading: isFilmDataLoading,
+    isError: isFilmDataError,
+  } = useApiService<FilmItemType>(`${ApiRoute.Films}/${searchId}`, filmStatus);
   const { data: similarFilms, isLoading } = useApiService<FilmItemType[]>(
     `${ApiRoute.Films}/${searchId}/similar`
   );
-
   const location = useLocation();
   const currentNavItem = location.pathname.slice(
     location.pathname.lastIndexOf('/') + 1
@@ -30,6 +38,12 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
   );
 
   useEffect(() => {
+    if (currentFilmData) {
+      setFilmStatus(currentFilmData.isFavorite);
+    }
+  }, [currentFilmData]);
+
+  useEffect(() => {
     if (subPageCurrentIndex > 0) {
       setActiveNavItem(subPageCurrentIndex);
     } else {
@@ -37,10 +51,24 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
     }
   }, [currentNavItem, subPageCurrentIndex]);
 
-  const currentFilm = useUrlParam(films);
+  const [isFilmStatusUpdateError, setIsFilmStatusUpdateError] = useState(false);
+  const { data: myFilms } = useApiService<FilmItemType[]>(
+    ApiRoute.Favorite,
+    filmStatus
+  );
 
-  if (!currentFilm) {
+  if (isFilmDataError) {
     return <Navigate to={AppRoute.PageNotFound} />;
+  }
+
+  if (isFilmDataLoading) {
+    return <LoadingOverlay />;
+  }
+
+  if (isFilmStatusUpdateError) {
+    //todo: log error
+    // eslint-disable-next-line no-console
+    console.log(isFilmStatusUpdateError);
   }
 
   return (
@@ -48,21 +76,28 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
       <section className='film-card film-card--full'>
         <div className='film-card__hero'>
           <div className='film-card__bg'>
-            <img src={currentFilm?.backgroundImage} alt={currentFilm?.name} />
+            <img
+              src={currentFilmData?.backgroundImage}
+              alt={currentFilmData?.name}
+            />
           </div>
           <h1 className='visually-hidden'>WTW</h1>
           <Header authorizationStatus={authorizationStatus} />
           <div className='film-card__wrap'>
             <div className='film-card__desc'>
-              <h2 className='film-card__title'>{currentFilm?.name}</h2>
+              <h2 className='film-card__title'>{currentFilmData?.name}</h2>
               <p className='film-card__meta'>
-                <span className='film-card__genre'>{currentFilm?.genre}</span>
-                <span className='film-card__year'>{currentFilm?.released}</span>
+                <span className='film-card__genre'>
+                  {currentFilmData?.genre}
+                </span>
+                <span className='film-card__year'>
+                  {currentFilmData?.released}
+                </span>
               </p>
               <div className='film-card__buttons'>
                 <Link
                   className='btn btn--play film-card__button'
-                  to={`/player/${currentFilm.id}`}
+                  to={`/player/${currentFilmData?.id}`}
                 >
                   <svg viewBox='0 0 19 19' width={19} height={19}>
                     <use xlinkHref='#play-s' />
@@ -72,18 +107,30 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
 
                 {authorizationStatus === AuthorizationStatus.Auth && (
                   <>
-                    <Link
+                    <button
+                      onClick={
+                        (evt) =>
+                          handleFilmStateUpdate(
+                            evt,
+                            currentFilmData?.id,
+                            filmStatus,
+                            setFilmStatus,
+                            setIsFilmStatusUpdateError
+                          )
+                        // eslint-disable-next-line react/jsx-curly-newline
+                      }
                       className='btn btn--list film-card__button'
-                      to={AppRoute.MyList}
                     >
                       <svg viewBox='0 0 19 20' width={19} height={20}>
-                        <use xlinkHref='#add' />
+                        <use xlinkHref={filmStatus ? '#in-list' : '#add'} />
                       </svg>
                       <span>My list</span>
-                      <span className='film-card__count'>9</span>
-                    </Link>
+                      <span className='film-card__count'>
+                        {myFilms?.length || 0}
+                      </span>
+                    </button>
                     <Link
-                      to={`/films/${currentFilm?.id}/review`}
+                      to={`/films/${currentFilmData?.id}/review`}
                       className='btn film-card__button'
                     >
                       Add review
@@ -99,8 +146,8 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
           <div className='film-card__info'>
             <div className='film-card__poster film-card__poster--big'>
               <img
-                src={currentFilm?.posterImage}
-                alt={currentFilm?.name}
+                src={currentFilmData?.posterImage}
+                alt={currentFilmData?.name}
                 width={218}
                 height={327}
               />
@@ -119,7 +166,7 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
                     >
                       <NavLink
                         to={`/films/${
-                          currentFilm?.id
+                          currentFilmData?.id
                         }/${navItem.toLocaleLowerCase()}`}
                         className='film-nav__link'
                       >
@@ -129,7 +176,7 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
                   ))}
                 </ul>
               </nav>
-              <Outlet context={currentFilm} />
+              <Outlet context={currentFilmData} />
             </div>
           </div>
         </div>
@@ -141,13 +188,14 @@ function MainLayout({ films, authorizationStatus }: Props): JSX.Element {
           {!isLoading && (
             <div className='catalog__films-list'>
               {similarFilms
-                ?.filter(({ id }) => id !== currentFilm.id)
-                .map(({ id, posterImage, name }) => (
+                ?.filter(({ id }) => id !== currentFilmData?.id)
+                .map(({ id, posterImage, name, previewVideoLink }) => (
                   <SmallFilmCard
                     key={id}
                     id={id}
                     imgSrc={posterImage}
                     name={name}
+                    previewVideoLink={previewVideoLink}
                   />
                 ))}
             </div>

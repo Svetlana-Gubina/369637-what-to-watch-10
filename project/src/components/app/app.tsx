@@ -15,14 +15,15 @@ import { AppRoute } from '../../project.constants';
 import LoadingOverlay from '../loading-overlay/loading-overlay';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { fetchAllFilms, fetchPromo } from '../../store/async-action';
+import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 
 function App(): JSX.Element | null {
   const filmData = useAppSelector((state) => state.films.films);
   const isDataLoaded = useAppSelector((state) => state.films.isFilmDataLoaded);
   const isFetchError = useAppSelector((state) => state.films.filmDataError);
-  const authorizationStatus = useAppSelector(
-    (state) => state.user.authorizationStatus
-  );
+  const authorizationStatus =
+    useAppSelector((state) => state.user.authorizationStatus) ||
+    AuthorizationStatus.Unknown;
 
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -49,12 +50,7 @@ function App(): JSX.Element | null {
         />
         <Route
           path={AppRoute.Film}
-          element={
-            <MainLayout
-              authorizationStatus={authorizationStatus}
-              films={filmData}
-            />
-          }
+          element={<MainLayout authorizationStatus={authorizationStatus} />}
         >
           <Route index element={<Overview />} />
           <Route path={AppRoute.Overview} element={<Overview />} />
@@ -76,7 +72,7 @@ function App(): JSX.Element | null {
           path={AppRoute.MyList}
           element={
             <PrivateRoot authorizationStatus={authorizationStatus}>
-              <MyList films={filmData} />
+              <MyList />
             </PrivateRoot>
           }
         />

@@ -1,9 +1,9 @@
 import React from 'react';
-import type { FilmItemType } from '../app/app.types';
+import type { FilmItemType } from '../../types';
 import { getRatingDescription } from './overview.utils';
 import { useOutletContext } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import type { CommentType } from '../app/app.types';
+import type { CommentType } from '../../types';
 import { ApiRoute } from '../../api/constants';
 import useApiService from '../../hooks/apiHooks/useApiService';
 

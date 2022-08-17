@@ -7,7 +7,11 @@ type ReturnType<T> = {
   isError: boolean;
 };
 
-function useApiService<T>(url: string): ReturnType<T> {
+function useApiService<T>(
+  url: string,
+  dep1: string | boolean = false,
+  dep2: string | boolean = false
+): ReturnType<T> {
   const [data, setData] = useState<T | null>(null);
   const [isError, setIsError] = useState(false);
 
@@ -20,7 +24,7 @@ function useApiService<T>(url: string): ReturnType<T> {
       .catch(() => {
         setIsError(true);
       });
-  }, [url]);
+  }, [url, dep1, dep2]);
 
   return {
     data,

@@ -4,7 +4,7 @@ import Logo from '../logo/logo';
 import { AppRoute } from '../../project.constants';
 import UserBlock from '../user-block/user-block';
 import { AuthorizationStatus } from '../private-route/private-route.constants';
-import type { Props } from '../app/app.types';
+import type { Props } from '../../types';
 
 function Header({ authorizationStatus }: Omit<Props, 'films'>): JSX.Element {
   return (

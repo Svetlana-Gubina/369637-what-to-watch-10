@@ -1,8 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ApiRoute } from '../api/constants';
 import type { AppDispatch, RootState } from './store.types';
-import type { FilmItemType, UserDataType } from '../components/app/app.types';
-import { saveToken, dropToken } from '../services/token';
+import type { FilmItemType, UserDataType } from '../types';
+import {
+  saveItem,
+  dropItem,
+  AUTH_TOKEN_KEY_NAME,
+  USER_AVATAR_KEY_NAME,
+} from '../services/localStorageItem';
 import { AxiosInstance } from 'axios';
 
 // Films
@@ -16,19 +21,6 @@ export const fetchAllFilms = createAsyncThunk<
   }
 >('films/fetchAllFilms', async (_arg, { dispatch, extra: api }) => {
   const { data } = await api.get<FilmItemType[]>(ApiRoute.Films);
-  return data;
-});
-
-export const fetchFilmDataById = createAsyncThunk<
-  FilmItemType,
-  number,
-  {
-    dispatch: AppDispatch;
-    state: RootState;
-    extra: AxiosInstance;
-  }
->('films/fetchFilmDataById', async (filmId, { dispatch, extra: api }) => {
-  const { data } = await api.get<FilmItemType>(`${ApiRoute.Films}/${filmId}`);
   return data;
 });
 
@@ -51,7 +43,7 @@ type AddCommentAttributes = {
   data: { comment: string; rating: number };
 };
 
-export const AddComment = createAsyncThunk<
+export const addComment = createAsyncThunk<
   void,
   AddCommentAttributes,
   {
@@ -59,41 +51,8 @@ export const AddComment = createAsyncThunk<
     state: RootState;
     extra: AxiosInstance;
   }
->('films/AddComment', async (attr, { dispatch, extra: api }) => {
-  await api.post(`${ApiRoute.Comments}/${attr.filmId}`, {
-    body: JSON.stringify(attr.data),
-  });
-});
-
-// Favorite
-export const fetchFavoriteFilms = createAsyncThunk<
-  FilmItemType[],
-  undefined,
-  {
-    dispatch: AppDispatch;
-    state: RootState;
-    extra: AxiosInstance;
-  }
->('films/fetchFavoriteFilms', async (_arg, { dispatch, extra: api }) => {
-  const { data } = await api.get<FilmItemType[]>(ApiRoute.Favorite);
-  return data;
-});
-
-type UpdateStatusAttributes = {
-  filmId: number;
-  status: boolean;
-};
-
-export const updateFilmIsFavoriteState = createAsyncThunk<
-  void,
-  UpdateStatusAttributes,
-  {
-    dispatch: AppDispatch;
-    state: RootState;
-    extra: AxiosInstance;
-  }
->('films/updateFilmIsFavoriteState', async (attr, { dispatch, extra: api }) => {
-  await api.post(`${ApiRoute.Favorite}/${attr.filmId}/${attr.status}`);
+>('comment/addComment', async (attr, { dispatch, extra: api }) => {
+  await api.post(`${ApiRoute.Comments}/${attr.filmId}`, attr.data);
 });
 
 // User
@@ -127,7 +86,8 @@ export const loginAction = createAsyncThunk<
     email,
     password,
   });
-  saveToken(data.token);
+  saveItem(AUTH_TOKEN_KEY_NAME, data.token);
+  saveItem(USER_AVATAR_KEY_NAME, data.avatarUrl);
   return data;
 });
 
@@ -141,5 +101,6 @@ export const logoutAction = createAsyncThunk<
   }
 >('user/logout', async (_arg, { dispatch, extra: api }) => {
   await api.delete(ApiRoute.Logout);
-  dropToken();
+  dropItem(AUTH_TOKEN_KEY_NAME);
+  dropItem(USER_AVATAR_KEY_NAME);
 });

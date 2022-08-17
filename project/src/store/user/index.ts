@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
-import type { UserDataType } from '../../components/app/app.types';
+import type { UserDataType } from '../../types';
 import { checkAuthAction, loginAction, logoutAction } from '../async-action';
 import type { PayloadAction } from '@reduxjs/toolkit';
-// import type { RootState } from '../store.types';
 
 // Define a type for the slice state
 type UserState = {

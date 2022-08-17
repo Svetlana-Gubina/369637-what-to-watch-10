@@ -2,7 +2,7 @@ import React from 'react';
 import ReviewItem from '../review/review';
 import { MAX_REVIEWS_TO_SHOW } from './reviews.constants';
 import { useParams } from 'react-router-dom';
-import type { CommentType } from '../app/app.types';
+import type { CommentType } from '../../types';
 import LoadingOverlay from '../loading-overlay/loading-overlay';
 import { ApiRoute } from '../../api/constants';
 import useApiService from '../../hooks/apiHooks/useApiService';

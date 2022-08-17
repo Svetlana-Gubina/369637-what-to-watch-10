@@ -4,7 +4,12 @@ import PlayerComponent from '../../components/player-component/player-component'
 import { TIMEOUT } from './small-film-card.constants';
 import type { Props } from './small-film-card.types';
 
-function SmallFilmCard({ id, imgSrc, name }: Props): JSX.Element {
+function SmallFilmCard({
+  id,
+  imgSrc,
+  name,
+  previewVideoLink,
+}: Props): JSX.Element {
   const [isVideoActive, setIsVideoActive] = useState(false);
   const [isCursonOnCard, setIsCursonOnCard] = useState(false);
 
@@ -31,6 +36,7 @@ function SmallFilmCard({ id, imgSrc, name }: Props): JSX.Element {
           id={id}
           imgSrc={imgSrc}
           name={name}
+          previewVideoLink={previewVideoLink}
           isFullPage={false}
         />
       ) : (
