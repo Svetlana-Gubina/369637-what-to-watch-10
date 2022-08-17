@@ -9,6 +9,7 @@ import { AuthorizationStatus } from '../../components/private-route/private-rout
 
 function SignIn(): JSX.Element {
   const [isEmailError, setIsEmailError] = useState(false);
+  const [isPasswordError, setIsPasswordError] = useState(false);
   const authorizationStatus = useAppSelector(
     (state) => state.user.authorizationStatus
   );
@@ -25,6 +26,7 @@ function SignIn(): JSX.Element {
   }, [authorizationStatus, navigate]);
 
   const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
+  const isValidPassword = (email: string) => /[0-9]+[A-Za-z]+/g.test(email);
 
   const handleEmailChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setUserEmail(evt.target.value);
@@ -33,6 +35,7 @@ function SignIn(): JSX.Element {
 
   const handlePasswordChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setUserPassword(evt.target.value);
+    setIsPasswordError(false);
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -40,6 +43,10 @@ function SignIn(): JSX.Element {
 
     if (!isValidEmail(userEmail)) {
       setIsEmailError(true);
+      return;
+    }
+    if (!isValidPassword) {
+      setIsPasswordError(true);
       return;
     }
 
@@ -63,6 +70,11 @@ function SignIn(): JSX.Element {
           {isEmailError && (
             <div className='sign-in__message'>
               <p>Please enter a valid email address</p>
+            </div>
+          )}
+          {isPasswordError && (
+            <div className='sign-in__message'>
+              <p>Password should contain digits and letters</p>
             </div>
           )}
           {isLoginError && (

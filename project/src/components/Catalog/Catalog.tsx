@@ -38,13 +38,14 @@ function Catalog(): JSX.Element {
       <div className='catalog__films-list'>
         {filmsByGenre
           .slice(0, FILMS_TO_SHOW * count)
-          .map(({ id, posterImage, name, previewVideoLink }) => (
+          .map(({ id, posterImage, name, previewVideoLink, videoLink }) => (
             <SmallFilmCard
               key={id}
               id={id}
               imgSrc={posterImage}
               name={name}
               previewVideoLink={previewVideoLink}
+              videoLink={videoLink}
             />
           ))}
       </div>

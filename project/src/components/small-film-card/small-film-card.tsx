@@ -9,6 +9,7 @@ function SmallFilmCard({
   imgSrc,
   name,
   previewVideoLink,
+  videoLink,
 }: Props): JSX.Element {
   const [isVideoActive, setIsVideoActive] = useState(false);
   const [isCursonOnCard, setIsCursonOnCard] = useState(false);
@@ -37,6 +38,7 @@ function SmallFilmCard({
           imgSrc={imgSrc}
           name={name}
           previewVideoLink={previewVideoLink}
+          videoLink={videoLink}
           isFullPage={false}
         />
       ) : (

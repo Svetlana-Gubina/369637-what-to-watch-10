@@ -1,8 +1,11 @@
+/* eslint-disable no-console */
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoadingOverlay from '../loading-overlay/loading-overlay';
 import useVideoPlayer from '../../hooks/useVideoPlayer/useVideoPlayer';
 import { PlayerState } from '../../pages/player/player-constants';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Props } from './player-component.types';
 
 function PlayerComponent({
@@ -10,6 +13,7 @@ function PlayerComponent({
   imgSrc,
   name,
   previewVideoLink,
+  videoLink,
   isFullPage,
 }: Props): JSX.Element {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -39,8 +43,10 @@ function PlayerComponent({
         height: '100%',
       }}
     >
+      {isFullPage && <ToastContainer />}
       {isLoading && <LoadingOverlay />}
       <video
+        preload='metadata'
         onLoadedData={() => setIsLoading(false)}
         onCanPlay={togglePlay}
         id='video-preview'
@@ -48,11 +54,13 @@ function PlayerComponent({
         poster={imgSrc || 'img/player-poster.jpg'}
         ref={videoRef}
       >
-        <source src={previewVideoLink} type='video/mp4' />
-        <source src={previewVideoLink} type='video/webm' />
+        <source
+          src={isFullPage ? videoLink : previewVideoLink}
+          type='video/mp4'
+        />
         <p>
           Your browser doesn&rsquo;t support HTML5 video. Here is a{' '}
-          <a href={previewVideoLink}>link to the video</a> instead.
+          <a href={videoLink}>link to the video</a> instead.
         </p>
       </video>
 

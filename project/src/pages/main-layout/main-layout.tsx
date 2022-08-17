@@ -5,7 +5,7 @@ import Footer from '../../components/footer/footer';
 import SmallFilmCard from '../../components/small-film-card/small-film-card';
 import { AppRoute } from '../../project.constants';
 import type { Props } from './main-layout.types';
-import { NAV_LIST } from './main-layout.constants';
+import { NAV_LIST, LIMIT } from './main-layout.constants';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 import { useParams } from 'react-router-dom';
 import type { FilmItemType } from '../../types';
@@ -192,15 +192,19 @@ function MainLayout({
             <div className='catalog__films-list'>
               {similarFilms
                 ?.filter(({ id }) => id !== currentFilmData?.id)
-                .map(({ id, posterImage, name, previewVideoLink }) => (
-                  <SmallFilmCard
-                    key={id}
-                    id={id}
-                    imgSrc={posterImage}
-                    name={name}
-                    previewVideoLink={previewVideoLink}
-                  />
-                ))}
+                .slice(0, LIMIT)
+                .map(
+                  ({ id, posterImage, name, previewVideoLink, videoLink }) => (
+                    <SmallFilmCard
+                      key={id}
+                      id={id}
+                      imgSrc={posterImage}
+                      name={name}
+                      previewVideoLink={previewVideoLink}
+                      videoLink={videoLink}
+                    />
+                  )
+                )}
             </div>
           )}
         </section>

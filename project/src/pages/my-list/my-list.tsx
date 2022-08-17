@@ -36,15 +36,18 @@ function MyList(): JSX.Element {
       <section className='catalog'>
         <h2 className='catalog__title visually-hidden'>Catalog</h2>
         <div className='catalog__films-list'>
-          {myFilms?.map(({ id, posterImage, name, previewVideoLink }) => (
-            <SmallFilmCard
-              key={id}
-              id={id}
-              imgSrc={posterImage}
-              name={name}
-              previewVideoLink={previewVideoLink}
-            />
-          ))}
+          {myFilms?.map(
+            ({ id, posterImage, name, previewVideoLink, videoLink }) => (
+              <SmallFilmCard
+                key={id}
+                id={id}
+                imgSrc={posterImage}
+                name={name}
+                previewVideoLink={previewVideoLink}
+                videoLink={videoLink}
+              />
+            )
+          )}
         </div>
       </section>
       <Footer />

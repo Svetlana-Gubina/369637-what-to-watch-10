@@ -3,4 +3,5 @@ export type Props = {
   imgSrc: string;
   name: string;
   previewVideoLink: string;
+  videoLink: string;
 };
