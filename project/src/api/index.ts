@@ -1,5 +1,6 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import { getItem, AUTH_TOKEN_KEY_NAME } from '../services/localStorageItem';
+import { toast } from 'react-toastify';
 
 const BASE_URL = 'https://10.react.pages.academy/wtw';
 const TIMEOUT = 5000;
@@ -20,6 +21,20 @@ export const createApi = (): AxiosInstance => {
         config.headers['x-token'] = token;
       }
       return config;
+    }
+  );
+
+  instance.interceptors.response.use(
+    (response) => response,
+    (error: AxiosError) => {
+      if (error.response) {
+        const customId = 'custom-id';
+        toast.warn(error.response.data.error, {
+          toastId: customId,
+        });
+      }
+
+      throw error;
     }
   );
 

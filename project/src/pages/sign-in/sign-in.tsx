@@ -8,8 +8,7 @@ import { AppRoute } from '../../project.constants';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 
 function SignIn(): JSX.Element {
-  // todo: add validation
-  const isError = false;
+  const [isEmailError, setIsEmailError] = useState(false);
   const authorizationStatus = useAppSelector(
     (state) => state.user.authorizationStatus
   );
@@ -25,8 +24,11 @@ function SignIn(): JSX.Element {
     }
   }, [authorizationStatus, navigate]);
 
+  const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
+
   const handleEmailChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setUserEmail(evt.target.value);
+    setIsEmailError(false);
   };
 
   const handlePasswordChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +37,11 @@ function SignIn(): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+
+    if (!isValidEmail(userEmail)) {
+      setIsEmailError(true);
+      return;
+    }
 
     if (userEmail && userPassword) {
       dispatch(loginAction({ email: userEmail, password: userPassword }));
@@ -53,7 +60,7 @@ function SignIn(): JSX.Element {
           className='sign-in__form'
           onSubmit={(evt) => handleSubmit(evt)}
         >
-          {isError && (
+          {isEmailError && (
             <div className='sign-in__message'>
               <p>Please enter a valid email address</p>
             </div>

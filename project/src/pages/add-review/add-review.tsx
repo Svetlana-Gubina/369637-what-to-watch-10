@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, useRef } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import { AppRoute } from '../../project.constants';
 import useUrlParam from '../../hooks/useUrlParam/useUrlParam';
@@ -8,7 +8,10 @@ import { RATING_ITEMS } from './add-review.constants';
 import { addComment } from '../../store/async-action';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { clearCommentState } from '../../store/action';
+import LoadingOverlay from '../../components/loading-overlay/loading-overlay';
 import type { Props } from '../../types';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AddReview({ films }: Props): JSX.Element {
   const currentFilm = useUrlParam(films);
@@ -16,6 +19,8 @@ function AddReview({ films }: Props): JSX.Element {
   const isError = useAppSelector((state) => state.comment.isCommentError);
   const [text, setText] = useState('');
   const [rating, setRating] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const inputRefs = useRef<HTMLInputElement[]>([]);
   const textRef = useRef<HTMLTextAreaElement | null>(null);
@@ -23,8 +28,9 @@ function AddReview({ films }: Props): JSX.Element {
 
   const validate = (): boolean => {
     if (!rating) {
-      // todo: show error
-      // console.log('Please check some stars');
+      // eslint-disable-next-line no-console
+      console.log('Please, check some stars!');
+      toast.warn('Please, check some stars!');
       return false;
     }
 
@@ -57,14 +63,16 @@ function AddReview({ films }: Props): JSX.Element {
           data: { comment: text, rating: rating },
         })
       );
+      setIsLoading(true);
     }
   };
 
   if (!currentFilm) {
-    return <Navigate to={AppRoute.PageNotFound} />;
+    navigate(AppRoute.PageNotFound);
   }
 
   if (isSuccess) {
+    setIsLoading(false);
     if (textRef.current && inputRefs.current) {
       textRef.current.value = '';
       inputRefs.current.map((el) => {
@@ -73,23 +81,26 @@ function AddReview({ films }: Props): JSX.Element {
         return el;
       });
     }
-
     setText('');
     setRating(0);
-    window.location.reload();
-    // todo: show error
-    // console.log('Your review successfully posted!');
     dispatch(clearCommentState());
   }
 
+  if (isLoading) {
+    return <LoadingOverlay />;
+  }
+
   if (isError) {
-    // todo: show error
-    // console.log('Sorry, comment not posted, please try again.');
+    setIsLoading(false);
+    toast.error(
+      'Sorry, some error happened, comment is not posted. Please, try again.'
+    );
     dispatch(clearCommentState());
   }
 
   return (
     <section className='film-card film-card--full'>
+      <ToastContainer />
       <div className='film-card__header'>
         <div className='film-card__bg'>
           <img src={currentFilm?.backgroundImage} alt={currentFilm?.name} />

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import WelcomeScreen from '../../pages/welcome-screen/welcome-screen';
 import MainLayout from '../../pages/main-layout/main-layout';
 import Overview from '../overview/overview';
@@ -16,6 +16,8 @@ import LoadingOverlay from '../loading-overlay/loading-overlay';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { fetchAllFilms, fetchPromo } from '../../store/async-action';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 function App(): JSX.Element | null {
   const filmData = useAppSelector((state) => state.films.films);
@@ -42,7 +44,7 @@ function App(): JSX.Element | null {
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Main}
@@ -79,7 +81,7 @@ function App(): JSX.Element | null {
         <Route path={AppRoute.PageNotFound} element={<PageNotFound />} />
         <Route path='*' element={<PageNotFound />} />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

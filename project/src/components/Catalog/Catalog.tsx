@@ -1,28 +1,21 @@
 import React, { useState } from 'react';
 import SmallFilmCard from '../small-film-card/small-film-card';
 import { GENRES, FILMS_TO_SHOW, INITIAL_COUNT } from './catalog.constants';
-import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
-import { chooseGenreAction } from '../../store/action';
+import { RootState } from '../../store/store.types';
+import { createSelector } from 'reselect';
+import { checkGenreMathFilter } from './catalog.utils';
+import { store } from '../../store';
 
 function Catalog(): JSX.Element {
-  const filmData = useAppSelector((state) => state.films.films);
   const [activeGenre, setActiveGenre] = useState(0);
   const [count, setCount] = useState<number>(INITIAL_COUNT);
+  const selectFilmsByGenre = createSelector(
+    (state: RootState) => state.films.films,
+    (films) =>
+      films.filter(({ genre }) => checkGenreMathFilter(genre, activeGenre))
+  );
 
-  // todo: reselect
-  const filmsByGenre = filmData;
-  const dispatch = useAppDispatch();
-
-  const handleChooseGenre = (
-    evt:
-      | React.MouseEvent<HTMLButtonElement>
-      | React.KeyboardEvent<HTMLButtonElement>
-  ): void => {
-    evt.preventDefault();
-
-    const btn = evt.target as HTMLButtonElement;
-    dispatch(chooseGenreAction(btn.name));
-  };
+  const filmsByGenre = selectFilmsByGenre(store.getState());
 
   return (
     <section className='catalog'>
@@ -36,12 +29,7 @@ function Catalog(): JSX.Element {
               activeGenre === i ? 'catalog__genres-item--active' : ''
             }`}
           >
-            <button
-              type='button'
-              name={genre}
-              onClick={(evt) => handleChooseGenre(evt)}
-              className='catalog__genres-btn'
-            >
+            <button type='button' name={genre} className='catalog__genres-btn'>
               {genre}
             </button>
           </li>

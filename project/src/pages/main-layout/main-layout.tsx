@@ -13,6 +13,8 @@ import useApiService from '../../hooks/apiHooks/useApiService';
 import { ApiRoute } from '../../api/constants';
 import LoadingOverlay from '../../components/loading-overlay/loading-overlay';
 import { handleFilmStateUpdate } from '../../project.utils';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function MainLayout({
   authorizationStatus,
@@ -66,14 +68,15 @@ function MainLayout({
   }
 
   if (isFilmStatusUpdateError) {
-    //todo: log error
-    // eslint-disable-next-line no-console
-    console.log(isFilmStatusUpdateError);
+    toast.error(
+      'Sorry, some error, film status in not changed. Please, try again'
+    );
   }
 
   return (
     <>
       <section className='film-card film-card--full'>
+        <ToastContainer />
         <div className='film-card__hero'>
           <div className='film-card__bg'>
             <img
