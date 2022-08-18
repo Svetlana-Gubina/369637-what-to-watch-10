@@ -40,7 +40,7 @@ function App(): JSX.Element | null {
   }
 
   if (isFetchError) {
-    <div>Sorry, server is not responding, please try again later.</div>;
+    return <div>Sorry, server is not responding, please try again later.</div>;
   }
 
   return (

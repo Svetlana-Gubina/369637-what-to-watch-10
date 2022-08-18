@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoadingOverlay from '../loading-overlay/loading-overlay';
