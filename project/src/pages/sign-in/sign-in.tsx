@@ -1,6 +1,6 @@
 import React, { useEffect, useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Logo from '../../components/logo/logo';
+import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { loginAction } from '../../store/async-action';
@@ -57,10 +57,14 @@ function SignIn(): JSX.Element {
 
   return (
     <div className='user-page'>
-      <header className='page-header user-page__head'>
-        <Logo />
+      <Header
+        authorizationStatus={authorizationStatus}
+        additionalClassName={'user-page__head'}
+        isSignInPage
+      >
         <h1 className='page-title user-page__title'>Sign in</h1>
-      </header>
+      </Header>
+
       <div className='sign-in user-page__content'>
         <form
           action='#'
@@ -86,7 +90,11 @@ function SignIn(): JSX.Element {
             </div>
           )}
           <div className='sign-in__fields'>
-            <div className='sign-in__field'>
+            <div
+              className={`sign-in__field ${
+                isEmailError && 'sign-in__field--error'
+              }`}
+            >
               <input
                 className='sign-in__input'
                 type='email'
@@ -102,7 +110,11 @@ function SignIn(): JSX.Element {
                 Email address
               </label>
             </div>
-            <div className='sign-in__field'>
+            <div
+              className={`sign-in__field ${
+                isPasswordError && 'sign-in__field--error'
+              }`}
+            >
               <input
                 className='sign-in__input'
                 type='password'

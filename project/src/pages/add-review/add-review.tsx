@@ -1,9 +1,8 @@
 import React, { useState, FormEvent, useRef } from 'react';
+import Header from '../../components/header/header';
 import { Link, useNavigate } from 'react-router-dom';
-import Logo from '../../components/logo/logo';
 import { AppRoute } from '../../project.constants';
 import useUrlParam from '../../hooks/useUrlParam/useUrlParam';
-import UserBlock from '../../components/user-block/user-block';
 import {
   RATING_ITEMS,
   MAX_REVIEW_LENGTH,
@@ -17,7 +16,7 @@ import type { Props } from '../../types';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function AddReview({ films }: Props): JSX.Element {
+function AddReview({ films, authorizationStatus }: Props): JSX.Element {
   const currentFilm = useUrlParam(films);
   const isSuccess = useAppSelector((state) => state.comment.isCommentSuccess);
   const isError = useAppSelector((state) => state.comment.isCommentError);
@@ -95,9 +94,7 @@ function AddReview({ films }: Props): JSX.Element {
           <img src={currentFilm?.backgroundImage} alt={currentFilm?.name} />
         </div>
         <h1 className='visually-hidden'>WTW</h1>
-        <header className='page-header'>
-          <Logo />
-
+        <Header authorizationStatus={authorizationStatus}>
           <nav className='breadcrumbs'>
             <ul className='breadcrumbs__list'>
               <li className='breadcrumbs__item'>
@@ -115,9 +112,8 @@ function AddReview({ films }: Props): JSX.Element {
               </li>
             </ul>
           </nav>
+        </Header>
 
-          <UserBlock />
-        </header>
         <div className='film-card__poster film-card__poster--small'>
           <img
             src={currentFilm?.posterImage}

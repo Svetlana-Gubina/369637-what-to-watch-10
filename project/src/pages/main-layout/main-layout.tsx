@@ -85,7 +85,10 @@ function MainLayout({
             />
           </div>
           <h1 className='visually-hidden'>WTW</h1>
-          <Header authorizationStatus={authorizationStatus} />
+          <Header
+            authorizationStatus={authorizationStatus}
+            additionalClassName={'film-card__head'}
+          />
           <div className='film-card__wrap'>
             <div className='film-card__desc'>
               <h2 className='film-card__title'>{currentFilmData?.name}</h2>

@@ -46,7 +46,10 @@ function WelcomeScreen({
           <img src={promo?.backgroundImage} alt={promo?.name} />
         </div>
         <h1 className='visually-hidden'>WTW</h1>
-        <Header authorizationStatus={authorizationStatus} />
+        <Header
+          authorizationStatus={authorizationStatus}
+          additionalClassName={'film-card__head'}
+        />
         <div className='film-card__wrap'>
           <div className='film-card__info'>
             <div className='film-card__poster'>

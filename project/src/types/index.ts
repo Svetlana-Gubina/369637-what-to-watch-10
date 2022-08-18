@@ -41,5 +41,5 @@ export type FilmItemType = {
 
 export type Props = {
   films: FilmItemType[];
-  authorizationStatus?: AuthorizationStatus;
+  authorizationStatus: AuthorizationStatus;
 };

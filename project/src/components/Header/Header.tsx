@@ -1,26 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Logo from '../logo/logo';
-import { AppRoute } from '../../project.constants';
-import UserBlock from '../user-block/user-block';
-import { AuthorizationStatus } from '../private-route/private-route.constants';
-import type { Props } from '../../types';
+import UserMenu from '../user-menu/user-menu';
+import type { Props } from './header.types';
 
-function Header({ authorizationStatus }: Omit<Props, 'films'>): JSX.Element {
+function Header({
+  authorizationStatus,
+  additionalClassName,
+  isSignInPage = false,
+  children,
+}: Props): JSX.Element {
   return (
-    <header
-      className={`page-header ${authorizationStatus ? 'film-card__head' : ''}`}
-    >
+    <header className={`page-header ${additionalClassName}`}>
       <Logo />
-      {authorizationStatus === AuthorizationStatus.Auth ? (
-        <UserBlock />
-      ) : (
-        <div className='user-block'>
-          <Link to={AppRoute.SignIn} className='user-block__link'>
-            Sign in
-          </Link>
-        </div>
-      )}
+      {children}
+      {!isSignInPage && <UserMenu authorizationStatus={authorizationStatus} />}
     </header>
   );
 }

@@ -66,7 +66,10 @@ function App(): JSX.Element | null {
           path={AppRoute.AddReview}
           element={
             <PrivateRoot authorizationStatus={authorizationStatus}>
-              <AddReview films={filmData} />
+              <AddReview
+                authorizationStatus={authorizationStatus}
+                films={filmData}
+              />
             </PrivateRoot>
           }
         />
@@ -74,7 +77,7 @@ function App(): JSX.Element | null {
           path={AppRoute.MyList}
           element={
             <PrivateRoot authorizationStatus={authorizationStatus}>
-              <MyList />
+              <MyList authorizationStatus={authorizationStatus} />
             </PrivateRoot>
           }
         />
