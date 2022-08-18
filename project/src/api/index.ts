@@ -29,7 +29,12 @@ export const createApi = (): AxiosInstance => {
     (error: AxiosError) => {
       if (error.response) {
         const customId = 'custom-id';
-        toast.warn(error.response.data.error, {
+        if (error.response.status === 401) {
+          toast.warn('You are not logged in', {
+            toastId: customId,
+          });
+        }
+        toast.error(error.response.data.error, {
           toastId: customId,
         });
       }

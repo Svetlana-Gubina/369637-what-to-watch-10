@@ -1,8 +1,10 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
 
-function useVideoPlayer(videoElement: React.RefObject<HTMLVideoElement>) {
+function useVideoPlayer(
+  videoElement: React.RefObject<HTMLVideoElement>,
+  isLoading: boolean
+) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [videoRuntime, setVideoRuntime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -45,13 +47,8 @@ function useVideoPlayer(videoElement: React.RefObject<HTMLVideoElement>) {
 
     if (videoTime) {
       setVideoRuntime(videoTime);
-    } else {
-      const customId = 'duration-id';
-      toast.warn('Some error happened, video duration is unknown', {
-        toastId: customId,
-      });
     }
-  }, [videoRuntime, videoElement]);
+  }, [videoRuntime, videoElement, isLoading]);
 
   useEffect(() => {
     if (videoElement.current) {

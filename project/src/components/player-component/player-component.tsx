@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import LoadingOverlay from '../loading-overlay/loading-overlay';
 import useVideoPlayer from '../../hooks/useVideoPlayer/useVideoPlayer';
 import { PlayerState } from '../../pages/player/player-constants';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { Props } from './player-component.types';
 
 function PlayerComponent({
@@ -27,7 +25,7 @@ function PlayerComponent({
     isVideoMuted,
     togglePlay,
     toggleMute,
-  } = useVideoPlayer(videoRef);
+  } = useVideoPlayer(videoRef, isLoading);
 
   const goFullScreen = (): void => {
     navigate(`/player/${id}`);
@@ -43,7 +41,6 @@ function PlayerComponent({
         height: '100%',
       }}
     >
-      {isFullPage && <ToastContainer />}
       {isLoading && <LoadingOverlay />}
       <video
         preload='metadata'
