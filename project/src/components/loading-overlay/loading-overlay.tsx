@@ -4,23 +4,24 @@ function LoadingOverlay(): JSX.Element {
   return (
     <div
       style={{
-        width: '100%',
-        height: '100%',
+        color: 'wheat',
+        background: 'rgba(0, 0, 0, 0.5)',
+        width: '100vw',
+        height: '100vh',
         margin: '0',
         padding: '0',
-        position: 'absolute',
+        position: 'fixed',
         top: '0',
         right: '0',
-        left: '0',
-        background: 'rgba(0 0 0 0.5)',
         zIndex: '100',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        color: 'wheat',
+        fontSize: '25px',
+        textAlign: 'center',
       }}
     >
-      Loading...
+      <p>Loading...</p>
     </div>
   );
 }

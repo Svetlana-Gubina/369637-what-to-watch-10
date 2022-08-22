@@ -10,6 +10,7 @@ function PlayerComponent({
   imgSrc,
   name,
   previewVideoLink,
+  videoLink,
   isFullPage,
 }: Props): JSX.Element {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -23,7 +24,7 @@ function PlayerComponent({
     isVideoMuted,
     togglePlay,
     toggleMute,
-  } = useVideoPlayer(videoRef);
+  } = useVideoPlayer(videoRef, isLoading);
 
   const goFullScreen = (): void => {
     navigate(`/player/${id}`);
@@ -41,6 +42,7 @@ function PlayerComponent({
     >
       {isLoading && <LoadingOverlay />}
       <video
+        preload='metadata'
         onLoadedData={() => setIsLoading(false)}
         onCanPlay={togglePlay}
         id='video-preview'
@@ -48,11 +50,13 @@ function PlayerComponent({
         poster={imgSrc || 'img/player-poster.jpg'}
         ref={videoRef}
       >
-        <source src={previewVideoLink} type='video/mp4' />
-        <source src={previewVideoLink} type='video/webm' />
+        <source
+          src={isFullPage ? videoLink : previewVideoLink}
+          type='video/mp4'
+        />
         <p>
           Your browser doesn&rsquo;t support HTML5 video. Here is a{' '}
-          <a href={previewVideoLink}>link to the video</a> instead.
+          <a href={videoLink}>link to the video</a> instead.
         </p>
       </video>
 

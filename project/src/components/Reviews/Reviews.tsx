@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import ReviewItem from '../review/review';
 import { MAX_REVIEWS_TO_SHOW } from './reviews.constants';
 import { useParams } from 'react-router-dom';
@@ -12,6 +12,13 @@ function Reviews(): JSX.Element {
   const { data: comments, isLoading } = useApiService<CommentType[]>(
     `${ApiRoute.Comments}/${searchId}`
   );
+  const commentsToRender = useMemo(
+    () =>
+      comments?.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      ),
+    [comments]
+  );
 
   if (isLoading) {
     return <LoadingOverlay />;
@@ -22,7 +29,7 @@ function Reviews(): JSX.Element {
       {comments && comments.length ? (
         <>
           <div className='film-card__reviews-col'>
-            {comments
+            {commentsToRender
               ?.slice(0, MAX_REVIEWS_TO_SHOW)
               .map(({ id, user, comment, date, rating }) => (
                 <ReviewItem
@@ -36,7 +43,7 @@ function Reviews(): JSX.Element {
           </div>
 
           <div className='film-card__reviews-col'>
-            {comments
+            {commentsToRender
               ?.slice(MAX_REVIEWS_TO_SHOW, MAX_REVIEWS_TO_SHOW * 2)
               .map(({ id, user, comment, date, rating }) => (
                 <ReviewItem

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import WelcomeScreen from '../../pages/welcome-screen/welcome-screen';
 import MainLayout from '../../pages/main-layout/main-layout';
 import Overview from '../overview/overview';
@@ -16,6 +16,8 @@ import LoadingOverlay from '../loading-overlay/loading-overlay';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { fetchAllFilms, fetchPromo } from '../../store/async-action';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 function App(): JSX.Element | null {
   const filmData = useAppSelector((state) => state.films.films);
@@ -38,11 +40,11 @@ function App(): JSX.Element | null {
   }
 
   if (isFetchError) {
-    <div>Sorry, server is not responding, please try again later.</div>;
+    return <div>Sorry, server is not responding, please try again later.</div>;
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Main}
@@ -64,7 +66,10 @@ function App(): JSX.Element | null {
           path={AppRoute.AddReview}
           element={
             <PrivateRoot authorizationStatus={authorizationStatus}>
-              <AddReview films={filmData} />
+              <AddReview
+                authorizationStatus={authorizationStatus}
+                films={filmData}
+              />
             </PrivateRoot>
           }
         />
@@ -72,14 +77,14 @@ function App(): JSX.Element | null {
           path={AppRoute.MyList}
           element={
             <PrivateRoot authorizationStatus={authorizationStatus}>
-              <MyList />
+              <MyList authorizationStatus={authorizationStatus} />
             </PrivateRoot>
           }
         />
         <Route path={AppRoute.PageNotFound} element={<PageNotFound />} />
         <Route path='*' element={<PageNotFound />} />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

@@ -17,6 +17,7 @@ function Player({ films }: Props): JSX.Element | null {
         imgSrc={currentFilm.previewImage}
         name={currentFilm.name}
         previewVideoLink={currentFilm.previewVideoLink}
+        videoLink={currentFilm.videoLink}
         isFullPage
       />
     </div>

@@ -1,14 +1,41 @@
+/* eslint-disable indent */
 import React, { useState, useEffect } from 'react';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 
-function useVideoPlayer(videoElement: React.RefObject<HTMLVideoElement>) {
+dayjs.extend(duration);
+
+const formatDuration = (seconds: number) => {
+  const hoursCount = Math.floor(seconds / 3600);
+  const minsCount = Math.floor((seconds - hoursCount * 3600) / 60);
+  const secsCount = Math.floor(seconds - hoursCount * 3600 - minsCount * 60);
+
+  return hoursCount
+    ? dayjs
+        .duration({
+          seconds: secsCount,
+          minutes: minsCount,
+          hours: hoursCount,
+        })
+        .format('HH:mm:ss')
+    : dayjs
+        .duration({
+          seconds: secsCount,
+          minutes: minsCount,
+        })
+        .format('mm:ss');
+};
+
+function useVideoPlayer(
+  videoElement: React.RefObject<HTMLVideoElement>,
+  isLoading: boolean
+) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [videoRuntime, setVideoRuntime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isVideoMuted, setIsVideoMuted] = useState(true);
-  const [timeLeft, setTimeLeft] = useState(
-    `${Math.floor(videoRuntime / 60)} : ${Math.floor(videoRuntime % 60)}` || ''
-  );
+  const [timeLeft, setTimeLeft] = useState(formatDuration(videoRuntime) || '');
 
   const togglePlay = (): void => {
     setIsPlaying((prevState) => !prevState);
@@ -27,11 +54,7 @@ function useVideoPlayer(videoElement: React.RefObject<HTMLVideoElement>) {
       ) {
         setCurrentTime(videoElement.current.currentTime);
         setProgress((videoElement.current.currentTime / videoRuntime) * 100);
-        setTimeLeft(
-          `${Math.floor((videoRuntime - currentTime) / 60)} : ${Math.floor(
-            (videoRuntime - currentTime) % 60
-          )}`
-        );
+        setTimeLeft(formatDuration(videoRuntime - currentTime));
       }
     }, 1000);
 
@@ -44,7 +67,7 @@ function useVideoPlayer(videoElement: React.RefObject<HTMLVideoElement>) {
     if (videoTime) {
       setVideoRuntime(videoTime);
     }
-  }, [videoRuntime, videoElement]);
+  }, [videoRuntime, videoElement, isLoading]);
 
   useEffect(() => {
     if (videoElement.current) {

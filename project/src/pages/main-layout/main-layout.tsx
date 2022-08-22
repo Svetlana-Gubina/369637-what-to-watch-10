@@ -5,7 +5,7 @@ import Footer from '../../components/footer/footer';
 import SmallFilmCard from '../../components/small-film-card/small-film-card';
 import { AppRoute } from '../../project.constants';
 import type { Props } from './main-layout.types';
-import { NAV_LIST } from './main-layout.constants';
+import { NAV_LIST, LIMIT } from './main-layout.constants';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 import { useParams } from 'react-router-dom';
 import type { FilmItemType } from '../../types';
@@ -13,6 +13,8 @@ import useApiService from '../../hooks/apiHooks/useApiService';
 import { ApiRoute } from '../../api/constants';
 import LoadingOverlay from '../../components/loading-overlay/loading-overlay';
 import { handleFilmStateUpdate } from '../../project.utils';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function MainLayout({
   authorizationStatus,
@@ -66,14 +68,15 @@ function MainLayout({
   }
 
   if (isFilmStatusUpdateError) {
-    //todo: log error
-    // eslint-disable-next-line no-console
-    console.log(isFilmStatusUpdateError);
+    toast.error(
+      'Sorry, some error, film status in not changed. Please, try again'
+    );
   }
 
   return (
     <>
       <section className='film-card film-card--full'>
+        <ToastContainer />
         <div className='film-card__hero'>
           <div className='film-card__bg'>
             <img
@@ -82,7 +85,10 @@ function MainLayout({
             />
           </div>
           <h1 className='visually-hidden'>WTW</h1>
-          <Header authorizationStatus={authorizationStatus} />
+          <Header
+            authorizationStatus={authorizationStatus}
+            additionalClassName={'film-card__head'}
+          />
           <div className='film-card__wrap'>
             <div className='film-card__desc'>
               <h2 className='film-card__title'>{currentFilmData?.name}</h2>
@@ -189,15 +195,19 @@ function MainLayout({
             <div className='catalog__films-list'>
               {similarFilms
                 ?.filter(({ id }) => id !== currentFilmData?.id)
-                .map(({ id, posterImage, name, previewVideoLink }) => (
-                  <SmallFilmCard
-                    key={id}
-                    id={id}
-                    imgSrc={posterImage}
-                    name={name}
-                    previewVideoLink={previewVideoLink}
-                  />
-                ))}
+                .slice(0, LIMIT)
+                .map(
+                  ({ id, posterImage, name, previewVideoLink, videoLink }) => (
+                    <SmallFilmCard
+                      key={id}
+                      id={id}
+                      imgSrc={posterImage}
+                      name={name}
+                      previewVideoLink={previewVideoLink}
+                      videoLink={videoLink}
+                    />
+                  )
+                )}
             </div>
           )}
         </section>

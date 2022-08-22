@@ -11,6 +11,8 @@ import type { FilmItemType } from '../../types';
 import { ApiRoute } from '../../api/constants';
 import { handleFilmStateUpdate } from '../../project.utils';
 import { fetchPromo } from '../../store/async-action';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function WelcomeScreen({
   authorizationStatus,
@@ -31,19 +33,23 @@ function WelcomeScreen({
   );
 
   if (isFilmStatusUpdateError) {
-    //todo: log error
-    // eslint-disable-next-line no-console
-    console.log(isFilmStatusUpdateError);
+    toast.error(
+      'Sorry, some error, film status in not changed. Please, try again'
+    );
   }
 
   return (
     <>
       <section className='film-card'>
+        <ToastContainer />
         <div className='film-card__bg'>
           <img src={promo?.backgroundImage} alt={promo?.name} />
         </div>
         <h1 className='visually-hidden'>WTW</h1>
-        <Header authorizationStatus={authorizationStatus} />
+        <Header
+          authorizationStatus={authorizationStatus}
+          additionalClassName={'film-card__head'}
+        />
         <div className='film-card__wrap'>
           <div className='film-card__info'>
             <div className='film-card__poster'>

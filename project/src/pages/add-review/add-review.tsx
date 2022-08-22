@@ -1,35 +1,33 @@
 import React, { useState, FormEvent, useRef } from 'react';
-import { Link, Navigate } from 'react-router-dom';
-import Logo from '../../components/logo/logo';
+import Header from '../../components/header/header';
+import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../project.constants';
 import useUrlParam from '../../hooks/useUrlParam/useUrlParam';
-import UserBlock from '../../components/user-block/user-block';
-import { RATING_ITEMS } from './add-review.constants';
+import {
+  RATING_ITEMS,
+  MAX_REVIEW_LENGTH,
+  MIN_REVIEW_LENGTH,
+} from './add-review.constants';
 import { addComment } from '../../store/async-action';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { clearCommentState } from '../../store/action';
+import LoadingOverlay from '../../components/loading-overlay/loading-overlay';
 import type { Props } from '../../types';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function AddReview({ films }: Props): JSX.Element {
+function AddReview({ films, authorizationStatus }: Props): JSX.Element {
   const currentFilm = useUrlParam(films);
   const isSuccess = useAppSelector((state) => state.comment.isCommentSuccess);
   const isError = useAppSelector((state) => state.comment.isCommentError);
   const [text, setText] = useState('');
   const [rating, setRating] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const inputRefs = useRef<HTMLInputElement[]>([]);
   const textRef = useRef<HTMLTextAreaElement | null>(null);
   const dispatch = useAppDispatch();
-
-  const validate = (): boolean => {
-    if (!rating) {
-      // todo: show error
-      // console.log('Please check some stars');
-      return false;
-    }
-
-    return true;
-  };
 
   const handleTextChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = evt.target;
@@ -46,10 +44,6 @@ function AddReview({ films }: Props): JSX.Element {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (!validate()) {
-      return;
-    }
-
     if (text && rating && currentFilm) {
       dispatch(
         addComment({
@@ -57,14 +51,16 @@ function AddReview({ films }: Props): JSX.Element {
           data: { comment: text, rating: rating },
         })
       );
+      setIsLoading(true);
     }
   };
 
   if (!currentFilm) {
-    return <Navigate to={AppRoute.PageNotFound} />;
+    navigate(AppRoute.PageNotFound);
   }
 
   if (isSuccess) {
+    setIsLoading(false);
     if (textRef.current && inputRefs.current) {
       textRef.current.value = '';
       inputRefs.current.map((el) => {
@@ -73,31 +69,32 @@ function AddReview({ films }: Props): JSX.Element {
         return el;
       });
     }
-
     setText('');
     setRating(0);
-    window.location.reload();
-    // todo: show error
-    // console.log('Your review successfully posted!');
     dispatch(clearCommentState());
   }
 
+  if (isLoading) {
+    return <LoadingOverlay />;
+  }
+
   if (isError) {
-    // todo: show error
-    // console.log('Sorry, comment not posted, please try again.');
+    setIsLoading(false);
+    toast.error(
+      'Sorry, some error happened, comment is not posted. Please, try again.'
+    );
     dispatch(clearCommentState());
   }
 
   return (
     <section className='film-card film-card--full'>
+      <ToastContainer />
       <div className='film-card__header'>
         <div className='film-card__bg'>
           <img src={currentFilm?.backgroundImage} alt={currentFilm?.name} />
         </div>
         <h1 className='visually-hidden'>WTW</h1>
-        <header className='page-header'>
-          <Logo />
-
+        <Header authorizationStatus={authorizationStatus}>
           <nav className='breadcrumbs'>
             <ul className='breadcrumbs__list'>
               <li className='breadcrumbs__item'>
@@ -115,9 +112,8 @@ function AddReview({ films }: Props): JSX.Element {
               </li>
             </ul>
           </nav>
+        </Header>
 
-          <UserBlock />
-        </header>
         <div className='film-card__poster film-card__poster--small'>
           <img
             src={currentFilm?.posterImage}
@@ -134,6 +130,9 @@ function AddReview({ films }: Props): JSX.Element {
           onSubmit={(evt) => handleSubmit(evt)}
         >
           <div className='rating'>
+            {!rating && (
+              <p className='rating_message'>Please check some stars</p>
+            )}
             <div className='rating__stars'>
               {RATING_ITEMS.map((item, i) => (
                 <div key={item}>
@@ -156,6 +155,11 @@ function AddReview({ films }: Props): JSX.Element {
               ))}
             </div>
           </div>
+          {text.length < MIN_REVIEW_LENGTH && (
+            <p className='review-text_message'>
+              Please type at least {MIN_REVIEW_LENGTH} characters
+            </p>
+          )}
           <div className='add-review__text'>
             <textarea
               ref={textRef}
@@ -163,14 +167,18 @@ function AddReview({ films }: Props): JSX.Element {
               name='review-text'
               id='review-text'
               placeholder='Review text'
-              maxLength={400}
-              minLength={50}
+              maxLength={MAX_REVIEW_LENGTH}
+              minLength={MIN_REVIEW_LENGTH}
               required
               defaultValue={''}
               onChange={(evt) => handleTextChange(evt)}
             />
             <div className='add-review__submit'>
-              <button className='add-review__btn' type='submit'>
+              <button
+                className='add-review__btn'
+                type='submit'
+                disabled={text.length < MIN_REVIEW_LENGTH || !rating}
+              >
                 Post
               </button>
             </div>
