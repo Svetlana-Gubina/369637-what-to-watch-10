@@ -102,6 +102,8 @@ function SignIn(): JSX.Element {
                 name='user-email'
                 id='user-email'
                 onChange={(evt) => handleEmailChange(evt)}
+                required
+                data-testId='test-email'
               />
               <label
                 className='sign-in__label visually-hidden'
@@ -122,6 +124,8 @@ function SignIn(): JSX.Element {
                 name='user-password'
                 id='user-password'
                 onChange={(evt) => handlePasswordChange(evt)}
+                data-testId='test-password'
+                required
               />
               <label
                 className='sign-in__label visually-hidden'
