@@ -16,7 +16,7 @@ describe('Logo component test', () => {
       </HistoryRouter>
     );
 
-    expect(screen.getByAltText(/W/i)).toBeInTheDocument();
+    expect(screen.getByText(/T/i)).toBeInTheDocument();
     expect(screen.getByRole('link')).toBeInTheDocument();
   });
 

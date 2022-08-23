@@ -5,9 +5,15 @@ import userEvent from '@testing-library/user-event';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { AppRoute } from '../../project.constants';
 import HistoryRouter from '../../components/history-route/history-route';
+import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 import SignIn from './sign-in';
 
 const mockStore = configureMockStore();
+const store = mockStore({
+  user: {
+    authorizationStatus: AuthorizationStatus.NoAuth,
+  },
+});
 
 describe('SignIn page tests', () => {
   it('should render SignIn page when user navigate to "login" url', async () => {
@@ -15,14 +21,13 @@ describe('SignIn page tests', () => {
     history.push(AppRoute.SignIn);
 
     render(
-      <Provider store={mockStore({})}>
+      <Provider store={store}>
         <HistoryRouter history={history}>
           <SignIn />
         </HistoryRouter>
       </Provider>
     );
 
-    expect(screen.getByText(/Sign in/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Email address/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
 
@@ -43,7 +48,7 @@ describe('SignIn page tests', () => {
     history.push(AppRoute.SignIn);
 
     render(
-      <Provider store={mockStore({})}>
+      <Provider store={store}>
         <HistoryRouter history={history}>
           <SignIn />
         </HistoryRouter>
@@ -52,9 +57,10 @@ describe('SignIn page tests', () => {
 
     await userEvent.type(screen.getByTestId('test-email'), 'keks@99999');
     await userEvent.type(screen.getByTestId('test-password'), '123456');
+    await userEvent.click(screen.getByTestId('test-signInSubmit'));
 
     expect(
-      screen.getByDisplayValue(/Please enter a valid email address/i)
+      screen.getByText(/Please enter a valid email address/i)
     ).toBeInTheDocument();
   });
 });

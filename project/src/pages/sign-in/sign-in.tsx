@@ -103,7 +103,7 @@ function SignIn(): JSX.Element {
                 id='user-email'
                 onChange={(evt) => handleEmailChange(evt)}
                 required
-                data-testId='test-email'
+                data-testid='test-email'
               />
               <label
                 className='sign-in__label visually-hidden'
@@ -124,7 +124,7 @@ function SignIn(): JSX.Element {
                 name='user-password'
                 id='user-password'
                 onChange={(evt) => handlePasswordChange(evt)}
-                data-testId='test-password'
+                data-testid='test-password'
                 required
               />
               <label
@@ -136,7 +136,11 @@ function SignIn(): JSX.Element {
             </div>
           </div>
           <div className='sign-in__submit'>
-            <button className='sign-in__btn' type='submit'>
+            <button
+              className='sign-in__btn'
+              type='submit'
+              data-testid='test-signInSubmit'
+            >
               Sign in
             </button>
           </div>
