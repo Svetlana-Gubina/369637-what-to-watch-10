@@ -26,7 +26,8 @@ function SignIn(): JSX.Element {
   }, [authorizationStatus, navigate]);
 
   const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
-  const isValidPassword = (email: string) => /[0-9]+[A-Za-z]+/g.test(email);
+  const isValidPassword = (password: string) =>
+    /[0-9]+[A-Za-z]+/g.test(password);
 
   const handleEmailChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setUserEmail(evt.target.value);
