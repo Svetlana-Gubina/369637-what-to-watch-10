@@ -46,7 +46,7 @@ function useVideoPlayer(
   };
 
   useEffect(() => {
-    const interval = window.setInterval(() => {
+    const updateProgress = () => {
       if (
         isPlaying &&
         videoElement.current &&
@@ -56,9 +56,15 @@ function useVideoPlayer(
         setProgress((videoElement.current.currentTime / videoRuntime) * 100);
         setTimeLeft(formatDuration(videoRuntime - currentTime));
       }
-    }, 1000);
 
-    return () => clearInterval(interval);
+      return requestAnimationFrame(updateProgress);
+    };
+
+    const requestId = updateProgress();
+
+    return () => {
+      cancelAnimationFrame(requestId);
+    };
   }, [videoElement, currentTime, videoRuntime, isPlaying, progress]);
 
   useEffect(() => {
