@@ -46,6 +46,7 @@ function PlayerComponent({
         onLoadedData={() => setIsLoading(false)}
         onCanPlay={togglePlay}
         id='video-preview'
+        data-testid='test-video'
         className='player__video'
         poster={imgSrc || 'img/player-poster.jpg'}
         ref={videoRef}

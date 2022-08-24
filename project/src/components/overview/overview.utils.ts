@@ -1,11 +1,11 @@
-import { RatingDecription, RatingLimit } from '../reviews/reviews.constants';
+import { RatingDecription, RatingLimit } from '../Reviews/reviews.constants';
 
 export const getRatingDescription = (ratingSum: number, count: number) => {
   const averageRating = Math.floor(ratingSum / count);
   let index = 0;
 
   switch (true) {
-    case averageRating <= RatingLimit.low:
+    case averageRating < RatingLimit.low:
       index = 0;
       break;
     case averageRating >= RatingLimit.low &&

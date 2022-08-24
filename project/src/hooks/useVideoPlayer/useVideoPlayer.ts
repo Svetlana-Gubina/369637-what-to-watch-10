@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 
@@ -45,8 +45,8 @@ function useVideoPlayer(
     setIsVideoMuted((prevState) => !prevState);
   };
 
-  useEffect(() => {
-    const interval = window.setInterval(() => {
+  useLayoutEffect(() => {
+    const updateProgress = () => {
       if (
         isPlaying &&
         videoElement.current &&
@@ -56,9 +56,15 @@ function useVideoPlayer(
         setProgress((videoElement.current.currentTime / videoRuntime) * 100);
         setTimeLeft(formatDuration(videoRuntime - currentTime));
       }
-    }, 1000);
 
-    return () => clearInterval(interval);
+      return requestAnimationFrame(updateProgress);
+    };
+
+    const requestId = updateProgress();
+
+    return () => {
+      cancelAnimationFrame(requestId);
+    };
   }, [videoElement, currentTime, videoRuntime, isPlaying, progress]);
 
   useEffect(() => {

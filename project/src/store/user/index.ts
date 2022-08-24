@@ -3,13 +3,7 @@ import { AuthorizationStatus } from '../../components/private-route/private-rout
 import type { UserDataType } from '../../types';
 import { checkAuthAction, loginAction, logoutAction } from '../async-action';
 import type { PayloadAction } from '@reduxjs/toolkit';
-
-// Define a type for the slice state
-type UserState = {
-  authorizationStatus: AuthorizationStatus;
-  userData: UserDataType | null;
-  isLoginError: boolean;
-};
+import type { UserState } from '../../types/store';
 
 // Define the initial state using that type
 const initialState: UserState = {

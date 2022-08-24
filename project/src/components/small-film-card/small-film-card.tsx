@@ -28,6 +28,7 @@ function SmallFilmCard({
 
   return (
     <article
+      data-testid='test-smallCard'
       onMouseEnter={() => setIsCursonOnCard(true)}
       onMouseLeave={() => setIsCursonOnCard(false)}
       className='small-film-card catalog__films-card'

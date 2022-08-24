@@ -1,12 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { addComment } from '../async-action';
 import { clearCommentState } from '../action';
-
-// a type for the slice state
-type CommentState = {
-  isCommentSuccess: boolean;
-  isCommentError: boolean;
-};
+import type { CommentState } from '../../types/store';
 
 // the initial state using that type
 const initialState: CommentState = {
