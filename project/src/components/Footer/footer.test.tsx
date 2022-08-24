@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import HistoryRouter from '../history-route/history-route';
-import Footer from '../footer/footer';
+import Footer from '../Footer/Footer';
 
 const history = createMemoryHistory();
 describe('Footer component test', () => {
