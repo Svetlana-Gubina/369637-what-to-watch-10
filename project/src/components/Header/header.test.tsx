@@ -4,7 +4,7 @@ import { createMemoryHistory } from 'history';
 import HistoryRouter from '../history-route/history-route';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Provider } from 'react-redux';
-import Header from '../Header/header';
+import Header from '../Header/Header';
 import { AuthorizationStatus } from '../private-route/private-route.constants';
 
 const history = createMemoryHistory();
