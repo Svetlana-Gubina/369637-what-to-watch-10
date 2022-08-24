@@ -1,4 +1,4 @@
-import { RatingDecription } from '../Reviews/Reviews.constants';
+import { RatingDecription } from '../Reviews/reviews.constants';
 import { getRatingDescription } from './overview.utils';
 
 describe('getRatingDescription function test', () => {
