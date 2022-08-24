@@ -1,7 +1,7 @@
 import React, { useEffect, useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../../components/header/header';
-import Footer from '../../components/footer/footer';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { loginAction } from '../../store/async-action';
 import { AppRoute } from '../../project.constants';
@@ -26,7 +26,8 @@ function SignIn(): JSX.Element {
   }, [authorizationStatus, navigate]);
 
   const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
-  const isValidPassword = (email: string) => /[0-9]+[A-Za-z]+/g.test(email);
+  const isValidPassword = (password: string) =>
+    /[0-9]+[A-Za-z]+/g.test(password);
 
   const handleEmailChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setUserEmail(evt.target.value);
@@ -102,6 +103,8 @@ function SignIn(): JSX.Element {
                 name='user-email'
                 id='user-email'
                 onChange={(evt) => handleEmailChange(evt)}
+                required
+                data-testid='test-email'
               />
               <label
                 className='sign-in__label visually-hidden'
@@ -122,6 +125,8 @@ function SignIn(): JSX.Element {
                 name='user-password'
                 id='user-password'
                 onChange={(evt) => handlePasswordChange(evt)}
+                data-testid='test-password'
+                required
               />
               <label
                 className='sign-in__label visually-hidden'
@@ -132,7 +137,11 @@ function SignIn(): JSX.Element {
             </div>
           </div>
           <div className='sign-in__submit'>
-            <button className='sign-in__btn' type='submit'>
+            <button
+              className='sign-in__btn'
+              type='submit'
+              data-testid='test-signInSubmit'
+            >
               Sign in
             </button>
           </div>

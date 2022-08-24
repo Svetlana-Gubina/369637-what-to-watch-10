@@ -31,6 +31,7 @@ const UserBlock = () => {
           onClick={(evt) => handleSignOut(evt)}
           to='/'
           className='user-block__link'
+          data-testid='test-signOut'
         >
           Sign out
         </Link>

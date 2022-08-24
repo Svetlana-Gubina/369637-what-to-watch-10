@@ -89,7 +89,7 @@ function PageNotFound(): JSX.Element {
           </g>
         </g>
       </svg>
-      <Link to='/' className='back-home-link'>
+      <Link to='/' className='back-home-link' data-testid='test-backHome'>
         <svg
           clipRule='evenodd'
           fillRule='evenodd'
