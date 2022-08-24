@@ -1,4 +1,4 @@
-import { RatingDecription, RatingLimit } from '../reviews/reviews.constants';
+import { RatingDecription, RatingLimit } from '../Reviews/reviews.constants';
 
 export const getRatingDescription = (ratingSum: number, count: number) => {
   const averageRating = Math.floor(ratingSum / count);
