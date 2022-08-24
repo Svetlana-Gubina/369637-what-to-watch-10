@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ApiRoute } from '../api/constants';
-import type { AppDispatch, RootState } from './store.types';
+import type { AppDispatch, RootState } from '../types/store';
 import type { FilmItemType, UserDataType } from '../types';
 import {
   saveItem,

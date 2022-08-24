@@ -1,17 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { FilmItemType } from '../../types';
+import type { FilmsState } from '../../types/store';
 import { fetchAllFilms, fetchPromo } from '../async-action';
-
-// a type for the slice state
-type FilmsState = {
-  isFilmDataLoaded: boolean;
-  isPromoDataLoaded: boolean;
-  filmDataError: boolean;
-  promoDataError: boolean;
-  films: FilmItemType[];
-  promo: FilmItemType | null;
-};
 
 // the initial state using that type
 const initialState: FilmsState = {

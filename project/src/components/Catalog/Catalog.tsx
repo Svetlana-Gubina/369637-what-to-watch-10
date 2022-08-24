@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SmallFilmCard from '../small-film-card/small-film-card';
 import { GENRES, FILMS_TO_SHOW, INITIAL_COUNT } from './catalog.constants';
-import { RootState } from '../../store/store.types';
+import { RootState } from '../../types/store';
 import { createSelector } from 'reselect';
 import { checkGenreMathFilter } from './catalog.utils';
 import { store } from '../../store';

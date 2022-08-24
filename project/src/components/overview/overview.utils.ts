@@ -5,7 +5,7 @@ export const getRatingDescription = (ratingSum: number, count: number) => {
   let index = 0;
 
   switch (true) {
-    case averageRating <= RatingLimit.low:
+    case averageRating < RatingLimit.low:
       index = 0;
       break;
     case averageRating >= RatingLimit.low &&

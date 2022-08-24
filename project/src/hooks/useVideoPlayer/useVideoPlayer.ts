@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 
@@ -45,7 +45,7 @@ function useVideoPlayer(
     setIsVideoMuted((prevState) => !prevState);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const updateProgress = () => {
       if (
         isPlaying &&
