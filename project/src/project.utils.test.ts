@@ -1,5 +1,4 @@
 import { getCurrentFilm, handleFilmStateUpdate } from './project.utils';
-import { waitFor } from '@testing-library/react';
 import { createApi } from './api';
 import MockAdapter from 'axios-mock-adapter';
 import { ApiRoute } from './api/constants';
