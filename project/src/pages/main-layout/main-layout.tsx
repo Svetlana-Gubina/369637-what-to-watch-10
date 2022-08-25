@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Navigate, NavLink, Outlet, useLocation } from 'react-router-dom';
-import Header from '../../components/header/header';
-import Footer from '../../components/footer/footer';
+import Header from '../../components/headerSection/headerSection';
+import Footer from '../../components/footerSection/footerSection';
 import SmallFilmCard from '../../components/small-film-card/small-film-card';
 import { AppRoute } from '../../project.constants';
 import type { Props } from './main-layout.types';

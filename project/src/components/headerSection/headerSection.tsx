@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from '../logo/logo';
 import UserMenu from '../user-menu/user-menu';
-import type { Props } from './header.types';
+import type { Props } from './headerSection.types';
 
 function Header({
   authorizationStatus,

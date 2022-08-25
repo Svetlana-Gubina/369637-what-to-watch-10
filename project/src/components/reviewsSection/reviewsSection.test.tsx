@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Router from 'react-router-dom';
-import Reviews from '../reviews/reviews';
+import Reviews from './reviewsSection';
 import useApiService from '../../hooks/apiHooks/useApiService';
 
 const commentsDataMock = [

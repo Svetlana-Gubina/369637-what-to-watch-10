@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Router from 'react-router-dom';
-import Details from '../details/details';
+import Details from './detailsSection';
 
 const mockData = {
   released: 2020,
