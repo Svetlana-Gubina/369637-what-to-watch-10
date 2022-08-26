@@ -1,7 +1,7 @@
 import React, { useEffect, useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../../components/headerSection/headerSection';
-import Footer from '../../components/footerSection/footerSection';
+import Header from '../../components/header-section/header-section';
+import Footer from '../../components/footer-section/footerSection';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { loginAction } from '../../store/async-action';
 import { AppRoute } from '../../project.constants';

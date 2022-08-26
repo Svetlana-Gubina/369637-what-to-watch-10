@@ -4,10 +4,10 @@ import {
   GENRES,
   FILMS_TO_SHOW,
   INITIAL_COUNT,
-} from './catalogSection.constants';
+} from './catalog-section.constants';
 import { RootState } from '../../types/store';
 import { createSelector } from 'reselect';
-import { checkGenreMathFilter } from './catalogSection.utils';
+import { checkGenreMathFilter } from './catalog-section.utils';
 import { store } from '../../store';
 
 function Catalog(): JSX.Element {

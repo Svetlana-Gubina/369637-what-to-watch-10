@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import WelcomeScreen from '../../pages/welcome-screen/welcome-screen';
 import MainLayout from '../../pages/main-layout/main-layout';
 import Overview from '../overview/overview';
-import Details from '../detailsSection/detailsSection';
+import Details from '../details-section/details-section';
 import Reviews from '../reviewsSection/reviewsSection';
 import SignIn from '../../pages/sign-in/sign-in';
 import Player from '../../pages/player/player';

@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, useRef } from 'react';
-import Header from '../../components/headerSection/headerSection';
+import Header from '../../components/header-section/header-section';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../project.constants';
 import useUrlParam from '../../hooks/useUrlParam/useUrlParam';

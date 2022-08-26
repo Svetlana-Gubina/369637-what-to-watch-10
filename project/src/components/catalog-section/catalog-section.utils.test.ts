@@ -1,4 +1,4 @@
-import { checkGenreMathFilter } from './catalogSection.utils';
+import { checkGenreMathFilter } from './catalog-section.utils';
 
 describe('checkGenreMathFilter function test', () => {
   it('should return true for "all genres"', () => {

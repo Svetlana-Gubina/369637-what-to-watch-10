@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../../components/headerSection/headerSection';
-import Footer from '../../components/footerSection/footerSection';
+import Header from '../../components/header-section/header-section';
+import Footer from '../../components/footer-section/footerSection';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
-import Catalog from '../../components/catalogSection/catalogSection';
+import Catalog from '../../components/catalog-section/catalog-section';
 import { useAppSelector, useAppDispatch } from '../../hooks/storeHooks';
 import type { Props } from '../../types';
 import useApiService from '../../hooks/apiHooks/useApiService';
