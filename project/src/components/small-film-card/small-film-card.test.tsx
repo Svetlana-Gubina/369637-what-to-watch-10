@@ -1,11 +1,11 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import HistoryRouter from '../history-route/history-route';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Provider } from 'react-redux';
 import SmallFilmCard from '../small-film-card/small-film-card';
-// import userEvent from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 
 const history = createMemoryHistory();
 const mockStore = configureMockStore();
@@ -21,6 +21,10 @@ const testFilmData = {
 describe('Details component test', () => {
   it('should render correctly', async () => {
     const { id, imgSrc, name, previewVideoLink, videoLink } = testFilmData;
+    jest
+      .spyOn(window.HTMLMediaElement.prototype, 'pause')
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      .mockImplementation(() => {});
 
     render(
       <Provider store={mockStore({})}>
@@ -39,8 +43,11 @@ describe('Details component test', () => {
     expect(screen.getByRole('link')).toBeInTheDocument();
     expect(screen.getByAltText(name)).toBeInTheDocument();
 
-    // todo: should it work? - https://stackoverflow.com/questions/51829319/how-to-mock-video-pause-function-using-jest
-    // await userEvent.hover(screen.getByTestId('test-smallCard'));
+    // flaky test
+    await userEvent.hover(screen.getByTestId('test-smallCard'));
+    await waitFor(() => {
+      expect(screen.getByTestId('test-video')).toBeInTheDocument();
+    });
     // await screen.findByTestId('test-video');
   });
 });

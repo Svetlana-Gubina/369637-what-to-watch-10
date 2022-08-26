@@ -8,7 +8,7 @@ import {
   AUTH_TOKEN_KEY_NAME,
   USER_AVATAR_KEY_NAME,
 } from '../services/localStorageItem';
-import { redirectTiRoute } from './action';
+import { redirectToRoute } from './action';
 import { AxiosInstance } from 'axios';
 
 // Films
@@ -54,7 +54,7 @@ export const addComment = createAsyncThunk<
   }
 >('comment/addComment', async (attr, { dispatch, extra: api }) => {
   await api.post(`${ApiRoute.Comments}/${attr.filmId}`, attr.data);
-  dispatch(redirectTiRoute(`/films/${attr.filmId}/reviews`));
+  dispatch(redirectToRoute(`/films/${attr.filmId}/reviews`));
 });
 
 // User

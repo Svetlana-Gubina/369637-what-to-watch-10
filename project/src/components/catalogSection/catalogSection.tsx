@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import SmallFilmCard from '../small-film-card/small-film-card';
-import { GENRES, FILMS_TO_SHOW, INITIAL_COUNT } from './catalog.constants';
+import {
+  GENRES,
+  FILMS_TO_SHOW,
+  INITIAL_COUNT,
+} from './catalogSection.constants';
 import { RootState } from '../../types/store';
 import { createSelector } from 'reselect';
-import { checkGenreMathFilter } from './catalog.utils';
+import { checkGenreMathFilter } from './catalogSection.utils';
 import { store } from '../../store';
 
 function Catalog(): JSX.Element {
