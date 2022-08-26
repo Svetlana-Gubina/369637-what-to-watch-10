@@ -162,6 +162,7 @@ function AddReview({ films, authorizationStatus }: Props): JSX.Element {
           )}
           <div className='add-review__text'>
             <textarea
+              data-testid='test-textarea'
               ref={textRef}
               className='add-review__textarea'
               name='review-text'
@@ -175,6 +176,7 @@ function AddReview({ films, authorizationStatus }: Props): JSX.Element {
             />
             <div className='add-review__submit'>
               <button
+                data-testid='test-submit'
                 className='add-review__btn'
                 type='submit'
                 disabled={text.length < MIN_REVIEW_LENGTH || !rating}

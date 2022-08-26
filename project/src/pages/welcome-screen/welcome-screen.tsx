@@ -9,6 +9,7 @@ import type { Props } from '../../types';
 import useApiService from '../../hooks/apiHooks/useApiService';
 import type { FilmItemType } from '../../types';
 import { ApiRoute } from '../../api/constants';
+import { AppRoute } from '../../project.constants';
 import { handleFilmStateUpdate } from '../../project.utils';
 import { fetchPromo } from '../../store/async-action';
 import { ToastContainer, toast } from 'react-toastify';
@@ -78,29 +79,34 @@ function WelcomeScreen({
                 </Link>
 
                 {authorizationStatus === AuthorizationStatus.Auth && (
-                  <button
-                    onClick={
-                      (evt) =>
-                        handleFilmStateUpdate(
-                          evt,
-                          promo?.id,
-                          filmStatus,
-                          setFilmStatus,
-                          setIsFilmStatusUpdateError
-                        )
-                      // eslint-disable-next-line react/jsx-curly-newline
-                    }
-                    className='btn btn--list film-card__button'
-                    type='button'
-                  >
-                    <svg viewBox='0 0 19 20' width={19} height={20}>
-                      <use xlinkHref={filmStatus ? '#in-list' : '#add'} />
-                    </svg>
-                    <span>My list</span>
+                  <div className='btn--list film-card__button'>
+                    <button
+                      className='btn--icon'
+                      onClick={
+                        (evt) =>
+                          handleFilmStateUpdate(
+                            evt,
+                            promo?.id,
+                            filmStatus,
+                            setFilmStatus,
+                            setIsFilmStatusUpdateError
+                          )
+                        // eslint-disable-next-line react/jsx-curly-newline
+                      }
+                      type='button'
+                    >
+                      <svg viewBox='0 0 19 20' width={19} height={20}>
+                        <use xlinkHref={filmStatus ? '#in-list' : '#add'} />
+                      </svg>
+                    </button>
+                    <Link to={AppRoute.MyList}>
+                      <span>My list</span>
+                    </Link>
+
                     <span className='film-card__count'>
                       {myFilms?.length || 0}
                     </span>
-                  </button>
+                  </div>
                 )}
               </div>
             </div>

@@ -5,6 +5,7 @@ import Footer from '../../components/footer-section/footerSection';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { loginAction } from '../../store/async-action';
 import { AppRoute } from '../../project.constants';
+import { isValidEmail, isValidPassword } from './sign-in.utils';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 
 function SignIn(): JSX.Element {
@@ -24,10 +25,6 @@ function SignIn(): JSX.Element {
       navigate(AppRoute.Main);
     }
   }, [authorizationStatus, navigate]);
-
-  const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
-  const isValidPassword = (password: string) =>
-    /[0-9]+[A-Za-z]+/g.test(password);
 
   const handleEmailChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setUserEmail(evt.target.value);
