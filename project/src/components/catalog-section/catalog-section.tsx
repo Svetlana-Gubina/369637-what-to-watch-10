@@ -55,6 +55,7 @@ function Catalog(): JSX.Element {
       </div>
       <div className='catalog__more'>
         <button
+          data-testid='test-showMore'
           onClick={() => setCount((prevState) => (prevState += 1))}
           className='catalog__button'
           type='button'

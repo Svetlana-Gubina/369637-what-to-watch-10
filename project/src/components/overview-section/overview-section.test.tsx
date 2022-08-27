@@ -1,35 +1,33 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Router from 'react-router-dom';
-import Reviews from './reviewsSection';
+import Overview from './overview-section';
+import type { CommentType } from '../../types';
 import useApiService from '../../hooks/apiHooks/useApiService';
 
-const commentsDataMock = [
+const mockData = {
+  description: 'test description',
+  director: 'test director',
+  starring: ['test', 'test'],
+};
+
+const commentsMock = [
   {
-    comment: 'short comment',
-    date: new Date().toDateString(),
+    comment: 'test',
     id: 1,
     rating: 10,
-    user: {
-      id: 111,
-      name: 'test1',
-    },
   },
   {
-    comment: 'long long comment',
-    date: new Date().toDateString(),
+    comment: 'test',
     id: 2,
     rating: 10,
-    user: {
-      id: 222,
-      name: 'test2',
-    },
   },
-];
+] as unknown as CommentType[];
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useParams: jest.fn(),
+  useOutletContext: jest.fn(),
 }));
 
 jest.mock('../../hooks/apiHooks/useApiService');
@@ -38,18 +36,19 @@ const mockuseApiService = useApiService as jest.MockedFunction<
   typeof useApiService
 >;
 
-describe('Reviews component test', () => {
+describe('Overview component test', () => {
   it('should render correctly', () => {
+    jest.spyOn(Router, 'useOutletContext').mockReturnValue(mockData);
     jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1' });
     mockuseApiService.mockReturnValue({
-      data: commentsDataMock,
+      data: commentsMock,
       isLoading: false,
       isError: false,
     });
 
-    render(<Reviews />);
+    render(<Overview />);
 
-    expect(screen.getByText(/long long comment/i)).toBeInTheDocument();
-    expect(screen.getByText(/test2/i)).toBeInTheDocument();
+    expect(screen.getByText(/test director/i)).toBeInTheDocument();
+    expect(screen.getByText(/2 ratings/i)).toBeInTheDocument();
   });
 });

@@ -1,7 +1,7 @@
 import {
   RatingDecription,
   RatingLimit,
-} from '../reviewsSection/reviewsSection.constants';
+} from '../reviews-section/reviews-section.constants';
 
 export const getRatingDescription = (ratingSum: number, count: number) => {
   const averageRating = Math.floor(ratingSum / count);

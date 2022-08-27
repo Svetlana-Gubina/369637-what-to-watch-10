@@ -97,7 +97,12 @@ function PlayerComponent({
 
         <div className='player__controls-row'>
           {isFullPage && (
-            <button type='button' className='player__play' onClick={togglePlay}>
+            <button
+              type='button'
+              className='player__play'
+              onClick={togglePlay}
+              data-testid='test-togglePlay'
+            >
               <svg viewBox='0 0 19 19' width={19} height={19}>
                 <use
                   xlinkHref={
@@ -118,6 +123,7 @@ function PlayerComponent({
           <button
             onClick={toggleMute}
             type='button'
+            data-testid='test-toggleMute'
             className='player__mute'
             style={{
               marginRight: '5px',

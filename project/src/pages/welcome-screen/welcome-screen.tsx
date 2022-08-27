@@ -82,6 +82,7 @@ function WelcomeScreen({
                   <div className='btn--list film-card__button'>
                     <button
                       className='btn--icon'
+                      data-testid='test-myListBtn'
                       onClick={
                         (evt) =>
                           handleFilmStateUpdate(

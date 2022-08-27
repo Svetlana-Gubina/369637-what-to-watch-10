@@ -1,6 +1,6 @@
 import React from 'react';
 import type { FilmItemType } from '../../types';
-import { getRatingDescription } from './overview.utils';
+import { getRatingDescription } from './overview-section.utils';
 import { useOutletContext } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import type { CommentType } from '../../types';

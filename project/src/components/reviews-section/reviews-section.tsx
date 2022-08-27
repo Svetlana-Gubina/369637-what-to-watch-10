@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import ReviewItem from '../review/review';
-import { MAX_REVIEWS_TO_SHOW } from './reviewsSection.constants';
+import { MAX_REVIEWS_TO_SHOW } from './reviews-section.constants';
 import { useParams } from 'react-router-dom';
 import type { CommentType } from '../../types';
 import LoadingOverlay from '../loading-overlay/loading-overlay';

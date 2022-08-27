@@ -1,5 +1,5 @@
-import { RatingDecription } from '../reviewsSection/reviewsSection.constants';
-import { getRatingDescription } from './overview.utils';
+import { RatingDecription } from '../reviews-section/reviews-section.constants';
+import { getRatingDescription } from './overview-section.utils';
 
 describe('getRatingDescription function test', () => {
   it('if average rating from 5 to 8, description shuild be "Good"', () => {
