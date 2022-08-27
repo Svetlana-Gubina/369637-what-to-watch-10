@@ -57,7 +57,9 @@ function Reviews(): JSX.Element {
           </div>
         </>
       ) : (
-        <div>There are no reviews yet. be the first!</div>
+        <div className='no-reviews'>
+          There are no reviews yet. Be the first!
+        </div>
       )}
     </div>
   );

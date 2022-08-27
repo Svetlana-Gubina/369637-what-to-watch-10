@@ -1512,3 +1512,7 @@ cursor: pointer; }
   color: #fff;
   background: #fd612ead;
   border-radius: 15px; }
+
+  .no-reviews {
+    color:#353535;
+  }
