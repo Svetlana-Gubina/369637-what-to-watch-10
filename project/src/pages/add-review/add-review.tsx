@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, useRef } from 'react';
-import Header from '../../components/headerSection/headerSection';
+import Header from '../../components/header-section/header-section';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../project.constants';
 import useUrlParam from '../../hooks/useUrlParam/useUrlParam';
@@ -162,6 +162,7 @@ function AddReview({ films, authorizationStatus }: Props): JSX.Element {
           )}
           <div className='add-review__text'>
             <textarea
+              data-testid='test-textarea'
               ref={textRef}
               className='add-review__textarea'
               name='review-text'
@@ -175,6 +176,7 @@ function AddReview({ films, authorizationStatus }: Props): JSX.Element {
             />
             <div className='add-review__submit'>
               <button
+                data-testid='test-submit'
                 className='add-review__btn'
                 type='submit'
                 disabled={text.length < MIN_REVIEW_LENGTH || !rating}

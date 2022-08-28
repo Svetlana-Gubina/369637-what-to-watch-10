@@ -19,12 +19,12 @@ const testFilmData = {
 };
 
 describe('Details component test', () => {
+  beforeAll(() => {
+    window.HTMLMediaElement.prototype.play = jest.fn();
+    window.HTMLMediaElement.prototype.pause = jest.fn();
+  });
   it('should render correctly', async () => {
     const { id, imgSrc, name, previewVideoLink, videoLink } = testFilmData;
-    jest
-      .spyOn(window.HTMLMediaElement.prototype, 'pause')
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      .mockImplementation(() => {});
 
     render(
       <Provider store={mockStore({})}>
@@ -48,6 +48,5 @@ describe('Details component test', () => {
     await waitFor(() => {
       expect(screen.getByTestId('test-video')).toBeInTheDocument();
     });
-    // await screen.findByTestId('test-video');
   });
 });

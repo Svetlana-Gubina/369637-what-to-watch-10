@@ -471,10 +471,8 @@ main {
 .btn {
   display: inline-block;
   vertical-align: top;
-  padding: 0;
   text-decoration: none;
   border: 0;
-  background: none;
   cursor: pointer;
   background: rgba(0, 0, 0, 0.26);
   border-radius: 8px;
@@ -502,6 +500,47 @@ main {
   .btn svg {
     vertical-align: top;
     margin-right: 9px; }
+
+  .btn--icon {
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .btn--list {
+    display: inline-block;
+    vertical-align: top;
+    padding: 13px 30px;
+    background: rgba(0, 0, 0, 0.26);
+    border-radius: 8px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    min-width: 128px;
+  }
+
+  .btn--list svg {
+    vertical-align: top;
+    margin-right: 9px; }
+
+
+  .btn--list a {
+    color: #EEE5B5;
+    font-size: 17px;
+    line-height: 20px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .btn--list a:hover,
+  .btn--list a:focus {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
 
 .catalog {
   margin-bottom: 115px;
@@ -1473,3 +1512,7 @@ cursor: pointer; }
   color: #fff;
   background: #fd612ead;
   border-radius: 15px; }
+
+  .no-reviews {
+    color:#353535;
+  }

@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../../components/headerSection/headerSection';
-import Footer from '../../components/footerSection/footerSection';
+import Header from '../../components/header-section/header-section';
+import Footer from '../../components/footer-section/footerSection';
 import SmallFilmCard from '../../components/small-film-card/small-film-card';
 import useApiService from '../../hooks/apiHooks/useApiService';
 import { ApiRoute } from '../../api/constants';

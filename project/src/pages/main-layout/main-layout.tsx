@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Navigate, NavLink, Outlet, useLocation } from 'react-router-dom';
-import Header from '../../components/headerSection/headerSection';
-import Footer from '../../components/footerSection/footerSection';
+import Header from '../../components/header-section/header-section';
+import Footer from '../../components/footer-section/footerSection';
 import SmallFilmCard from '../../components/small-film-card/small-film-card';
 import { AppRoute } from '../../project.constants';
 import type { Props } from './main-layout.types';
@@ -113,28 +113,35 @@ function MainLayout({
 
                 {authorizationStatus === AuthorizationStatus.Auth && (
                   <>
-                    <button
-                      onClick={
-                        (evt) =>
-                          handleFilmStateUpdate(
-                            evt,
-                            currentFilmData?.id,
-                            filmStatus,
-                            setFilmStatus,
-                            setIsFilmStatusUpdateError
-                          )
-                        // eslint-disable-next-line react/jsx-curly-newline
-                      }
-                      className='btn btn--list film-card__button'
-                    >
-                      <svg viewBox='0 0 19 20' width={19} height={20}>
-                        <use xlinkHref={filmStatus ? '#in-list' : '#add'} />
-                      </svg>
-                      <span>My list</span>
+                    <div className='btn--list film-card__button'>
+                      <button
+                        className='btn--icon'
+                        onClick={
+                          (evt) =>
+                            handleFilmStateUpdate(
+                              evt,
+                              currentFilmData?.id,
+                              filmStatus,
+                              setFilmStatus,
+                              setIsFilmStatusUpdateError
+                            )
+                          // eslint-disable-next-line react/jsx-curly-newline
+                        }
+                        type='button'
+                      >
+                        <svg viewBox='0 0 19 20' width={19} height={20}>
+                          <use xlinkHref={filmStatus ? '#in-list' : '#add'} />
+                        </svg>
+                      </button>
+                      <Link to={AppRoute.MyList}>
+                        <span>My list</span>
+                      </Link>
+
                       <span className='film-card__count'>
                         {myFilms?.length || 0}
                       </span>
-                    </button>
+                    </div>
+
                     <Link
                       to={`/films/${currentFilmData?.id}/review`}
                       className='btn film-card__button'
