@@ -1,11 +1,10 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import HistoryRouter from '../history-route/history-route';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Provider } from 'react-redux';
 import SmallFilmCard from '../small-film-card/small-film-card';
-import userEvent from '@testing-library/user-event';
 
 const history = createMemoryHistory();
 const mockStore = configureMockStore();
