@@ -43,7 +43,7 @@ function SignIn(): JSX.Element {
       setIsEmailError(true);
       return;
     }
-    if (!isValidPassword) {
+    if (!isValidPassword(userPassword)) {
       setIsPasswordError(true);
       return;
     }

@@ -36,7 +36,6 @@ function SmallFilmCard({
       {isVideoActive ? (
         <PlayerComponent
           id={id}
-          imgSrc={imgSrc}
           name={name}
           previewVideoLink={previewVideoLink}
           videoLink={videoLink}

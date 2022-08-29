@@ -44,7 +44,7 @@ describe('PlayerComponent component tests', () => {
     jest.resetAllMocks();
   });
   it('should render component with children passed', async () => {
-    const { id, previewImage, name, previewVideoLink, videoLink } = mockFilm;
+    const { id, name, previewVideoLink, videoLink } = mockFilm;
 
     const mockTogglePlay = jest.fn();
     const mockToggleMute = jest.fn();
@@ -64,7 +64,6 @@ describe('PlayerComponent component tests', () => {
         <HistoryRouter history={history}>
           <PlayerComponent
             id={id}
-            imgSrc={previewImage}
             name={name}
             previewVideoLink={previewVideoLink}
             videoLink={videoLink}

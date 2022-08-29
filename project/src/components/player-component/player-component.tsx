@@ -7,7 +7,6 @@ import { Props } from './player-component.types';
 
 function PlayerComponent({
   id,
-  imgSrc,
   name,
   previewVideoLink,
   videoLink,
@@ -15,6 +14,7 @@ function PlayerComponent({
 }: Props): JSX.Element {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadError, setIsLoadError] = useState(false);
   const navigate = useNavigate();
   const {
     isPlaying,
@@ -30,6 +30,43 @@ function PlayerComponent({
     navigate(`/player/${id}`);
   };
 
+  if (isLoadError) {
+    if (isFullPage) {
+      return (
+        isFullPage && (
+          <div
+            style={{
+              color: 'wheat',
+              background: 'rgba(0, 0, 0, 0.5)',
+              width: '100%',
+              height: '100%',
+              margin: '0',
+              padding: '0',
+              position: 'absolute',
+              top: '0',
+              right: '0',
+              zIndex: '100',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              fontSize: '25px',
+              textAlign: 'center',
+            }}
+          >
+            Sorry, video cannot be played
+            <button
+              onClick={() => navigate(-1)}
+              type='button'
+              className='player__exit'
+            >
+              Exit
+            </button>
+          </div>
+        )
+      );
+    }
+  }
+
   return (
     <div
       style={{
@@ -42,13 +79,13 @@ function PlayerComponent({
     >
       {isLoading && <LoadingOverlay />}
       <video
-        preload='metadata'
+        preload='auto'
         onLoadedData={() => setIsLoading(false)}
+        onError={() => setIsLoadError(true)}
         onCanPlay={togglePlay}
         id='video-preview'
         data-testid='test-video'
         className='player__video'
-        poster={imgSrc || 'img/player-poster.jpg'}
         ref={videoRef}
       >
         <source

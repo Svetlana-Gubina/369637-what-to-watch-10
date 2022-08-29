@@ -14,7 +14,6 @@ function Player({ films }: Props): JSX.Element | null {
     <div className='player'>
       <PlayerComponent
         id={currentFilm.id}
-        imgSrc={currentFilm.previewImage}
         name={currentFilm.name}
         previewVideoLink={currentFilm.previewVideoLink}
         videoLink={currentFilm.videoLink}
