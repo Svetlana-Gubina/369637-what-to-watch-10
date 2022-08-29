@@ -42,11 +42,5 @@ describe('Details component test', () => {
 
     expect(screen.getByRole('link')).toBeInTheDocument();
     expect(screen.getByAltText(name)).toBeInTheDocument();
-
-    // flaky test
-    await userEvent.hover(screen.getByTestId('test-smallCard'));
-    await waitFor(() => {
-      expect(screen.getByTestId('test-video')).toBeInTheDocument();
-    });
   });
 });
