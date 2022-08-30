@@ -4,7 +4,7 @@ import useUrlParam from '../../hooks/useUrlParam/useUrlParam';
 import { createMemoryHistory } from 'history';
 import userEvent from '@testing-library/user-event';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
-import HistoryRouter from '../../components/history-route/history-route';
+import HistoryRouter from '../../components/history-router/history-router';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import type { FilmItemType } from '../../types';
 import { AppRoute } from '../../project.constants';

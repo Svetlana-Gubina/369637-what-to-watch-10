@@ -1,23 +1,25 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Provider } from 'react-redux';
-import Header from './header-section';
+import HeaderSection from './header-section';
 import { AuthorizationStatus } from '../private-route/private-route.constants';
 
 const history = createMemoryHistory();
 const mockStore = configureMockStore();
 
-describe('Header component tests', () => {
+describe('HeaderSection component tests', () => {
   it('should render component with children passed', () => {
     const authorizationStatus = AuthorizationStatus.NoAuth;
     const element = <div>Hello!</div>;
     render(
       <Provider store={mockStore({})}>
         <HistoryRouter history={history}>
-          <Header authorizationStatus={authorizationStatus}>{element}</Header>
+          <HeaderSection authorizationStatus={authorizationStatus}>
+            {element}
+          </HeaderSection>
         </HistoryRouter>
       </Provider>
     );
@@ -31,7 +33,10 @@ describe('Header component tests', () => {
     render(
       <Provider store={mockStore({})}>
         <HistoryRouter history={history}>
-          <Header authorizationStatus={authorizationStatus} isSignInPage />
+          <HeaderSection
+            authorizationStatus={authorizationStatus}
+            isSignInPage
+          />
         </HistoryRouter>
       </Provider>
     );
@@ -45,7 +50,7 @@ describe('Header component tests', () => {
     render(
       <Provider store={mockStore({})}>
         <HistoryRouter history={history}>
-          <Header authorizationStatus={authorizationStatus} />
+          <HeaderSection authorizationStatus={authorizationStatus} />
         </HistoryRouter>
       </Provider>
     );

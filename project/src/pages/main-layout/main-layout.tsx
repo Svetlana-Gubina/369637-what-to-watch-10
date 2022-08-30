@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Navigate, NavLink, Outlet, useLocation } from 'react-router-dom';
-import Header from '../../components/header-section/header-section';
-import Footer from '../../components/footer-section/footerSection';
+import HeaderSection from '../../components/header-section/header-section';
+import FooterSection from '../../components/footer-section/footer-section';
 import SmallFilmCard from '../../components/small-film-card/small-film-card';
 import { AppRoute } from '../../project.constants';
 import type { Props } from './main-layout.types';
@@ -85,7 +85,7 @@ function MainLayout({
             />
           </div>
           <h1 className='visually-hidden'>WTW</h1>
-          <Header
+          <HeaderSection
             authorizationStatus={authorizationStatus}
             additionalClassName={'film-card__head'}
           />
@@ -218,7 +218,7 @@ function MainLayout({
             </div>
           )}
         </section>
-        <Footer />
+        <FooterSection />
       </div>
     </>
   );

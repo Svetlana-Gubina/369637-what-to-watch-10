@@ -4,6 +4,7 @@ import LoadingOverlay from '../loading-overlay/loading-overlay';
 import useVideoPlayer from '../../hooks/useVideoPlayer/useVideoPlayer';
 import { PlayerState } from '../../pages/player/player-constants';
 import { Props } from './player-component.types';
+import './player-component.css';
 
 function PlayerComponent({
   id,
@@ -34,25 +35,7 @@ function PlayerComponent({
     if (isFullPage) {
       return (
         isFullPage && (
-          <div
-            style={{
-              color: 'wheat',
-              background: 'rgba(0, 0, 0, 0.5)',
-              width: '100%',
-              height: '100%',
-              margin: '0',
-              padding: '0',
-              position: 'absolute',
-              top: '0',
-              right: '0',
-              zIndex: '100',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              fontSize: '25px',
-              textAlign: 'center',
-            }}
-          >
+          <div className='loadError-container'>
             Sorry, video cannot be played
             <button
               onClick={() => navigate(-1)}
@@ -68,15 +51,7 @@ function PlayerComponent({
   }
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        margin: '0',
-        padding: '0',
-        width: '100%',
-        height: '100%',
-      }}
-    >
+    <div className='playerComponent-container'>
       {isLoading && <LoadingOverlay />}
       <video
         preload='auto'
@@ -161,18 +136,7 @@ function PlayerComponent({
             onClick={toggleMute}
             type='button'
             data-testid='test-toggleMute'
-            className='player__mute'
-            style={{
-              marginRight: '5px',
-              background: '#F5DEB3',
-              boxShadow: 'none',
-              border: 'none',
-              width: '30px',
-              height: '30px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
+            className='player-mute'
           >
             <svg viewBox='3 3 27 27' width={27} height={27}>
               <use xlinkHref={`#audio-${isVideoMuted ? 'off' : 'on'}`} />

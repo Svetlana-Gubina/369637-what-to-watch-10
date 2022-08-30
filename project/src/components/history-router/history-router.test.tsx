@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, waitFor, act } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from './history-router';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';

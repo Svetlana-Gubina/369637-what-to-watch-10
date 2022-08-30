@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import userEvent from '@testing-library/user-event';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { AppRoute } from '../../project.constants';
-import HistoryRouter from '../../components/history-route/history-route';
+import HistoryRouter from '../../components/history-router/history-router';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
 import SignIn from './sign-in';
 

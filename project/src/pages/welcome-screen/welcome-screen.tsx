@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../../components/header-section/header-section';
-import Footer from '../../components/footer-section/footerSection';
+import HeaderSection from '../../components/header-section/header-section';
+import FooterSection from '../../components/footer-section/footer-section';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
-import Catalog from '../../components/catalog-section/catalog-section';
+import CatalogSection from '../../components/catalog-section/catalog-section';
 import { useAppSelector, useAppDispatch } from '../../hooks/storeHooks';
 import type { Props } from '../../types';
 import useApiService from '../../hooks/apiHooks/useApiService';
@@ -47,7 +47,7 @@ function WelcomeScreen({
           <img src={promo?.backgroundImage} alt={promo?.name} />
         </div>
         <h1 className='visually-hidden'>WTW</h1>
-        <Header
+        <HeaderSection
           authorizationStatus={authorizationStatus}
           additionalClassName={'film-card__head'}
         />
@@ -115,8 +115,8 @@ function WelcomeScreen({
         </div>
       </section>
       <div className='page-content'>
-        <Catalog />
-        <Footer />
+        <CatalogSection />
+        <FooterSection />
       </div>
     </>
   );

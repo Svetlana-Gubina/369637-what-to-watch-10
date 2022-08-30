@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import WelcomeScreen from '../../pages/welcome-screen/welcome-screen';
 import MainLayout from '../../pages/main-layout/main-layout';
-import Overview from '../overview-section/overview-section';
-import Details from '../details-section/details-section';
-import Reviews from '../reviews-section/reviews-section';
+import OverviewSection from '../overview-section/overview-section';
+import DetailsSection from '../details-section/details-section';
+import ReviewsSection from '../reviews-section/reviews-section';
 import SignIn from '../../pages/sign-in/sign-in';
 import Player from '../../pages/player/player';
 import PrivateRoot from '../private-route/private-route';
@@ -16,7 +16,7 @@ import LoadingOverlay from '../loading-overlay/loading-overlay';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { fetchAllFilms, fetchPromo } from '../../store/async-action';
 import { AuthorizationStatus } from '../../components/private-route/private-route.constants';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
 
 function App(): JSX.Element | null {
@@ -54,11 +54,11 @@ function App(): JSX.Element | null {
           path={AppRoute.Film}
           element={<MainLayout authorizationStatus={authorizationStatus} />}
         >
-          <Route index element={<Overview />} />
-          <Route path={AppRoute.Overview} element={<Overview />} />
-          <Route path={AppRoute.Reviews} element={<Reviews />} />
-          <Route path={AppRoute.Details} element={<Details />} />
-          <Route path='*' element={<Overview />} />
+          <Route index element={<OverviewSection />} />
+          <Route path={AppRoute.Overview} element={<OverviewSection />} />
+          <Route path={AppRoute.Reviews} element={<ReviewsSection />} />
+          <Route path={AppRoute.Details} element={<DetailsSection />} />
+          <Route path='*' element={<OverviewSection />} />
         </Route>
         <Route path={AppRoute.Player} element={<Player films={filmData} />} />
         <Route path={AppRoute.SignIn} element={<SignIn />} />

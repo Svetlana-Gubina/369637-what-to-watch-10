@@ -10,7 +10,7 @@ import { createSelector } from 'reselect';
 import { checkGenreMathFilter } from './catalog-section.utils';
 import { store } from '../../store';
 
-function Catalog(): JSX.Element {
+function CatalogSection(): JSX.Element {
   const [activeGenre, setActiveGenre] = useState(0);
   const [count, setCount] = useState<number>(INITIAL_COUNT);
   const selectFilmsByGenre = createSelector(
@@ -68,4 +68,4 @@ function Catalog(): JSX.Element {
   );
 }
 
-export default Catalog;
+export default CatalogSection;

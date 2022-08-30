@@ -7,7 +7,7 @@ import type { CommentType } from '../../types';
 import { ApiRoute } from '../../api/constants';
 import useApiService from '../../hooks/apiHooks/useApiService';
 
-function Overview(): JSX.Element {
+function OverviewSection(): JSX.Element {
   const { id: searchId } = useParams();
   const { data: comments, isLoading } = useApiService<CommentType[]>(
     `${ApiRoute.Comments}/${searchId}`
@@ -50,4 +50,4 @@ function Overview(): JSX.Element {
   );
 }
 
-export default Overview;
+export default OverviewSection;

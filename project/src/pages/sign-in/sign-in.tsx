@@ -1,7 +1,7 @@
 import React, { useEffect, useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../../components/header-section/header-section';
-import Footer from '../../components/footer-section/footerSection';
+import HeaderSection from '../../components/header-section/header-section';
+import FooterSection from '../../components/footer-section/footer-section';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { loginAction } from '../../store/async-action';
 import { AppRoute } from '../../project.constants';
@@ -55,13 +55,13 @@ function SignIn(): JSX.Element {
 
   return (
     <div className='user-page'>
-      <Header
+      <HeaderSection
         authorizationStatus={authorizationStatus}
         additionalClassName={'user-page__head'}
         isSignInPage
       >
         <h1 className='page-title user-page__title'>Sign in</h1>
-      </Header>
+      </HeaderSection>
 
       <div className='sign-in user-page__content'>
         <form
@@ -144,7 +144,7 @@ function SignIn(): JSX.Element {
           </div>
         </form>
       </div>
-      <Footer />
+      <FooterSection />
     </div>
   );
 }

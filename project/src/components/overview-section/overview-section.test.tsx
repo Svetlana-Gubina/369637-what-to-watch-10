@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Router from 'react-router-dom';
-import Overview from './overview-section';
+import OverviewSection from './overview-section';
 import type { CommentType } from '../../types';
 import useApiService from '../../hooks/apiHooks/useApiService';
 
@@ -36,7 +36,7 @@ const mockuseApiService = useApiService as jest.MockedFunction<
   typeof useApiService
 >;
 
-describe('Overview component test', () => {
+describe('OverviewSection component test', () => {
   it('should render correctly', () => {
     jest.spyOn(Router, 'useOutletContext').mockReturnValue(mockData);
     jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1' });
@@ -46,7 +46,7 @@ describe('Overview component test', () => {
       isError: false,
     });
 
-    render(<Overview />);
+    render(<OverviewSection />);
 
     expect(screen.getByText(/test director/i)).toBeInTheDocument();
     expect(screen.getByText(/2 ratings/i)).toBeInTheDocument();

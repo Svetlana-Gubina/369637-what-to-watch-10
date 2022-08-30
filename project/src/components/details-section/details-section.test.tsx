@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Router from 'react-router-dom';
-import Details from './details-section';
+import DetailsSection from './details-section';
 
 const mockData = {
   released: 2020,
@@ -16,11 +16,11 @@ jest.mock('react-router-dom', () => ({
   useOutletContext: jest.fn(),
 }));
 
-describe('Details component test', () => {
+describe('DetailsSection component test', () => {
   it('should render correctly', () => {
     jest.spyOn(Router, 'useOutletContext').mockReturnValue(mockData);
 
-    render(<Details />);
+    render(<DetailsSection />);
 
     expect(screen.getByText(/test director/i)).toBeInTheDocument();
   });

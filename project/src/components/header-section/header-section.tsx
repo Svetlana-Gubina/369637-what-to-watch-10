@@ -3,7 +3,7 @@ import Logo from '../logo/logo';
 import UserMenu from '../user-menu/user-menu';
 import type { Props } from './header-section.types';
 
-function Header({
+function HeaderSection({
   authorizationStatus,
   additionalClassName,
   isSignInPage = false,
@@ -18,4 +18,4 @@ function Header({
   );
 }
 
-export default Header;
+export default HeaderSection;

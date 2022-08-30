@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import ReviewItem from '../review/review';
+import ReviewItem from '../review/review-item';
 import { MAX_REVIEWS_TO_SHOW } from './reviews-section.constants';
 import { useParams } from 'react-router-dom';
 import type { CommentType } from '../../types';
@@ -7,7 +7,7 @@ import LoadingOverlay from '../loading-overlay/loading-overlay';
 import { ApiRoute } from '../../api/constants';
 import useApiService from '../../hooks/apiHooks/useApiService';
 
-function Reviews(): JSX.Element {
+function ReviewsSection(): JSX.Element {
   const { id: searchId } = useParams();
   const { data: comments, isLoading } = useApiService<CommentType[]>(
     `${ApiRoute.Comments}/${searchId}`
@@ -65,4 +65,4 @@ function Reviews(): JSX.Element {
   );
 }
 
-export default Reviews;
+export default ReviewsSection;

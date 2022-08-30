@@ -4,7 +4,7 @@ import { AuthorizationStatus } from '../../components/private-route/private-rout
 import MyList from './my-list';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import HistoryRouter from '../../components/history-route/history-route';
+import HistoryRouter from '../../components/history-router/history-router';
 import { createMemoryHistory } from 'history';
 import type { FilmItemType } from '../../types';
 import useApiService from '../../hooks/apiHooks/useApiService';

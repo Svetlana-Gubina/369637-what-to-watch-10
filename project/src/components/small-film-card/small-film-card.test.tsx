@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Provider } from 'react-redux';
 import SmallFilmCard from '../small-film-card/small-film-card';
@@ -17,7 +17,7 @@ const testFilmData = {
   videoLink: 'test',
 };
 
-describe('Details component test', () => {
+describe('SmallFilmCard component test', () => {
   beforeAll(() => {
     window.HTMLMediaElement.prototype.play = jest.fn();
     window.HTMLMediaElement.prototype.pause = jest.fn();

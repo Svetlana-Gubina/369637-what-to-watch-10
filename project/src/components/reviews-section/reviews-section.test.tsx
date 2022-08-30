@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Router from 'react-router-dom';
-import Reviews from './reviews-section';
+import ReviewsSection from './reviews-section';
 import useApiService from '../../hooks/apiHooks/useApiService';
 
 const commentsDataMock = [
@@ -38,7 +38,7 @@ const mockuseApiService = useApiService as jest.MockedFunction<
   typeof useApiService
 >;
 
-describe('Reviews component test', () => {
+describe('ReviewsSection component test', () => {
   it('should render correctly', () => {
     jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1' });
     mockuseApiService.mockReturnValue({
@@ -47,7 +47,7 @@ describe('Reviews component test', () => {
       isError: false,
     });
 
-    render(<Reviews />);
+    render(<ReviewsSection />);
 
     expect(screen.getByText(/long long comment/i)).toBeInTheDocument();
     expect(screen.getByText(/test2/i)).toBeInTheDocument();

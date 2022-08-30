@@ -2,7 +2,7 @@ import React from 'react';
 import type { FilmItemType } from '../../types';
 import { useOutletContext } from 'react-router-dom';
 
-function Details(): JSX.Element {
+function DetailsSection(): JSX.Element {
   const { released, genre, director, starring, runTime } =
     useOutletContext<FilmItemType>();
 
@@ -38,4 +38,4 @@ function Details(): JSX.Element {
   );
 }
 
-export default Details;
+export default DetailsSection;

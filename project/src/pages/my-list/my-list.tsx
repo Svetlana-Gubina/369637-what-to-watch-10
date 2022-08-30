@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../../components/header-section/header-section';
-import Footer from '../../components/footer-section/footerSection';
+import HeaderSection from '../../components/header-section/header-section';
+import FooterSection from '../../components/footer-section/footer-section';
 import SmallFilmCard from '../../components/small-film-card/small-film-card';
 import useApiService from '../../hooks/apiHooks/useApiService';
 import { ApiRoute } from '../../api/constants';
@@ -25,7 +25,7 @@ function MyList({ authorizationStatus }: Omit<Props, 'films'>): JSX.Element {
 
   return (
     <div className='user-page'>
-      <Header
+      <HeaderSection
         authorizationStatus={authorizationStatus}
         additionalClassName={'user-page__head'}
       >
@@ -33,7 +33,7 @@ function MyList({ authorizationStatus }: Omit<Props, 'films'>): JSX.Element {
           My list{' '}
           <span className='user-page__film-count'>{myFilms?.length}</span>
         </h1>
-      </Header>
+      </HeaderSection>
 
       <section className='catalog'>
         <h2 className='catalog__title visually-hidden'>Catalog</h2>
@@ -52,7 +52,7 @@ function MyList({ authorizationStatus }: Omit<Props, 'films'>): JSX.Element {
           )}
         </div>
       </section>
-      <Footer />
+      <FooterSection />
     </div>
   );
 }
