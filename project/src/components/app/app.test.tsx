@@ -40,14 +40,13 @@ const mockFilmdata = [
 ] as unknown as FilmItemType[];
 
 const api = createApi();
-// const mockApi = new MockAdapter(api);
 const middlewares = [thunk.withExtraArgument(api)];
 const mockStore = configureMockStore<
   RootState,
   Action,
   ThunkDispatch<RootState, typeof api, Action>
 >(middlewares);
-jest.mock('../history-route/history-route');
+jest.mock('../history-router/history-router');
 
 const mockHistoryRouter = HistoryRouter as jest.MockedFunction<
   typeof HistoryRouter
